@@ -1,2 +1,2 @@
 # fullstackopen
-Exercise as part of FullStackOpen curriculum
+Exercises as part of FullStackOpen curriculum
