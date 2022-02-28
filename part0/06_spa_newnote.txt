@@ -1,0 +1,8 @@
+note over browser:
+On submit, browser creates note and appends it to
+notes array. Then js redraws html on page to
+include new note. Finally, the note is sent to server.
+end note
+
+browser->server: HTTP POST /new_note_spa (json)
+server-->browser: 201 {"note created"}
