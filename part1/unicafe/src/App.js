@@ -26,22 +26,20 @@ const Stats = (props) => {
   return (
     <div className="stats-container">
       <ul>
-        <li>
-          <span className="stat-text">Total: </span>
-          {props.total}
-        </li>
-        <li>
-          <span className="stat-text">Average: </span>
-          {props.avg}
-        </li>
-        <li>
-          <span className="stat-text">Positive%: </span>
-          {props.pos}%
-        </li>
+        <StatisticLine text={`Total`} value={props.total} />
+        <StatisticLine text={`Average`} value={props.avg} />
+        <StatisticLine text={`Positive%`} value={`${props.pos}%`} />
       </ul>
     </div>
     )
 }
+
+const StatisticLine = ({text, value}) => (
+  <li>
+    <span className="stat-text">{text}: </span>
+    {value}
+  </li>
+)
 
 
 const App = () => {
