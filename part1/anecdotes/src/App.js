@@ -13,7 +13,10 @@ const App = () => {
   ]
 
   const [selected, setSelected] = useState(0)
-  const [votes, setVote] = useState({})
+  const [votes, setVote] = useState({0: 0})
+  const topVote = Object.keys(votes).reduce((a, b) => {
+    return votes[a] > votes[b] ? a : b
+  })
 
   const handleVoteClick = () => {
     const newVotes = {...votes}
@@ -24,6 +27,7 @@ const App = () => {
 
   return (
     <div>
+      <h1>Anecodotes of the day</h1>
       <p>{anecdotes[selected]}</p>
       <p>has {votes[selected]} votes</p>
       <button onClick={handleVoteClick}>
@@ -32,6 +36,9 @@ const App = () => {
       <button onClick={() => setSelected(Math.floor(Math.random() * anecdotes.length))}>
         Next anecdote
       </button>
+
+      <h2>Top voted anecdote</h2>
+      <p>{anecdotes[topVote]}</p>
     </div>
   )
 }
