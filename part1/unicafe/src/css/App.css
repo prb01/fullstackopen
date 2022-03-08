@@ -1,0 +1,71 @@
+/* RESET */
+*, *:before, *:after {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background-color: transparent;
+  font: 0;
+}
+
+body {
+  padding: 1em;
+  font-family:Arial, Helvetica, sans-serif;
+}
+
+h1 {
+  font-size: 24px;
+  margin-bottom: 1em;
+}
+
+button {
+  cursor: pointer;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: max-content;
+  margin: 0 auto;
+  padding: 0.5em;
+  background-color: hsl(0, 0%, 95%);
+  border: 1px solid hsl(0, 3%, 71%);
+  border-radius: 0.5em;
+}
+
+.feedback-container {
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: row;
+  width: 90%;
+}
+
+.feedback {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.feedback-face {
+  font-size: 3rem;
+  border-radius: 50%;
+  box-shadow: 0 5px 5px hsl(0, 2%, 26%);
+  margin: .2em;
+}
+
+.feedback-counter {
+  color: hsl(0, 2%, 45%);
+  font-size: .8em;
+}
+
+.fa-face-smile {
+  color: hsl(112, 32%, 64%);
+}
+
+.fa-face-meh {
+  color: hsl(44, 70%, 64%);
+}
+
+.fa-face-frown {
+  color: hsl(8, 34%, 51%);
+}
