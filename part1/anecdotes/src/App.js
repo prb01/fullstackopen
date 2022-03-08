@@ -26,19 +26,22 @@ const App = () => {
   }
 
   return (
-    <div>
-      <h1>Anecodotes of the day</h1>
-      <p>{anecdotes[selected]}</p>
+    <div className="quote-container">
+      <span className="quote-mark">"</span>
+      <span className="quote-text large">{anecdotes[selected]}</span>
       <p>has {votes[selected]} votes</p>
-      <button onClick={handleVoteClick}>
-        Vote
-      </button>
-      <button onClick={() => setSelected(Math.floor(Math.random() * anecdotes.length))}>
-        Next anecdote
-      </button>
 
-      <h2>Top voted anecdote</h2>
-      <p>{anecdotes[topVote]}</p>
+      <div className="buttons">
+        <button onClick={handleVoteClick}>Vote</button>
+        <button onClick={() => setSelected(Math.floor(Math.random() * anecdotes.length))}>
+          Next anecdote
+        </button>
+      </div>
+
+      <div className="subquote-container">
+        <h2>Top voted anecdote</h2>
+        <span className="quote-text small">{anecdotes[topVote]}</span>
+      </div>
     </div>
   )
 }
