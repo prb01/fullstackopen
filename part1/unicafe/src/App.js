@@ -14,24 +14,35 @@ const Counter = ({num}) => (
   </span>
 )
 
-const Stats = (props) => (
-  <div className="stats-container">
-    <ul>
-      <li>
-        <span className="stat-text">Total: </span>
-        {props.total}
-      </li>
-      <li>
-        <span className="stat-text">Average: </span>
-        {props.avg}
-      </li>
-      <li>
-        <span className="stat-text">Positive%: </span>
-        {props.pos}%
-      </li>
-    </ul>
-  </div>
-)
+const Stats = (props) => {
+  if (props.total === 0) {
+    return (
+      <div className="stats-container">
+        <span className="stat-text">No feedback provided yet</span>
+      </div>
+    )
+  }
+
+  return (
+    <div className="stats-container">
+      <ul>
+        <li>
+          <span className="stat-text">Total: </span>
+          {props.total}
+        </li>
+        <li>
+          <span className="stat-text">Average: </span>
+          {props.avg}
+        </li>
+        <li>
+          <span className="stat-text">Positive%: </span>
+          {props.pos}%
+        </li>
+      </ul>
+    </div>
+    )
+}
+
 
 const App = () => {
   // save clicks of each button to its own state
@@ -72,7 +83,6 @@ const App = () => {
       </div>
       
       <hr />
-
       <Stats total={total} avg={avg} pos={pos} />
     </div>
     </> 
