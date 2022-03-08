@@ -14,11 +14,20 @@ const Counter = ({num}) => (
   </span>
 )
 
+const Stat = ({text, value}) => (
+  <li>
+    <span className="stat-text">{text}: </span>
+    {value}
+  </li>
+)
 const App = () => {
   // save clicks of each button to its own state
   const [good, setGood] = useState(0)
   const [neutral, setNeutral] = useState(0)
   const [bad, setBad] = useState(0)
+  const total = good + neutral + bad
+  const avg = Math.round(((good + (bad * -1)) / total) * 100) / 100
+  const pos = Math.round(((good / total) * 100) * 100) / 100
 
   return (
     <>
@@ -47,8 +56,15 @@ const App = () => {
           />
           <Counter num={bad} />
         </div>
-
-          
+      </div>
+      
+      <hr />
+      <div className="stats-container">
+        <ul>
+          <Stat text={`Total`} value={total} />
+          <Stat text={`Average`} value={avg} />
+          <Stat text={`Positive%`} value={`${pos}%`} />
+        </ul>
       </div>
     </div>
     </> 
@@ -56,3 +72,8 @@ const App = () => {
 }
 
 export default App
+
+
+// the total number of collected feedback, 
+// the average score(good: 1, neutral: 0, bad: -1) 
+// and the percentage of positive feedback
