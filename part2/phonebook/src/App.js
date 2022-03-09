@@ -10,6 +10,12 @@ const App = () => {
   const addName = e => {
     e.preventDefault()
     const nameObject = { name: newName }
+
+    if (persons.some( person => person.name === nameObject.name)) {
+      window.alert(`${nameObject.name} is already in the phonebook`)
+      return
+    }
+
     setPersons([...persons, nameObject])
     setNewName('')
   }
