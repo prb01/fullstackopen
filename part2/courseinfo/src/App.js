@@ -1,3 +1,14 @@
+const Course = ({ course }) => {
+  return (
+    <><h1>{course.name}</h1>
+    { course.parts.map( part => (
+      <p key={part.id}>{part.name}: {part.exercises}</p>
+    ))}
+    </>
+  )
+}
+
+
 const App = () => {
   const course = {
     id: 1,
@@ -17,9 +28,16 @@ const App = () => {
         name: 'State of a component',
         exercises: 14,
         id: 3
+      },
+      {
+        name: 'Fake part',
+        exercises: 8,
+        id: 4
       }
     ]
   }
 
   return <Course course={course} />
 }
+
+export default App
