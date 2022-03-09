@@ -3,7 +3,7 @@ const Numbers = ({ persons }) => (
 )
 
 const Number = ({ person }) => (
-  <p>{person.name}</p>
+  <p><b>{person.name}</b> | {person.number}</p>
 )
 
 export default Numbers
