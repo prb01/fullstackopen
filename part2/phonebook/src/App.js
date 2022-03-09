@@ -1,5 +1,8 @@
 import { useState } from 'react'
 import Numbers from './components/Numbers'
+import Filter from './components/Filter'
+import PersonForm from './components/PersonForm'
+
 
 const App = () => {
   const [persons, setPersons] = useState([
@@ -36,32 +39,23 @@ const App = () => {
       )
   }
 
-  const handleNameChange = e => {
-    setNewName(e.target.value)
-  }
-  const handleNumChange = e => {
-    setNewNum(e.target.value)
-  }
-  const handleSearchChange = e => {
-    setNewSearch(e.target.value)
-  }
+  const handleNameChange = e => setNewName(e.target.value)
+  const handleNumChange = e => setNewNum(e.target.value)
+  const handleSearchChange = e => setNewSearch(e.target.value)
 
   return (
     <div>
       <h2>Phonebook</h2>
-      <input value={newSearch} onChange={handleSearchChange}/>
+      <Filter value={newSearch} onChange={handleSearchChange} />
+
       <h3>Add New</h3>
-      <form onSubmit={addNumber}>
-        <div>
-          name: <input value={newName} onChange={handleNameChange}/>
-        </div>
-        <div>
-          number: <input value={newNum} onChange={handleNumChange}/>
-        </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
+      <PersonForm 
+        onSubmit={addNumber} 
+        name={newName}
+        nameChange={handleNameChange}
+        num={newNum}
+        numChange={handleNumChange} />
+
       <h2>Numbers</h2>
       <Numbers persons={personsToShow()} />
     </div>
