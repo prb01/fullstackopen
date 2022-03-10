@@ -21,7 +21,7 @@ const App = () => {
     const personsCopy = [...persons]
 
     if (idx > 0) {
-      personsCopy[idx].number = newNum
+      Object.assign(personsCopy[idx], nameObject)
     } else {
       setPersons([...personsCopy, nameObject])
     }
