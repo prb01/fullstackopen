@@ -18,13 +18,14 @@ const App = () => {
     e.preventDefault()
     const nameObject = { name: newName, number: newNum }
     const idx = persons.findIndex(person => person.name === nameObject.name)
-    
+    const personsCopy = [...persons]
+
     if (idx > 0) {
-      window.alert(`${nameObject.name} is already in the phonebook`)
-      return
+      personsCopy[idx].number = newNum
+    } else {
+      setPersons([...personsCopy, nameObject])
     }
 
-    setPersons([...persons, nameObject])
     setNewName('')
     setNewNum('')
   }
