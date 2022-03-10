@@ -17,7 +17,7 @@ const App = () => {
   const addNumber = e => {
     e.preventDefault()
     const nameObject = { name: newName, number: newNum }
-    const idx = persons.findIndex(person => person.name === nameObject.name)
+    const idx = persons.findIndex(person => person.name.toLowerCase() === nameObject.name.toLowerCase())
     const personsCopy = [...persons]
 
     if (idx > 0) {
