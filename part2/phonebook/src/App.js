@@ -1,18 +1,24 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import axios from 'axios'
 import Numbers from './components/Numbers'
 import Filter from './components/Filter'
 import PersonForm from './components/PersonForm'
 
 
 const App = () => {
-  const [persons, setPersons] = useState([
-    { name: 'Arto Hellas', number: '001-300-5467' },
-    { name: 'Caro Duque', number: '+54-001-4567' },
-    { name: 'Denny Maliakla', number: '+41 41 750 55 78' }
-  ])
+  const [persons, setPersons] = useState([])
   const [newName, setNewName] = useState('')
   const [newNum, setNewNum] = useState('')
   const [newSearch, setNewSearch] = useState('')
+
+  const hook = () => {
+    axios
+      .get('http://localhost:3001/persons')
+      .then(res => {
+        setPersons(res.data)
+      })
+  }
+  useEffect(hook, [])
 
   const addNumber = e => {
     e.preventDefault()
