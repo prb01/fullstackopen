@@ -7,6 +7,14 @@ pre {
   white-space: pre-wrap;
 }
 
+th, td {
+  text-align: start;
+}
+
+td {
+  padding-left:0.5rem;
+}
+
 .App {
   text-align: center;
 }
@@ -66,6 +74,8 @@ pre {
   bottom: 0;
   font-size: 3rem;
   font-weight: bold;
+  -webkit-text-stroke: 2px white;
+
 }
 
 .weather-data {

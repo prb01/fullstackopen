@@ -22,23 +22,23 @@ const Weather = ({lat, lon}) => {
       <h3>Weather in capital</h3>
       <div className="weather-grid">
         <div className="weather-icon">
-            <img src={`http://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`} />
+            <img src={`http://openweathermap.org/img/wn/${sky[0].icon}@2x.png`} alt={sky[0].description} />
           <span className="weather-temp">{Math.floor(main.temp)}°</span>
         </div>
         <div className="weather-data">
           <table>
             <tbody>
               <tr>
-                <th>Temp min.</th>
-                <td>{main.temp_min}</td>
+                <th>Temp min</th>
+                <td>{Math.round(main.temp_min)}°</td>
               </tr>
               <tr>
-                <th>Temp max.</th>
-                <td>{main.temp_max}</td>
+                <th>Temp max</th>
+                <td>{Math.round(main.temp_max)}°</td>
               </tr>
               <tr>
                 <th>Pressure</th>
-                <td>{main.pressure}hPa</td>
+                <td>{main.pressure} hPa</td>
               </tr>
               <tr>
                 <th>Humidity</th>

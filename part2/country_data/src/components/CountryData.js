@@ -2,6 +2,7 @@ import Weather from './Weather'
 
 const CountryData = ({country}) => (
   <>
+  <section className="country-container">
     <h2>{country.name.common} {country.flag}</h2>
     <h3>
       aka {Object.keys(country.name.nativeName)
@@ -36,7 +37,7 @@ const CountryData = ({country}) => (
         </tr>
       </tbody>
     </table>
-
+    </section>
     <Weather lat={country.capitalInfo.latlng[0]} lon={country.capitalInfo.latlng[1]} />
   </>
 )
