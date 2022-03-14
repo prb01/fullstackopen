@@ -1,13 +1,20 @@
 import { useState, useEffect} from 'react'
 import axios from 'axios'
 import './App.css'
-import JSONPretty from 'react-json-pretty'
 
 const Warning = ({show, msg}) => (
   <span style={{color: 'red', marginLeft: '1em'}}>{msg}</span>
 )
 
-function Display({ filteredData, search }) {
+const CountryLI = ({data, setSearch}) => (
+  data.map(d => 
+    <li key={d.name.official}>{d.name.common}&emsp;
+      <button onClick={() => setSearch(d.name.common)}>Show Country</button>
+    </li>
+  )
+)
+
+function Display({ filteredData, search, setSearch }) {
   if (search === '' || filteredData.length === 0) {
     return null
   }
@@ -16,15 +23,22 @@ function Display({ filteredData, search }) {
       return <Warning msg={'Please be more specific in your query'} />
     }
   
-  const country = filteredData[0]
-  if (filteredData.length > 1 && country.name.common.toLowerCase() !== search.toLowerCase()) {
-    return (
-      <ul>
-        {filteredData.map(d => <li key={d.name.official}>{d.name.common}</li>)}
+    if (filteredData.length > 1 && 
+      filteredData.every((country) => country.name.common.toLowerCase() !== search.toLowerCase())) {
+        return (
+          <ul>
+            <CountryLI data={filteredData} setSearch={setSearch}/>
+        {/* {filteredData.map(d => <li key={d.name.official}>{d.name.common}</li>)} */}
       </ul>
     )
   }
-
+  
+  let country
+  if (filteredData.length === 1) {
+    country = filteredData[0]
+  } else {
+    country = filteredData.find(c => c.name.common.toLowerCase() === search.toLowerCase())
+  }
   return (
     <>
     <h2>{country.name.common} {country.flag}</h2>
@@ -85,7 +99,7 @@ function App() {
       <p>Start by typing a country name</p>
       <input type='text' onChange={handleSearchChange} value={search}/>
       <hr />
-      <Display filteredData={filteredData()} search={search} />
+      <Display filteredData={filteredData()} search={search} setSearch={setSearch} />
     </div>
   )
 }
