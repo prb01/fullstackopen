@@ -1,5 +1,6 @@
 body {
   overflow-x: hidden;
+  padding: 0.5em;
 }
 
 pre {
@@ -45,3 +46,28 @@ pre {
   }
 }
 
+.weather-container {
+  margin-top: 2em;
+}
+
+.weather-grid {
+  display: flex;
+}
+
+.weather-icon {
+  position: relative;
+  margin-top: 0;
+  padding-right: 2rem;
+}
+
+.weather-temp {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  font-size: 3rem;
+  font-weight: bold;
+}
+
+.weather-data {
+  padding-left: 0.3rem;
+}
