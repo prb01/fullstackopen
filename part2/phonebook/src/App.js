@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import Numbers from './components/Numbers'
 import Filter from './components/Filter'
 import PersonForm from './components/PersonForm'
+import Notification from './components/Notification'
 import personService from './services/persons'
 import './App.css'
 
@@ -10,6 +11,8 @@ const App = () => {
   const [newName, setNewName] = useState('')
   const [newNum, setNewNum] = useState('')
   const [newSearch, setNewSearch] = useState('')
+  const [msg, setMsg] = useState(null)
+  const [status, setStatus] = useState(null)
   const handleNameChange = e => setNewName(e.target.value)
   const handleNumChange = e => setNewNum(e.target.value)
   const handleSearchChange = e => setNewSearch(e.target.value)
@@ -42,6 +45,13 @@ const App = () => {
       .then(returnedPerson => {
         setPersons([...persons, returnedPerson])
         clearForm()
+
+        setMsg(`Added ${personObject.name}`)
+        setStatus('success')
+        setTimeout(() => {
+          setMsg(null)
+          setStatus(null)
+        }, 4000)
       })
   }
 
@@ -55,6 +65,13 @@ const App = () => {
         .then(returnedPerson => {
           setPersons(persons.map(person => person.id !== id ? person : returnedPerson))
           clearForm()
+
+          setMsg(`Updated ${personObject.name}`)
+          setStatus('success')
+          setTimeout(() => {
+            setMsg(null)
+            setStatus(null)
+          }, 4000)
         })
     }
   }
@@ -67,8 +84,14 @@ const App = () => {
       personService
         .deletePerson(id)
         .then(res => {
-          console.log(res);
-          setPersons(persons.filter(person => person.id !== id))          
+          setPersons(persons.filter(person => person.id !== id))
+          
+          setMsg(`Deleted ${person.name}`)
+          setStatus('success')
+          setTimeout(() => {
+            setMsg(null)
+            setStatus(null)
+          }, 4000)
         })
     }
   }
@@ -94,6 +117,7 @@ const App = () => {
       <Filter value={newSearch} onChange={handleSearchChange} />
 
       <h3>Add/Update Number</h3>
+      <Notification msg={msg} status={status}/>
       <PersonForm 
         onSubmit={handleSubmitPerson} 
         name={newName}

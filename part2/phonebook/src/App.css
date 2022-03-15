@@ -5,3 +5,30 @@ body {
 .App {
   text-align: center;
 }
+
+.notification {
+  position:absolute;
+  left: 50%;
+  top: 1em;
+  padding: 0.5rem;
+  margin: 0.5rem 0;
+  width: max-content;
+  border-radius: 5px;
+  border: 1px solid;
+  font-size: 1em;
+}
+
+.notification.success {
+  background-color: hsl(91, 91%, 90%);
+  color: hsla(91, 91%, 15%);
+}
+
+.notification.error {
+  background-color: hsl(9, 91%, 90%);
+  color: hsl(9, 91%, 25%);
+}
+
+.notification.warning {
+  background-color: hsl(41, 65%, 90%);
+  color: hsl(41, 65%, 30%);
+}

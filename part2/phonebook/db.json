@@ -27,8 +27,13 @@
     },
     {
       "name": "Peter Parker",
-      "number": "888-0101-2020",
+      "number": "123",
       "id": 7
+    },
+    {
+      "name": "The Hulk",
+      "number": "1234",
+      "id": 8
     }
   ]
 }
