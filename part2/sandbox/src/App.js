@@ -1,12 +1,27 @@
-import Note from './components/Note'
 import { useState, useEffect } from 'react'
-import axios from 'axios'
+import Note from './components/Note'
+import Notification from './components/Notification'
 import noteService from './services/notes'
+
+const Footer = () => {
+  const footerStyle = {
+    color: 'rgb(12, 12, 141)',
+    fontStyle: 'italic',
+    fontSize: 16
+  }
+  return (
+    <div style={footerStyle}>
+      <br/>
+      <em>Note app, University of PRB</em>
+    </div>
+  )
+}
 
 const App = (props) => {
   const [notes, setNotes] = useState([])
   const [newNote, setNewNote] = useState('')
   const [showAll, setShowAll] = useState(true)
+  const [errorMsg, setErrorMsg] = useState(null)
   const handleNoteChange = e => setNewNote(e.target.value)
 
   const hook = () => {
@@ -47,15 +62,19 @@ const App = (props) => {
       .then(updatedNote => {
         setNotes(notes.map(note => note.id !== id ? note : updatedNote))
       })
-      .catch(error => { 
-        alert(`the note '${note.content}' was already deleted from server`)      
-        setNotes(notes.filter(n => n.id !== id)) 
+      .catch(error => {
+        setErrorMsg(`the note '${note.content}' was already deleted from server`)
+        setNotes(notes.filter(n => n.id !== id))
+        setTimeout(() => {
+          setErrorMsg(null)
+        }, 5000)
       })
   }
 
   return (
     <div>
       <h1>Notes</h1>
+      <Notification msg={errorMsg} />
       <div>
         <button onClick={() => setShowAll(!showAll)}>
           show {showAll ? 'important' : 'all'}
@@ -74,6 +93,7 @@ const App = (props) => {
           <input value={newNote} onChange={handleNoteChange}/>
           <button type="submit">Save</button>
       </form>
+      <Footer />
     </div>
   )
 }
