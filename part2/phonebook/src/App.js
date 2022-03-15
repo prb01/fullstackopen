@@ -4,7 +4,6 @@ import Numbers from './components/Numbers'
 import Filter from './components/Filter'
 import PersonForm from './components/PersonForm'
 
-
 const App = () => {
   const [persons, setPersons] = useState([])
   const [newName, setNewName] = useState('')
@@ -24,12 +23,21 @@ const App = () => {
     e.preventDefault()
     const nameObject = { name: newName, number: newNum }
     const idx = persons.findIndex(person => person.name.toLowerCase() === nameObject.name.toLowerCase())
-    const personsCopy = [...persons]
 
-    if (idx > 0) {
-      Object.assign(personsCopy[idx], nameObject)
+    if (idx >= 0) {
+      const person = persons[idx]
+      const id = person.id
+      axios
+        .put(`http://localhost:3001/persons/${id}`, nameObject)
+        .then(res => {
+          setPersons(persons.map(person => person.id !== id ? person : res.data))
+        })
     } else {
-      setPersons([...personsCopy, nameObject])
+      axios
+        .post('http://localhost:3001/persons', nameObject)
+        .then(res => {
+          setPersons([...persons, res.data])
+        })
     }
 
     setNewName('')

@@ -2,12 +2,12 @@
   "persons": [
     {
       "name": "Arto Hellas",
-      "number": "040-123456",
+      "number": "2490-845-09",
       "id": 1
     },
     {
-      "name": "Caro",
-      "number": "39-44-5323523",
+      "name": "caro",
+      "number": "924872345987",
       "id": 2
     },
     {
@@ -19,6 +19,16 @@
       "name": "Denny Maniakal",
       "number": "39-23-6423122",
       "id": 4
+    },
+    {
+      "name": "New Name",
+      "number": "1234",
+      "id": 5
+    },
+    {
+      "name": "This name",
+      "number": "0392890234568",
+      "id": 6
     }
   ]
 }
