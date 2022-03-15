@@ -26,19 +26,9 @@
       "id": 5
     },
     {
-      "name": "This name",
-      "number": "0392890234568",
-      "id": 6
-    },
-    {
       "name": "Peter Parker",
       "number": "888-0101-2020",
       "id": 7
-    },
-    {
-      "name": "Sam Smith",
-      "number": "12345678",
-      "id": 8
     }
   ]
 }
