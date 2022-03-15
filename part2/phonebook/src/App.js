@@ -1,45 +1,59 @@
 import { useState, useEffect } from 'react'
-import axios from 'axios'
 import Numbers from './components/Numbers'
 import Filter from './components/Filter'
 import PersonForm from './components/PersonForm'
+import personService from './services/persons'
 
 const App = () => {
   const [persons, setPersons] = useState([])
   const [newName, setNewName] = useState('')
   const [newNum, setNewNum] = useState('')
   const [newSearch, setNewSearch] = useState('')
+  const handleNameChange = e => setNewName(e.target.value)
+  const handleNumChange = e => setNewNum(e.target.value)
+  const handleSearchChange = e => setNewSearch(e.target.value)
 
-  const hook = () => {
-    axios
-      .get('http://localhost:3001/persons')
-      .then(res => {
-        setPersons(res.data)
+  const pullPersons = () => {
+    personService
+      .getAll()
+      .then(initialPersons => {
+        setPersons(initialPersons)
       })
   }
-  useEffect(hook, [])
+  useEffect(pullPersons, [])
 
-  const addNumber = e => {
+  const handleSubmitPerson = e => {
     e.preventDefault()
-    const nameObject = { name: newName, number: newNum }
-    const idx = persons.findIndex(person => person.name.toLowerCase() === nameObject.name.toLowerCase())
+    const personObject = { name: newName, number: newNum }
+    const idx = persons.findIndex(person => person.name.toLowerCase() === personObject.name.toLowerCase())
 
     if (idx >= 0) {
-      const person = persons[idx]
-      const id = person.id
-      axios
-        .put(`http://localhost:3001/persons/${id}`, nameObject)
-        .then(res => {
-          setPersons(persons.map(person => person.id !== id ? person : res.data))
-        })
+      const id = persons[idx].id
+      editNumber(id, personObject)
     } else {
-      axios
-        .post('http://localhost:3001/persons', nameObject)
-        .then(res => {
-          setPersons([...persons, res.data])
-        })
+      addNumber(personObject)
     }
+  }
 
+  const addNumber = personObject => {
+    personService
+      .create(personObject)
+      .then(returnedPerson => {
+        setPersons([...persons, returnedPerson])
+        clearForm()
+      })
+  }
+
+  const editNumber = (id, personObject) => {
+    personService
+      .update(id, personObject)
+      .then(returnedPerson => {
+        setPersons(persons.map(person => person.id !== id ? person : returnedPerson))
+        clearForm()
+      })
+  }
+
+  const clearForm = () => {
     setNewName('')
     setNewNum('')
   }
@@ -54,10 +68,6 @@ const App = () => {
       )
   }
 
-  const handleNameChange = e => setNewName(e.target.value)
-  const handleNumChange = e => setNewNum(e.target.value)
-  const handleSearchChange = e => setNewSearch(e.target.value)
-
   return (
     <div>
       <h2>Phonebook</h2>
@@ -65,7 +75,7 @@ const App = () => {
 
       <h3>Add New</h3>
       <PersonForm 
-        onSubmit={addNumber} 
+        onSubmit={handleSubmitPerson} 
         name={newName}
         nameChange={handleNameChange}
         num={newNum}
