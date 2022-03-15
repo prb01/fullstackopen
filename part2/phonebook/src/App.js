@@ -3,6 +3,7 @@ import Numbers from './components/Numbers'
 import Filter from './components/Filter'
 import PersonForm from './components/PersonForm'
 import personService from './services/persons'
+import './App.css'
 
 const App = () => {
   const [persons, setPersons] = useState([])
@@ -45,12 +46,17 @@ const App = () => {
   }
 
   const editNumber = (id, personObject) => {
-    personService
-      .update(id, personObject)
-      .then(returnedPerson => {
-        setPersons(persons.map(person => person.id !== id ? person : returnedPerson))
-        clearForm()
-      })
+    const person = persons.find(person => person.id === id)
+    const msg = `Are you sure you want to update entry for '${person.name}'?`
+
+    if (window.confirm(msg)) {
+      personService
+        .update(id, personObject)
+        .then(returnedPerson => {
+          setPersons(persons.map(person => person.id !== id ? person : returnedPerson))
+          clearForm()
+        })
+    }
   }
 
   const deleteNumber = id => {
@@ -87,7 +93,7 @@ const App = () => {
       <h2>Phonebook</h2>
       <Filter value={newSearch} onChange={handleSearchChange} />
 
-      <h3>Add New</h3>
+      <h3>Add/Update Number</h3>
       <PersonForm 
         onSubmit={handleSubmitPerson} 
         name={newName}
