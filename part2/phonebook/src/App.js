@@ -73,6 +73,15 @@ const App = () => {
             setStatus(null)
           }, 4000)
         })
+        .catch(reason => {
+          setPersons(persons.filter(person => person.id !== id))
+          setMsg(`Info for ${personObject.name} has already been removed`)
+          setStatus('error')
+          setTimeout(() => {
+            setMsg(null)
+            setStatus(null)
+          }, 4000)
+        })
     }
   }
 
@@ -88,6 +97,15 @@ const App = () => {
           
           setMsg(`Deleted ${person.name}`)
           setStatus('success')
+          setTimeout(() => {
+            setMsg(null)
+            setStatus(null)
+          }, 4000)
+        })
+        .catch(reason => {
+          setPersons(persons.filter(person => person.id !== id))
+          setMsg(`Info for ${person.name} has already been removed`)
+          setStatus('error')
           setTimeout(() => {
             setMsg(null)
             setStatus(null)
