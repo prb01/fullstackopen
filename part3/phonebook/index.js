@@ -59,9 +59,23 @@ app.get("/api/persons/:id", (req, res) => {
 //DELETE PERSONS/ID
 app.delete("/api/persons/:id", (req, res) => {
   const id = Number(req.params.id)
-  persons = persons.filter(p => p.id !== id)
+  persons = persons.filter((p) => p.id !== id)
 
   res.status(204).end()
+})
+
+const generateId = () => {
+  return Math.floor(Math.random() * 10000)
+}
+
+//POST PERSONS
+app.post("/api/persons", (req, res) => {
+  const person = req.body
+  person.id = generateId()
+
+  persons = persons.concat(person)
+
+  res.json(person)
 })
 
 app.listen(PORT, () => {
