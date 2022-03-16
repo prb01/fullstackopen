@@ -5,3 +5,25 @@ Content-Type: application/json
   "name": "Peter Parker",
   "number": "123456789"
 }
+###
+POST http://localhost:3001/api/persons
+Content-Type: application/json
+
+{
+  "number": "123456789"
+}
+###
+POST http://localhost:3001/api/persons
+Content-Type: application/json
+
+{
+  "name": "Peter Parker 2"
+}
+###
+POST http://localhost:3001/api/persons
+Content-Type: application/json
+
+{
+  "name": "Peter Parker",
+  "number": "987654321"
+}
