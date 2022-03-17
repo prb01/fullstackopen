@@ -12,7 +12,7 @@ const Footer = () => {
   return (
     <div style={footerStyle}>
       <br/>
-      <em>Note app, University of PRB</em>
+      <em>Note app, made by PRB01</em>
     </div>
   )
 }
