@@ -5,6 +5,7 @@ app.use(express.static("build"))
 app.use(express.json())
 app.use(cors())
 
+
 const requestLogger = (req, res, next) => {
   console.log("Method:", req.method)
   console.log("Path:  ", req.path)
