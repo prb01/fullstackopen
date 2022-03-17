@@ -9,8 +9,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "deploy": "git push heroku main",
     "deploy:back": "git add . && npm run git-commit && npm run deploy && npm run git:fso",
-    "git:fso": "cd ../ && git add -A && echo 'Enter commit msg:' && read MSG && git commit -m '$MSG' && git push && cd phonebook/",
-    "git-commit": "echo 'Enter commit msg:' && read MSG && git commit -m '$MSG'"
+    "git:fso": "cd ../ && git add -A && git commit -m \"$(read -p 'Commit description: ')\" && git push && cd phonebook/",
+    "git-commit": "read -p 'Enter commit msg:' MSG && git commit -m \"$(read -p 'Commit description: ')\""
   },
   "author": "Patrick R Bergstroem",
   "license": "ISC",
