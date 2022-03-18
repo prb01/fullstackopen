@@ -48,14 +48,9 @@ app.get("/api/notes", (req, res) => {
 })
 
 app.get("/api/notes/:id", (req, res) => {
-  const id = Number(req.params.id)
-  const note = notes.find((n) => n.id === id)
-  if (note) {
+  Note.findById(req.params.id).then(note => {
     res.json(note)
-  } else {
-    res.statusMessage = "You done messed up!"
-    res.status(404).end()
-  }
+  })
 })
 
 app.post("/api/notes", (req, res) => {
