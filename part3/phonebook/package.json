@@ -8,8 +8,8 @@
     "dev": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "deploy": "git push heroku main",
-    "deploy:back": "git add . && npm run git-commit && npm run deploy && npm run git:fso",
-    "git:fso": "cd ../ && git add -A && git commit && git push && cd phonebook/",
+    "deploy:back": "git add . && echo 'Commit msg for Heroku' && npm run git-commit && npm run deploy && npm run git:fso",
+    "git:fso": "cd ../ && git add -A && echo 'Commit msg for FSO' && git commit && git push && cd phonebook/",
     "git-commit": "git commit"
   },
   "author": "Patrick R Bergstroem",
