@@ -7,8 +7,9 @@
     "start": "node index.js",
     "dev": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
+    "build:ui": "rm -rf build && cd ../../part2/phonebook/ && npm run build && cp -r build ../../part3/phonebook",
     "deploy": "git push heroku main",
-    "deploy:back": "git add . && echo 'Commit msg for Heroku' && npm run git-commit && npm run deploy && npm run git:fso",
+    "deploy:full": "npm run build:ui && git add . && echo 'Commit msg for Heroku' && npm run git-commit && npm run deploy && npm run git:fso",
     "git:fso": "cd ../ && git add -A && echo 'Commit msg for FSO' && git commit && git push && cd phonebook/",
     "git-commit": "git commit"
   },
