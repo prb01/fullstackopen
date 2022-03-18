@@ -18,14 +18,18 @@ app.use(
 const PORT = process.env.PORT
 
 //GET INFO
-app.get("/info", (req, res) => {
-  const now = new Date()
-  const len = persons.length
+app.get("/info", (req, res, next) => {
+  Person.find({})
+    .then((persons) => {
+      const now = new Date()
+      const len = persons.length
 
-  res.send(
-    `<p>Phonebook has info for ${len} people.</p>
-    <p>${now}</p>`
-  )
+      res.send(
+        `<p>Phonebook has info for ${len} people.</p>
+      <p>${now}</p>`
+      )
+    })
+    .catch((error) => next(error))
 })
 
 //GET PERSONS
