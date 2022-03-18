@@ -58,11 +58,6 @@ app.get("/api/notes/:id", (req, res) => {
   }
 })
 
-const generateId = () => {
-  const maxId = notes.length > 0 ? Math.max(...notes.map((n) => n.id)) : 1
-  return maxId + 1
-}
-
 app.post("/api/notes", (req, res) => {
   const body = req.body
 
@@ -72,16 +67,15 @@ app.post("/api/notes", (req, res) => {
     })
   }
 
-  const note = {
-    id: generateId(),
+  const note = new Note({
     content: body.content,
     date: new Date(),
     important: body.important || false,
-  }
+  })
 
-  notes = notes.concat(note)
-
-  res.json(note)
+  note.save().then(savedNote => {
+    res.json(savedNote)
+  })
 })
 
 app.delete("/api/notes/:id", (req, res) => {
