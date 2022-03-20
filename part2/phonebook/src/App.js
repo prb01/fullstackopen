@@ -53,6 +53,15 @@ const App = () => {
           setStatus(null)
         }, 4000)
       })
+      .catch(error => {
+        setMsg(error.response.data.error)
+        setStatus("error")
+        setTimeout(() => {
+          setMsg(null)
+          setStatus(null)
+        }, 4000)
+
+      })
   }
 
   const editNumber = (id, personObject) => {
