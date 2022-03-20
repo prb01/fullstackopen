@@ -97,9 +97,14 @@ app.put("/api/persons/:id", (req, res, next) => {
     context: "query",
   })
     .then((updatedPerson) => {
+      if (!updatedPerson) throw { name: 'MissingError' }
       res.json(updatedPerson)
     })
-    .catch((error) => next(error))
+    .catch((error) => {
+      console.log('DID WE MAKE IT HERE???')
+      next(error)
+    }
+      )
 })
 
 const unknownEndpoint = (request, response) => {
@@ -108,14 +113,16 @@ const unknownEndpoint = (request, response) => {
 app.use(unknownEndpoint)
 
 const errorHandler = (error, req, res, next) => {
-  console.log(error.message)
-
   if (error.name === "CastError") {
     return res.status(400).send({ error: "malformatted id" })
   }
 
   if (error.name === "ValidationError") {
     return res.status(400).send({ error: error.message })
+  }
+
+  if (error.name === "MissingError") {
+    return res.status(400).send({ error: "Data entry is missing"})
   }
 
   next(error)

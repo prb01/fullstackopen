@@ -82,10 +82,9 @@ const App = () => {
             setStatus(null)
           }, 4000)
         })
-        .catch(reason => {
-          setPersons(persons.filter(person => person.id !== id))
-          setMsg(`Info for ${personObject.name} has already been removed`)
-          setStatus('error')
+        .catch(error => {
+          setMsg(error.response.data.error)
+          setStatus("error")
           setTimeout(() => {
             setMsg(null)
             setStatus(null)
