@@ -97,14 +97,12 @@ app.put("/api/persons/:id", (req, res, next) => {
     context: "query",
   })
     .then((updatedPerson) => {
-      if (!updatedPerson) throw { name: 'MissingError' }
+      if (!updatedPerson) throw { name: "MissingError" }
       res.json(updatedPerson)
     })
     .catch((error) => {
-      console.log('DID WE MAKE IT HERE???')
       next(error)
-    }
-      )
+    })
 })
 
 const unknownEndpoint = (request, response) => {

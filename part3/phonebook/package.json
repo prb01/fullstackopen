@@ -11,11 +11,13 @@
     "deploy": "git push heroku main",
     "deploy:full": "npm run build:ui && git add . && echo 'Commit msg for Heroku' && npm run git-commit && npm run deploy && npm run git:fso",
     "git:fso": "cd ../ && git add -A && echo 'Commit msg for FSO' && git commit && git push && cd phonebook/",
-    "git-commit": "git commit"
+    "git-commit": "git commit",
+    "lint": "eslint ."
   },
   "author": "Patrick R Bergstroem",
   "license": "ISC",
   "devDependencies": {
+    "eslint": "^8.11.0",
     "nodemon": "^2.0.15"
   },
   "dependencies": {
