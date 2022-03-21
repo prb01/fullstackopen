@@ -2,4 +2,5 @@ node_modules
 .vscode/
 part3/notes-back/.git
 part3/phonebook/.git
+part4/blog/.git
 .env
