@@ -6,12 +6,12 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
     "build:ui": "rm -rf build && cd ../../part2/notes-front/ && npm run build && cp -r build ../../part3/notes-back",
     "deploy": "git push heroku main",
     "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && npm run deploy && npm run git:fso",
     "git:fso": "cd ../ && git add -A && git commit -m uibuild && git push && cd notes-back/",
-    "logs:prod": "heroku logs --tail"
+    "logs:prod": "heroku logs --tail",
+    "test": "jest --verbose"
   },
   "author": "Patrick Bergstroem",
   "license": "ISC",
@@ -22,6 +22,10 @@
     "mongoose": "^6.2.7"
   },
   "devDependencies": {
+    "jest": "^27.5.1",
     "nodemon": "^2.0.15"
+  },
+  "jest": {
+    "testEnvironment": "node"
   }
 }
