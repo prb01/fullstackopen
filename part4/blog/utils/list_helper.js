@@ -22,4 +22,24 @@ const favoriteBlog = (blogs) => {
   }, null)
 }
 
-module.exports = { dummy, totalLikes, favoriteBlog }
+const mostBlogs = (blogs) => {
+  const blogCounts = {}
+  blogs.forEach(blog => {
+    blogCounts[blog.author] = blogCounts[blog.author] || 0
+    blogCounts[blog.author] += 1
+  })
+
+  const blogCountsArr = Object.keys(blogCounts).map((author) => {
+    return { author: author, blogs: blogCounts[author] }
+  })
+
+  return blogCountsArr.reduce((prev, curr) => {
+    if (!prev) return curr
+
+    const blog = curr.blogs > prev.blogs ? curr : prev
+
+    return blog
+  }, null)
+}
+
+module.exports = { dummy, totalLikes, favoriteBlog, mostBlogs }

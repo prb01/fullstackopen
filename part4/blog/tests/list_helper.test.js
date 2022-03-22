@@ -40,7 +40,7 @@ describe("favorite blog", () => {
 
   test("returns blog if only 1 present", () => {
     const blogs = [{ title: "test", author: "test", url: "test.com", likes: 3 }]
-    
+
     expect(listHelper.favoriteBlog(blogs)).toEqual(blogs[0])
   })
 
@@ -66,5 +66,45 @@ describe("favorite blog", () => {
     ]
 
     expect(listHelper.favoriteBlog(blogs)).toEqual(blogs[2])
+  })
+})
+
+describe("most blogs", () => {
+  test("returns null if blogs is empty", () => {
+    const blogs = []
+    expect(listHelper.mostBlogs(blogs)).toBe(null)
+  })
+
+  test("returns author & num of blogs if only 1 blog", () => {
+    const blogs = [{ title: "test", author: "test", url: "test.com", likes: 3 }]
+    const expected = { author: "test", blogs: 1 }
+
+    expect(listHelper.mostBlogs(blogs)).toEqual(expected)
+  })
+
+  test("returns author with most blogs in large list", () => {
+    const blogs = [
+      { title: "test1", author: "test1", url: "test.com", likes: 3 },
+      { title: "test2", author: "test2", url: "test.com", likes: 4 },
+      { title: "test3", author: "Batman", url: "test.com", likes: 2 },
+      { title: "test4", author: "Batman", url: "test.com", likes: 2 },
+      { title: "test5", author: "test5", url: "test.com", likes: 1 },
+    ]
+    const expected = { author: "Batman", blogs: 2 }
+
+    expect(listHelper.mostBlogs(blogs)).toEqual(expected)
+  })
+
+  test("returns FIRST author with most blogs if multiple with same amount", () => {
+    const blogs = [
+      { title: "test1", author: "Roger Federer", url: "test.com", likes: 2 },
+      { title: "test2", author: "Roger Federer", url: "test.com", likes: 1 },
+      { title: "test3", author: "Batman", url: "test.com", likes: 5 },
+      { title: "test4", author: "Batman", url: "test.com", likes: 5 },
+      { title: "test5", author: "test5", url: "test.com", likes: 1 },
+    ]
+    const expected = { author: "Roger Federer", blogs: 2 }
+
+    expect(listHelper.mostBlogs(blogs)).toEqual(expected)
   })
 })
