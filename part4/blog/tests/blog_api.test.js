@@ -159,6 +159,47 @@ describe("When deleting a blog", () => {
   })
 })
 
+describe("When updating an existing blog", () => {
+  let blogsAtStart
+  let blogToUpdate
+  let updatedNote
+
+  beforeEach(async () => {
+    blogsAtStart = await helper.blogsInDb()
+    blogToUpdate = blogsAtStart[0]
+    updatedNote = {
+      ...blogToUpdate,
+      likes: 22,
+    }
+  })
+
+  test("return blog as json with 200 status", async () => {
+    await api
+      .put(`/api/blogs/${blogToUpdate.id}`)
+      .send(updatedNote)
+      .expect(200)
+      .expect("Content-Type", /application\/json/)
+  })
+
+  test("returned blog is same as request", async () => {
+    const returnedBlog = await api
+      .put(`/api/blogs/${blogToUpdate.id}`)
+      .send(updatedNote)
+
+    expect(JSON.stringify(returnedBlog.body)).toContain(JSON.stringify(updatedNote))
+  })
+
+  test("length of db has not changed", async () => {
+    await api
+      .put(`/api/blogs/${blogToUpdate.id}`)
+      .send(updatedNote)
+
+    const blogsAtEnd = await helper.blogsInDb()
+
+    expect(blogsAtEnd.length).toEqual(blogsAtStart.length)
+  })
+})
+
 afterAll(() => {
   mongoose.connection.close()
 })
