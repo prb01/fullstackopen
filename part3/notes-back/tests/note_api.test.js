@@ -80,10 +80,6 @@ test("a note without content can NOT be added", async () => {
   expect(notesAtEnd).toHaveLength(test_helper.initialNotes.length)
 })
 
-afterAll(() => {
-  mongoose.connection.close()
-})
-
 test("a note can be deleted", async () => {
   const notesAtStart = await test_helper.notesInDb()
   const noteToDelete = notesAtStart[0]
@@ -97,4 +93,8 @@ test("a note can be deleted", async () => {
 
   expect(notesAtEnd).toHaveLength(notesAtStart.length - 1)
   expect(contents).not.toContain(noteToDelete.content)
+})
+
+afterAll(() => {
+  mongoose.connection.close()
 })
