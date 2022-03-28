@@ -18,21 +18,21 @@ beforeEach(async () => {
   }
 })
 
-describe("GET /api/blogs", () => {
-  test("blogs returned as json", async () => {
+describe("When retrieving blogs (GET)", () => {
+  test("return json with 200 status", async () => {
     await api
       .get("/api/blogs")
       .expect(200)
       .expect("Content-Type", /application\/json/)
   })
 
-  test("all blogs returned", async () => {
+  test("return all blogs", async () => {
     const blogs = await api.get("/api/blogs")
 
     expect(blogs.body.length).toEqual(helper.initialBlogs.length)
   })
 
-  test("blog has 'id' property", async () => {
+  test("blogs have 'id' property", async () => {
     const blogs = await api.get("/api/blogs")
     const blog = blogs.body[0]
 
@@ -40,7 +40,7 @@ describe("GET /api/blogs", () => {
   })
 })
 
-describe("POST /api/blogs", () => {
+describe("When adding new blog (POST)", () => {
   const newBlog = {
     title: "Buster loves Lucille",
     author: "Buster Bluth",
@@ -48,7 +48,7 @@ describe("POST /api/blogs", () => {
     likes: 1,
   }
 
-  test("blog returned as json with 201 status", async () => {
+  test("return json with 201 status", async () => {
     await api
       .post("/api/blogs")
       .send(newBlog)
@@ -56,7 +56,7 @@ describe("POST /api/blogs", () => {
       .expect("Content-Type", /application\/json/)
   })
 
-  test("length increases by one", async () => {
+  test("db length increases by one", async () => {
     await api.post("/api/blogs").send(newBlog)
 
     const blogsAtEnd = await helper.blogsInDb()
@@ -64,7 +64,7 @@ describe("POST /api/blogs", () => {
     expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length + 1)
   })
 
-  test("new blog is in db", async () => {
+  test("new blog content is in db", async () => {
     await api.post("/api/blogs").send(newBlog)
 
     const blogsAtEnd = await helper.blogsInDb()
@@ -74,8 +74,8 @@ describe("POST /api/blogs", () => {
   })
 })
 
-describe("Blog properties", () => {
-  test("returns 0 likes if likes property is missing", async () => {
+describe("When creating blog with missing properties", () => {
+  test("return 0 likes if likes property is missing", async () => {
     const newBlogNoLikes = {
       title: "Buster loves Lucille",
       author: "Buster Bluth",
@@ -88,7 +88,7 @@ describe("Blog properties", () => {
     expect(savedBlog.body.likes).toEqual(0)
   })
 
-  test("returns 400 bad request if title is missing", async () => {
+  test("return 400 bad request if title is missing", async () => {
     const newBlogNoTitle = {
       url: "https://www.motherboy.com",
       author: "Buster Bluth",
@@ -101,7 +101,7 @@ describe("Blog properties", () => {
     .expect(400)
   })
 
-  test("returns 400 bad request if url is missing", async () => {
+  test("return 400 bad request if url is missing", async () => {
     const newBlogNoUrl = {
       title: "Buster loves Lucille",
       author: "Buster Bluth",
@@ -124,6 +124,38 @@ describe("Blog properties", () => {
     .post("/api/blogs")
     .send(newBlogNoTitleUrl)
     .expect(400)
+  })
+})
+
+describe("When deleting a blog", () => {
+  let blogsAtStart
+  let blogToDelete
+
+  beforeEach(async () => {
+    blogsAtStart = await helper.blogsInDb()
+    blogToDelete = blogsAtStart[0]
+  })
+  
+  test("return status 204", async () => {
+    await api
+      .delete(`/api/blogs/${blogToDelete.id}`)
+      .expect(204)
+  })
+
+  test("db length reduced by one", async () => {
+    await api.delete(`/api/blogs/${blogToDelete.id}`)
+
+    const blogsAtEnd = await helper.blogsInDb()
+    expect(blogsAtEnd.length).toEqual(blogsAtStart.length - 1)
+  })
+
+  test("deleted blog's content no longer in db", async () => {
+    await api.delete(`/api/blogs/${blogToDelete.id}`)
+
+    const blogsAtEnd = await helper.blogsInDb()
+    const titles = blogsAtEnd.map(blog => blog.title)
+
+    expect(titles).not.toContainEqual(blogToDelete.title)
   })
 })
 

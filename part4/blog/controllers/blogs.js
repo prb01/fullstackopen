@@ -18,11 +18,9 @@ blogsRouter.post("/", async (request, response) => {
   response.status(201).json(savedBlog)
 })
 
-module.exports = blogsRouter
+blogsRouter.delete("/:id", async (request, response) => {
+  await Blog.findByIdAndDelete(request.params.id)
+  response.status(204).end()
+})
 
-// {
-//     title: "Boblaw Law Blog",
-//     author: "Bobby Boblaw",
-//     url: "https://www.boblawlawblog.com",
-//     likes: 5,
-//   }
+module.exports = blogsRouter
