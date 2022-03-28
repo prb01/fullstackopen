@@ -27,15 +27,13 @@ describe("GET /api/blogs", () => {
   })
 
   test("all blogs returned", async () => {
-    const blogs = await api
-      .get("/api/blogs")
+    const blogs = await api.get("/api/blogs")
 
-      expect(blogs.body.length).toEqual(helper.initialBlogs.length)
+    expect(blogs.body.length).toEqual(helper.initialBlogs.length)
   })
 
   test("blog has 'id' property", async () => {
-    const blogs = await api
-      .get("/api/blogs")
+    const blogs = await api.get("/api/blogs")
     const blog = blogs.body[0]
 
     expect(blog.id).toBeDefined()
@@ -59,9 +57,7 @@ describe("POST /api/blogs", () => {
   })
 
   test("length increases by one", async () => {
-    await api
-      .post("/api/blogs")
-      .send(newBlog)
+    await api.post("/api/blogs").send(newBlog)
 
     const blogsAtEnd = await helper.blogsInDb()
 
@@ -69,14 +65,27 @@ describe("POST /api/blogs", () => {
   })
 
   test("new blog is in db", async () => {
-    await api
-      .post("/api/blogs")
-      .send(newBlog)
+    await api.post("/api/blogs").send(newBlog)
 
     const blogsAtEnd = await helper.blogsInDb()
-    const titles = blogsAtEnd.map(blog => blog.title)
+    const titles = blogsAtEnd.map((blog) => blog.title)
 
     expect(titles).toContainEqual(newBlog.title)
+  })
+})
+
+describe("Blog properties", () => {
+  test("returns 0 likes if likes property is missing", async () => {
+    const newBlogNoLikes = {
+      title: "Buster loves Lucille",
+      author: "Buster Bluth",
+      url: "https://www.motherboy.com",
+    }
+
+    const savedBlog = await api.post("/api/blogs").send(newBlogNoLikes)
+    
+    expect(savedBlog.body.likes).toBeDefined()
+    expect(savedBlog.body.likes).toEqual(0)
   })
 })
 

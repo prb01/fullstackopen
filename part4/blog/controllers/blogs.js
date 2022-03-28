@@ -7,10 +7,20 @@ blogsRouter.get("/", async (request, response) => {
 })
 
 blogsRouter.post("/", async (request, response) => {
-  const blog = new Blog(request.body)
+  const blog = new Blog({
+    ...request.body,
+    likes: request.body.likes || 0
+  })
 
   const savedBlog = await blog.save()
   response.status(201).json(savedBlog)
 })
 
 module.exports = blogsRouter
+
+// {
+//     title: "Boblaw Law Blog",
+//     author: "Bobby Boblaw",
+//     url: "https://www.boblawlawblog.com",
+//     likes: 5,
+//   }
