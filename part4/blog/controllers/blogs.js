@@ -3,21 +3,22 @@ const Blog = require("../models/blog")
 const User = require("../models/user")
 const jwt = require("jsonwebtoken")
 
-blogsRouter.get("/", async (request, response) => {
+blogsRouter.get("/", async (request, response,) => {
   const blogs = await Blog.find({}).populate('user', {blogs: 0})
   response.json(blogs)
 })
 
-blogsRouter.post("/", async (request, response) => {
+blogsRouter.post("/", async (request, response, next) => {
   const { title, author, url, likes, userId } = request.body
-  const decodedToken = jwt.verify(request.token, process.env.SECRET)
+  const token = request.token
 
-  if (!decodedToken.id) {
+  if (!token) {
     return response.status(401).json({
-      error: "token missing"
+      error: "token missing",
     })
   }
 
+  const decodedToken = jwt.verify(request.token, process.env.SECRET)
   const user = await User.findById(decodedToken.id)
   
   const blog = new Blog({
