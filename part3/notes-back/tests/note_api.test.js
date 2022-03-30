@@ -4,7 +4,9 @@ const supertest = require("supertest")
 const app = require("../app")
 const api = supertest(app)
 const Note = require("../models/note")
+const User = require("../models/user")
 const helper = require("./test_helper")
+const jwt = require("jsonwebtoken")
 
 jest.setTimeout(15000)
 
@@ -66,6 +68,19 @@ describe("viewing a specific note", () => {
 })
 
 describe("addition of a new note", () => {
+  let token
+
+  beforeEach(async () => {
+    const userForToken = {
+      username: "root",
+      id: "6244745bc322a2e3f575f2e3",
+    }
+
+    token = jwt.sign(userForToken, process.env.SECRET, {
+      expiresIn: 60 * 60,
+    })
+  })
+
   test("succeeds with valid data", async () => {
     const newNote = {
       content: "async/await simplifies making async calls",
@@ -74,6 +89,7 @@ describe("addition of a new note", () => {
 
     await api
       .post("/api/notes")
+      .set("Authorization", `bearer ${token}`)
       .send(newNote)
       .expect(201)
       .expect("Content-Type", /application\/json/)
@@ -90,7 +106,11 @@ describe("addition of a new note", () => {
       important: true,
     }
 
-    await api.post("/api/notes").send(newNote).expect(400)
+    await api
+      .post("/api/notes")
+      .set("Authorization", `bearer ${token}`)
+      .send(newNote)
+      .expect(400)
 
     const notesAtEnd = await helper.notesInDb()
 
@@ -103,7 +123,9 @@ describe("deletion of a note", () => {
     const notesAtStart = await helper.notesInDb()
     const noteToDelete = notesAtStart[0]
 
-    await api.delete(`/api/notes/${noteToDelete.id}`).expect(204)
+    await api
+      .delete(`/api/notes/${noteToDelete.id}`)
+      .expect(204)
 
     const notesAtEnd = await helper.notesInDb()
 
