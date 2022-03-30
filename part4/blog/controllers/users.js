@@ -10,11 +10,22 @@ usersRouter.get("/", async (request, response) => {
 usersRouter.post("/", async (request, response) => {
   const { name, username, password } = request.body
 
-  const existingUser = await User.findOne({ username }).exec()
+  if (!name || !username || !password) {
+    return response.status(400).json({
+      error: "name, username, and password must all be entered",
+    })
+  }
 
+  const existingUser = await User.findOne({ username }).exec()
   if (existingUser) {
     return response.status(400).json({
       error: 'username already taken'
+    })
+  }
+
+  if (username.length < 3) {
+    return response.status(400).json({
+      error: "username length must be at least 3",
     })
   }
 
