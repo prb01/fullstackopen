@@ -1,0 +1,36 @@
+#### Root user
+POST http://localhost:3003/api/users
+Content-Type: application/json
+
+{
+  "name": "Erik Sandstrom",
+  "username": "erikSand",
+  "password": "pa55w0rd"
+}
+#### Second user for good measure
+POST http://localhost:3003/api/users
+Content-Type: application/json
+
+{
+  "name": "Ragnar Lothbrok",
+  "username": "theRagnar",
+  "password": "pa55w0rd"
+}
+#### Error: username already taken
+POST http://localhost:3003/api/users
+Content-Type: application/json
+
+{
+  "name": "Erik Sandstrom",
+  "username": "erikSand",
+  "password": "pa55w0rd"
+}
+#### Error: password too short
+POST http://localhost:3003/api/users
+Content-Type: application/json
+
+{
+  "name": "Shorty McShorterson",
+  "username": "shorty",
+  "password": "1234"
+}
