@@ -2,8 +2,9 @@ POST http://localhost:3003/api/blogs
 Content-Type: application/json
 
 {
-  "title": "4th blog",
-  "author": "Michael Jackson",
-  "url": "www.google.com/blog/mj",
-  "likes": 3
+  "title": "5th blog",
+  "author": "Bloggy McBloggerson",
+  "url": "www.google.com/blog/bloggy",
+  "likes": 22,
+  "userId": "624480e38ef4027cd3463c1a"
 }
