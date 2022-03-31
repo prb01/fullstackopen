@@ -5,15 +5,26 @@ const app = require("../app")
 const api = supertest(app)
 const Blog = require("../models/blog")
 const helper = require("./test_helper")
+const jwt = require("jsonwebtoken")
 
-jest.setTimeout(15000)
+jest.setTimeout(10000)
+
+let token
+beforeAll(async () => {
+  const userForToken = {
+    username: "first",
+    id: "62448b752d0e4c2c71c8a688",
+  }
+
+  token = await jwt.sign(userForToken, process.env.SECRET)
+})
 
 beforeEach(async () => {
-  // await mongoose.connection.close()
   await Blog.deleteMany({})
 
   for (const blog of helper.initialBlogs) {
     const blogObject = new Blog(blog)
+    blogObject.user = await helper.getUser()
     await blogObject.save()
   }
 })
@@ -51,13 +62,17 @@ describe("When adding new blog (POST)", () => {
   test("return json with 201 status", async () => {
     await api
       .post("/api/blogs")
+      .set("authorization", `Bearer ${token}`)
       .send(newBlog)
       .expect(201)
       .expect("Content-Type", /application\/json/)
   })
 
   test("db length increases by one", async () => {
-    await api.post("/api/blogs").send(newBlog)
+    await api
+      .post("/api/blogs")
+      .set("authorization", `Bearer ${token}`)
+      .send(newBlog)
 
     const blogsAtEnd = await helper.blogsInDb()
 
@@ -65,7 +80,10 @@ describe("When adding new blog (POST)", () => {
   })
 
   test("new blog content is in db", async () => {
-    await api.post("/api/blogs").send(newBlog)
+    await api
+      .post("/api/blogs")
+      .set("authorization", `Bearer ${token}`)
+      .send(newBlog)
 
     const blogsAtEnd = await helper.blogsInDb()
     const titles = blogsAtEnd.map((blog) => blog.title)
@@ -82,7 +100,10 @@ describe("When creating blog with missing properties", () => {
       url: "https://www.motherboy.com",
     }
 
-    const savedBlog = await api.post("/api/blogs").send(newBlogNoLikes)
+    const savedBlog = await api
+      .post("/api/blogs")
+      .set("authorization", `Bearer ${token}`)
+      .send(newBlogNoLikes)
     
     expect(savedBlog.body.likes).toBeDefined()
     expect(savedBlog.body.likes).toEqual(0)
@@ -96,9 +117,10 @@ describe("When creating blog with missing properties", () => {
     }
     
     await api
-    .post("/api/blogs")
-    .send(newBlogNoTitle)
-    .expect(400)
+      .post("/api/blogs")
+      .set("authorization", `Bearer ${token}`)
+      .send(newBlogNoTitle)
+      .expect(400)
   })
 
   test("return 400 bad request if url is missing", async () => {
@@ -109,9 +131,10 @@ describe("When creating blog with missing properties", () => {
     }
     
     await api
-    .post("/api/blogs")
-    .send(newBlogNoUrl)
-    .expect(400)
+      .post("/api/blogs")
+      .set("authorization", `Bearer ${token}`)
+      .send(newBlogNoUrl)
+      .expect(400)
   })
 
   test("returns 400 bad request if title & url are missing", async () => {
@@ -121,9 +144,10 @@ describe("When creating blog with missing properties", () => {
     }
   
     await api
-    .post("/api/blogs")
-    .send(newBlogNoTitleUrl)
-    .expect(400)
+      .post("/api/blogs")
+      .set("authorization", `Bearer ${token}`)
+      .send(newBlogNoTitleUrl)
+      .expect(400)
   })
 })
 
@@ -139,18 +163,23 @@ describe("When deleting a blog", () => {
   test("return status 204", async () => {
     await api
       .delete(`/api/blogs/${blogToDelete.id}`)
+      .set("authorization", `Bearer ${token}`)
       .expect(204)
   })
 
   test("db length reduced by one", async () => {
-    await api.delete(`/api/blogs/${blogToDelete.id}`)
+    await api
+      .delete(`/api/blogs/${blogToDelete.id}`)
+      .set("authorization", `Bearer ${token}`)
 
     const blogsAtEnd = await helper.blogsInDb()
     expect(blogsAtEnd.length).toEqual(blogsAtStart.length - 1)
   })
 
   test("deleted blog's content no longer in db", async () => {
-    await api.delete(`/api/blogs/${blogToDelete.id}`)
+    await api
+      .delete(`/api/blogs/${blogToDelete.id}`)
+      .set("authorization", `Bearer ${token}`)
 
     const blogsAtEnd = await helper.blogsInDb()
     const titles = blogsAtEnd.map(blog => blog.title)
