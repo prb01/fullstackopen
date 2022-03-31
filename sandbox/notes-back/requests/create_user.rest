@@ -6,3 +6,12 @@ content-type: application/json
     "name": "Superuser",
     "password": "salainen"
 }
+####
+POST http://localhost:3001/api/users HTTP/1.1
+content-type: application/json
+
+{
+    "username": "test",
+    "name": "password",
+    "password": "password"
+}
