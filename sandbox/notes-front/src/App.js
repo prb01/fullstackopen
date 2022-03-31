@@ -28,12 +28,22 @@ const App = (props) => {
   const [password, setPassword] = useState("")
   const [user, setUser] = useState(null)
 
-  const hook = () => {
+  const getInitialNotes = () => {
     noteService.getAll().then((initialNotes) => {
       setNotes(initialNotes)
     })
   }
-  useEffect(hook, [])
+  useEffect(getInitialNotes, [])
+
+  const getUserFromLocalStorage = () => {
+    const loggedUser = window.localStorage.getItem('user')
+    if (loggedUser) {
+      const user = JSON.parse(loggedUser)
+      setUser(user)
+      noteService.setToken(user.token)
+    }
+  }
+  useEffect(getUserFromLocalStorage, [])
 
   const handleNoteChange = (e) => setNewNote(e.target.value)
   const handleLogin = async (e) => {
@@ -42,6 +52,9 @@ const App = (props) => {
 
     try {
       const user = await loginService.login({ username, password })
+      
+      window.localStorage.setItem('user', JSON.stringify(user))
+      noteService.setToken(user.token)
       setUser(user)
       setUsername("")
       setPassword("")
@@ -51,6 +64,13 @@ const App = (props) => {
         setErrorMsg(null)
       }, 5000)
     }
+  }
+  const handleLogout = e => {
+    e.preventDefault()
+
+    window.localStorage.removeItem("user")
+    noteService.setToken(null)
+    setUser(null)
   }
 
   const addNote = (e) => {
@@ -100,20 +120,26 @@ const App = (props) => {
       <Notification msg={errorMsg} />
 
       {user === null ? (
-        <Forms.LoginForm 
-          handleLogin = {handleLogin}
-          username = {username}
-          setUsername = {setUsername}
-          password = {password}
-          setPassword = {setPassword}
+        <Forms.LoginForm
+          handleLogin={handleLogin}
+          username={username}
+          setUsername={setUsername}
+          password={password}
+          setPassword={setPassword}
         />
       ) : (
         <Forms.NoteForm
-          user = {user}
-          addNote = {addNote}
-          newNote = {newNote}
-          handleNoteChange = {handleNoteChange}
+          user={user}
+          addNote={addNote}
+          newNote={newNote}
+          handleNoteChange={handleNoteChange}
         />
+      )}
+
+      {user !== null && (
+        <div>
+          <button onClick={handleLogout}>logout</button>
+        </div>
       )}
 
       <div>
