@@ -1,0 +1,15 @@
+button {
+  width: fit-content;
+}
+
+.container-form {
+  display: flex;
+  flex-direction: column;
+  width: max-content;
+}
+
+.container-formfields {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0.5rem;
+}

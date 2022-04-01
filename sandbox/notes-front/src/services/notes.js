@@ -4,7 +4,7 @@ const baseUrl = "/api/notes"
 let token = null
 
 const setToken = newToken => {
-  token = `bearer ${newToken  }`
+  token = `bearer ${newToken}`
 }
 
 const getAll = () => {
