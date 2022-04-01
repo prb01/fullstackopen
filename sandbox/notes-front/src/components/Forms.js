@@ -1,46 +1,69 @@
-const LoginForm = ({
-  handleLogin,
-  username,
-  setUsername,
-  password,
-  setPassword,
-}) => (
-  <form onSubmit={handleLogin}>
-    <div>
-      <label htmlFor="form_username">username</label>
-      <input
-        type="text"
-        value={username}
-        name="Username"
-        id="form_username"
-        onChange={({ target }) => setUsername(target.value)}
-      />
-    </div>
-    <div>
-      <label htmlFor="form_password">password</label>
-      <input
-        type="password"
-        value={password}
-        name="Password"
-        id="form_password"
-        onChange={({ target }) => setPassword(target.value)}
-      />
-    </div>
-    <button type="submit">login</button>
-  </form>
-)
+import { useState } from "react"
 
-const NoteForm = ({ user, addNote, newNote, handleNoteChange }) => (
-  <div>
-    <p>
-      <strong>{user.name}</strong> logged in{" "}
-    </p>
+const LoginForm = ({ loginUser }) => {
+  const [username, setUsername] = useState("")
+  const [password, setPassword] = useState("")
 
-    <form onSubmit={addNote}>
-      <input value={newNote} onChange={handleNoteChange} />
-      <button type="submit">Save</button>
+  const handleLogin = (e) => {
+    e.preventDefault()
+    loginUser({
+      username,
+      password,
+    })
+  }
+
+  return (
+    <form onSubmit={handleLogin}>
+      <div>
+        <label htmlFor="form_username">username</label>
+        <input
+          type="text"
+          value={username}
+          name="Username"
+          id="form_username"
+          onChange={({ target }) => setUsername(target.value)}
+        />
+      </div>
+      <div>
+        <label htmlFor="form_password">password</label>
+        <input
+          type="password"
+          value={password}
+          name="Password"
+          id="form_password"
+          onChange={({ target }) => setPassword(target.value)}
+        />
+      </div>
+      <button type="submit">login</button>
     </form>
-  </div>
-)
+  )
+}
+
+const NoteForm = ({ createNote }) => {
+  const [newNote, setNewNote] = useState("")
+
+  const handleNoteChange = (e) => setNewNote(e.target.value)
+
+  const addNote = (event) => {
+    event.preventDefault()
+    createNote({
+      content: newNote,
+      important: Math.random() > 0.5,
+      date: new Date().toISOString(),
+    })
+
+    setNewNote("")
+  }
+
+  return (
+    <div>
+      <h2>Add new note</h2>
+      <form onSubmit={addNote}>
+        <input value={newNote} onChange={handleNoteChange} />
+        <button type="submit">Save</button>
+      </form>
+    </div>
+  )
+}
 
 export default { LoginForm, NoteForm }
