@@ -1,4 +1,5 @@
 import { useState } from "react"
+import blogService from "../services/blogs"
 
 const Blogs = ({ blogs }) => (
   <div>
@@ -12,12 +13,21 @@ const Blogs = ({ blogs }) => (
 
 const Blog = ({ blog }) => {
   const [fullView, setFullView] = useState(false)
+  const [likes, setLikes] = useState(blog.likes)
 
   const showWhenSmallView = { display: fullView ? "none" : "" }
   const showWhenFullView = { display: fullView ? "" : "none" }
 
   const toggleView = () => {
     setFullView(!fullView)
+  }
+
+  const addLike = async (e) => {
+    e.preventDefault()
+
+    const updatedBlog = {...blog, likes: ++blog.likes }
+    await blogService.update(updatedBlog, blog.id)
+    setLikes(blog.likes)
   }
 
   return (
@@ -33,8 +43,8 @@ const Blog = ({ blog }) => {
         <ul>
           <li>url: {blog.url}</li>
           <li>
-            likes: {blog.likes}
-            <button onClick={() => console.log("like++")}>like</button>
+            likes: {likes}
+            <button onClick={addLike}>like</button>
           </li>
           <li>user: {blog.user?.name || "user unknown"}</li>
         </ul>
