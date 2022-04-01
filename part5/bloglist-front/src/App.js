@@ -1,10 +1,11 @@
-import { useState, useEffect } from "react"
-import Blog from "./components/Blog"
+import { useState, useEffect, useRef } from "react"
+import Blogs from "./components/Blogs"
 import Forms from "./components/Forms"
 import Notification from "./components/Notification"
 import blogService from "./services/blogs"
 import loginService from "./services/login"
 import "./App.css"
+import Togglable from "./components/Togglable"
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
@@ -15,6 +16,7 @@ const App = () => {
   const [author, setAuthor] = useState("")
   const [url, setUrl] = useState("")
   const [notification, setNotification] = useState(null)
+  const blogAddRef = useRef()
 
   useEffect(() => {
     blogService.getAll().then((blogs) => setBlogs(blogs))
@@ -36,6 +38,11 @@ const App = () => {
     }, timeout)
   }
 
+  const errorMsg = (error) =>
+    `${error.response.status} ${error.response.statusText}: ${
+      error.response.data?.error || error.message
+    }`
+
   const handleLogin = async (e) => {
     e.preventDefault()
 
@@ -50,11 +57,7 @@ const App = () => {
       setUsername("")
       setPassword("")
     } catch (error) {
-      toast(
-        `${error.response.status} ${error.response.statusText}: ${error.response.data?.error || error.message}`,
-        "error",
-        5000
-      )
+      toast(errorMsg(error), "error", 5000)
     }
   }
 
@@ -68,14 +71,11 @@ const App = () => {
   const handleAddBlog = async (e) => {
     e.preventDefault()
 
-    const newBlog = {
-      title,
-      author,
-      url,
-    }
+    const newBlog = { title, author, url }
 
     try {
       const returnedBlog = await blogService.create(newBlog)
+      blogAddRef.current.toggleVisibility()
 
       setBlogs(blogs.concat(returnedBlog))
       toast(`a new blog ${title} by ${author} added`, "info", 5000)
@@ -84,50 +84,60 @@ const App = () => {
       setAuthor("")
       setUrl("")
     } catch (error) {
-      toast(
-        `${error.response.status} ${error.response.statusText}: ${
-          error.response.data?.error || error.message
-        }`,
-        "error",
-        5000
-      )
+      toast(errorMsg(error), "error", 5000)
     }
   }
+
+  const loginForm = () => (
+    <Forms.Login
+      handleLogin={handleLogin}
+      setUsername={setUsername}
+      setPassword={setPassword}
+    />
+  )
+
+  const addBlogForm = () => (
+    <div>
+      <Togglable buttonLabel="add blog" ref={blogAddRef}>
+        <h2>Add new blog</h2>
+        <Forms.AddBlog
+          handleAddBlog={handleAddBlog}
+          title={title}
+          setTitle={setTitle}
+          author={author}
+          setAuthor={setAuthor}
+          url={url}
+          setUrl={setUrl}
+        />
+      </Togglable>
+    </div>
+  )
+
+  const loggedIn = () => (
+    <div>
+      <span>
+        <strong>{user.name}</strong> logged in
+      </span>
+      <button onClick={handleLogout}>logout</button>
+    </div>
+  )
 
   return (
     <div>
       <Notification notification={notification} />
 
-      <h2>blogs</h2>
+      <h1>blogs</h1>
+
       {user === null ? (
-        <Forms.Login
-          handleLogin={handleLogin}
-          setUsername={setUsername}
-          setPassword={setPassword}
-        />
+        loginForm()
       ) : (
-        <div>
-          <span>
-            <strong>{user.name}</strong> logged in
-          </span>
-          <button onClick={handleLogout}>logout</button>
-          <h2>Add new blog</h2>
-          <Forms.AddBlog
-            handleAddBlog={handleAddBlog}
-            title={title}
-            setTitle={setTitle}
-            author={author}
-            setAuthor={setAuthor}
-            url={url}
-            setUrl={setUrl}
-          />
-          <ul>
-            {blogs.map((blog) => (
-              <Blog key={blog.id} blog={blog} />
-            ))}
-          </ul>
-        </div>
+        <>
+          {loggedIn()}
+          {addBlogForm()}
+        </>
       )}
+
+      <Blogs blogs={blogs} />
     </div>
   )
 }
