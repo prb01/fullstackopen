@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react"
 import Blog from "./components/Blog"
 import Forms from "./components/Forms"
+import Notification from "./components/Notification"
 import blogService from "./services/blogs"
 import loginService from "./services/login"
 import "./App.css"
@@ -13,6 +14,7 @@ const App = () => {
   const [title, setTitle] = useState("")
   const [author, setAuthor] = useState("")
   const [url, setUrl] = useState("")
+  const [notification, setNotification] = useState(null)
 
   useEffect(() => {
     blogService.getAll().then((blogs) => setBlogs(blogs))
@@ -27,6 +29,13 @@ const App = () => {
     }
   }, [])
 
+  const toast = (msg, type, timeout) => {
+    setNotification({ msg, type })
+    setTimeout(() => {
+      setNotification(null)
+    }, timeout)
+  }
+
   const handleLogin = async (e) => {
     e.preventDefault()
 
@@ -36,10 +45,16 @@ const App = () => {
       window.localStorage.setItem("user", JSON.stringify(user))
       blogService.setToken(user.token)
       setUser(user)
+      toast(`${user.username} logged in successfully`, "info", 5000)
+
       setUsername("")
       setPassword("")
     } catch (error) {
-      console.log("Error:", error.message)
+      toast(
+        `${error.response.status} ${error.response.statusText}: ${error.response.data?.error || error.message}`,
+        "error",
+        5000
+      )
     }
   }
 
@@ -63,16 +78,26 @@ const App = () => {
       const returnedBlog = await blogService.create(newBlog)
 
       setBlogs(blogs.concat(returnedBlog))
+      toast(`a new blog ${title} by ${author} added`, "info", 5000)
+
       setTitle("")
       setAuthor("")
       setUrl("")
     } catch (error) {
-      console.log("Error:", error.message)
+      toast(
+        `${error.response.status} ${error.response.statusText}: ${
+          error.response.data?.error || error.message
+        }`,
+        "error",
+        5000
+      )
     }
   }
 
   return (
     <div>
+      <Notification notification={notification} />
+
       <h2>blogs</h2>
       {user === null ? (
         <Forms.Login
