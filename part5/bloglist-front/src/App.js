@@ -12,9 +12,6 @@ const App = () => {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
   const [user, setUser] = useState(null)
-  const [title, setTitle] = useState("")
-  const [author, setAuthor] = useState("")
-  const [url, setUrl] = useState("")
   const [notification, setNotification] = useState(null)
   const blogAddRef = useRef()
 
@@ -68,21 +65,17 @@ const App = () => {
     window.localStorage.removeItem("user")
   }
 
-  const handleAddBlog = async (e) => {
-    e.preventDefault()
-
-    const newBlog = { title, author, url }
-
+  const addBlog = async (newBlog) => {
     try {
       const returnedBlog = await blogService.create(newBlog)
       blogAddRef.current.toggleVisibility()
 
       setBlogs(blogs.concat(returnedBlog))
-      toast(`a new blog ${title} by ${author} added`, "info", 5000)
-
-      setTitle("")
-      setAuthor("")
-      setUrl("")
+      toast(
+        `a new blog ${newBlog.title} by ${newBlog.author} added`,
+        "info",
+        5000
+      )
     } catch (error) {
       toast(errorMsg(error), "error", 5000)
     }
@@ -100,15 +93,7 @@ const App = () => {
     <div>
       <Togglable buttonLabel="add blog" ref={blogAddRef}>
         <h2>Add new blog</h2>
-        <Forms.AddBlog
-          handleAddBlog={handleAddBlog}
-          title={title}
-          setTitle={setTitle}
-          author={author}
-          setAuthor={setAuthor}
-          url={url}
-          setUrl={setUrl}
-        />
+        <Forms.AddBlog addBlog={addBlog} />
       </Togglable>
     </div>
   )
