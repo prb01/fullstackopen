@@ -4,7 +4,7 @@ import blogService from "../services/blogs"
 const Blogs = ({ blogs }) => (
   <div>
     <ul>
-      {blogs.map((blog) => (
+      {blogs.sort((a,b) => a.likes < b.likes ).map((blog) => (
         <Blog key={blog.id} blog={blog} />
       ))}
     </ul>
