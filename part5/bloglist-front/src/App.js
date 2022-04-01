@@ -81,6 +81,36 @@ const App = () => {
     }
   }
 
+  const updateBlog = async (updatedBlog, id) => {
+    try {
+      const returnedBlog = await blogService.update(updatedBlog, id)
+
+      setBlogs(blogs.map((blog) => (blog.id === id ? returnedBlog : blog)))
+      toast(
+        `blog ${returnedBlog.title} by ${returnedBlog.author} updated`,
+        "info",
+        5000
+      )
+    } catch (error) {
+      toast(errorMsg(error), "error", 5000)
+    }
+  }
+
+  const removeBlog = async (blog, id) => {
+    try {
+      if (!window.confirm(`Remove blog "${blog.title}" by ${blog.author}`)) {
+        return
+      }
+
+      await blogService.remove(id)
+
+      setBlogs(blogs.map((blog) => (blog.id === id ? "" : blog)))
+      toast(`blog "${blog.title}" by ${blog.author} removed`, "info", 5000)
+    } catch (error) {
+      toast(errorMsg(error), "error", 5000)
+    }
+  }
+
   const loginForm = () => (
     <Forms.Login
       handleLogin={handleLogin}
@@ -122,7 +152,12 @@ const App = () => {
         </>
       )}
 
-      <Blogs blogs={blogs} />
+      <Blogs
+        blogs={blogs}
+        updateBlog={updateBlog}
+        removeBlog={removeBlog}
+        user={user}
+      />
     </div>
   )
 }

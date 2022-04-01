@@ -1,22 +1,36 @@
 import { useState } from "react"
 import blogService from "../services/blogs"
 
-const Blogs = ({ blogs }) => (
+const Blogs = ({ blogs, updateBlog, removeBlog, user }) => (
   <div>
     <ul>
-      {blogs.sort((a,b) => a.likes < b.likes ).map((blog) => (
-        <Blog key={blog.id} blog={blog} />
-      ))}
+      {blogs
+        .sort((a, b) => a.likes < b.likes)
+        .map((blog) => (
+          <Blog
+            key={blog.id}
+            blog={blog}
+            updateBlog={updateBlog}
+            removeBlog={removeBlog}
+            user={user}
+          />
+        ))}
     </ul>
   </div>
 )
 
-const Blog = ({ blog }) => {
+const Blog = ({ blog, updateBlog, removeBlog, user }) => {
   const [fullView, setFullView] = useState(false)
-  const [likes, setLikes] = useState(blog.likes)
+
+  const sessionUsername = user?.username || null
+  const blogUsername = blog.user?.username || null
 
   const showWhenSmallView = { display: fullView ? "none" : "" }
   const showWhenFullView = { display: fullView ? "" : "none" }
+  const toggleRemoveButton = {
+    display: sessionUsername === blogUsername ? "" : "none",
+  }
+  // const toggleRemoveButton = { display: "" }
 
   const toggleView = () => {
     setFullView(!fullView)
@@ -25,9 +39,14 @@ const Blog = ({ blog }) => {
   const addLike = async (e) => {
     e.preventDefault()
 
-    const updatedBlog = {...blog, likes: ++blog.likes }
-    await blogService.update(updatedBlog, blog.id)
-    setLikes(blog.likes)
+    const updatedBlog = { ...blog, likes: ++blog.likes }
+    updateBlog(updatedBlog, updatedBlog.id)
+  }
+
+  const handleRemove = async (e) => {
+    e.preventDefault()
+
+    removeBlog(blog, blog.id)
   }
 
   return (
@@ -43,10 +62,14 @@ const Blog = ({ blog }) => {
         <ul>
           <li>url: {blog.url}</li>
           <li>
-            likes: {likes}
+            likes: {blog.likes}
             <button onClick={addLike}>like</button>
           </li>
           <li>user: {blog.user?.name || "user unknown"}</li>
+
+          <button onClick={handleRemove} style={toggleRemoveButton}>
+            remove
+          </button>
         </ul>
       </li>
     </>
