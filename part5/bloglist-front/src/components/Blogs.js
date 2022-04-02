@@ -1,5 +1,4 @@
 import { useState } from "react"
-import blogService from "../services/blogs"
 
 const Blogs = ({ blogs, updateBlog, removeBlog, user }) => (
   <div>
@@ -8,11 +7,11 @@ const Blogs = ({ blogs, updateBlog, removeBlog, user }) => (
         .sort((a, b) => a.likes < b.likes)
         .map((blog) => (
           <Blog
-          key={blog.id}
-          blog={blog}
-          updateBlog={updateBlog}
-          removeBlog={removeBlog}
-          user={user}
+            key={blog.id}
+            blog={blog}
+            updateBlog={updateBlog}
+            removeBlog={removeBlog}
+            user={user}
           />
         ))}
     </ul>
