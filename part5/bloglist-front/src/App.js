@@ -85,7 +85,7 @@ const App = () => {
     try {
       const returnedBlog = await blogService.update(updatedBlog, id)
 
-      setBlogs(blogs.map((blog) => (blog.id === id ? returnedBlog : blog)))
+      setBlogs(blogs.map((blog) => (blog.id === id ? updatedBlog : blog)))
       toast(
         `blog ${returnedBlog.title} by ${returnedBlog.author} updated`,
         "info",
@@ -104,7 +104,7 @@ const App = () => {
 
       await blogService.remove(id)
 
-      setBlogs(blogs.map((blog) => (blog.id === id ? "" : blog)))
+      setBlogs(blogs.filter((blog) => (blog.id !== id)))
       toast(`blog "${blog.title}" by ${blog.author} removed`, "info", 5000)
     } catch (error) {
       toast(errorMsg(error), "error", 5000)

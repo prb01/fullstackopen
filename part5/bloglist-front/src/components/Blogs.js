@@ -8,11 +8,11 @@ const Blogs = ({ blogs, updateBlog, removeBlog, user }) => (
         .sort((a, b) => a.likes < b.likes)
         .map((blog) => (
           <Blog
-            key={blog.id}
-            blog={blog}
-            updateBlog={updateBlog}
-            removeBlog={removeBlog}
-            user={user}
+          key={blog.id}
+          blog={blog}
+          updateBlog={updateBlog}
+          removeBlog={removeBlog}
+          user={user}
           />
         ))}
     </ul>
@@ -30,7 +30,6 @@ const Blog = ({ blog, updateBlog, removeBlog, user }) => {
   const toggleRemoveButton = {
     display: sessionUsername === blogUsername ? "" : "none",
   }
-  // const toggleRemoveButton = { display: "" }
 
   const toggleView = () => {
     setFullView(!fullView)
