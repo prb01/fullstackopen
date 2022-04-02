@@ -22,8 +22,8 @@ const Blogs = ({ blogs, updateBlog, removeBlog, user }) => (
 const Blog = ({ blog, updateBlog, removeBlog, user }) => {
   const [fullView, setFullView] = useState(false)
 
-  const sessionUsername = user?.username || null
-  const blogUsername = blog.user?.username || null
+  const sessionUsername = user?.id || null
+  const blogUsername = blog.user?.id || null
 
   const showWhenSmallView = { display: fullView ? "none" : "" }
   const showWhenFullView = { display: fullView ? "" : "none" }
