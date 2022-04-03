@@ -41,7 +41,7 @@ const LoginForm = ({ loginUser }) => {
 }
 
 LoginForm.propTypes = {
-  loginUser: PropTypes.func.isRequired,
+  loginUser: PropTypes.func.isRequired, 
 }
 
 const NoteForm = ({ createNote }) => {
@@ -64,7 +64,12 @@ const NoteForm = ({ createNote }) => {
     <div>
       <h2>Add new note</h2>
       <form onSubmit={addNote}>
-        <input value={newNote} onChange={handleNoteChange} />
+        <input
+          value={newNote}
+          onChange={handleNoteChange}
+          placeholder="write note here.."
+          id="note-content"
+        />
         <button type="submit">Save</button>
       </form>
     </div>
