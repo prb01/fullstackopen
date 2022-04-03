@@ -51,4 +51,20 @@ describe("<Blog/>", () => {
     expect(collapsed).toHaveStyle("display: none")
     expect(expanded).not.toHaveStyle("display: none")
   })
+
+  test("clicking like button twice, calls like handler twice", async () => {
+    const mockLikeHandler = jest.fn()
+    
+    render(<Blogs blogs={blogs} updateBlog={mockLikeHandler}/>)
+    
+    const viewButton = screen.getByText("view")
+    const likeButton = screen.getByText("like")
+
+    await userEvent.click(viewButton)
+
+    await userEvent.click(likeButton)
+    await userEvent.click(likeButton)
+
+    expect(mockLikeHandler.mock.calls).toHaveLength(2)
+  })
 })
