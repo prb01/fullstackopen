@@ -24,7 +24,7 @@ const Blog = ({ blog, updateBlog, removeBlog, user }) => {
   const sessionUsername = user?.id || null
   const blogUsername = blog.user?.id || null
 
-  const showWhenSmallView = { display: fullView ? "none" : "" }
+  const hideWhenFullView = { display: fullView ? "none" : "" }
   const showWhenFullView = { display: fullView ? "" : "none" }
   const toggleRemoveButton = {
     display: sessionUsername === blogUsername ? "" : "none",
@@ -49,12 +49,12 @@ const Blog = ({ blog, updateBlog, removeBlog, user }) => {
 
   return (
     <>
-      <li style={showWhenSmallView}>
+      <li style={hideWhenFullView} className="collapsed">
         <strong>{blog.title}</strong> by {blog.author}
         <button onClick={toggleView}>view</button>
       </li>
 
-      <li style={showWhenFullView}>
+      <li style={showWhenFullView} className="expanded">
         <strong>{blog.title}</strong> by {blog.author}
         <button onClick={toggleView}>hide</button>
         <ul>
