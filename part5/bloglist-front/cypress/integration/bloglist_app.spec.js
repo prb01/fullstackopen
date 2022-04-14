@@ -37,9 +37,7 @@ describe("Blog app", function () {
 
   describe("When logged in", function () {
     beforeEach(function () {
-      cy.get("#username").type("test")
-      cy.get("#password").type("password")
-      cy.contains("Login").click()
+      cy.login({ username: "test", password: "password" })
     })
 
     it("A blog can be created", function () {
@@ -56,5 +54,41 @@ describe("Blog app", function () {
       cy.contains(`${title} by ${author}`)
       cy.get(".info").contains("added")
     })
+
+    describe("When there are several blogs", function () {
+      beforeEach(function () {
+        cy.createBlog({
+          title: "blog 1",
+          author: "1st blogger",
+          url: "http://www.blog1.com",
+        })
+
+        cy.createBlog({
+          title: "blog 2",
+          author: "2nd blogger",
+          url: "http://www.blog2.com",
+        })
+
+        cy.createBlog({
+          title: "blog 3",
+          author: "3rd blogger",
+          url: "http://www.blog3.com",
+        })
+      })
+    
+      it.only("A blog can be liked", function () {
+        cy.contains("blog 1").parent().find("button").as("viewButton")
+        cy.get("@viewButton").click()
+
+        //No likes beforehand
+        cy.contains("likes").contains("0")
+
+        //Like increases by 1 when like button is clicked
+        cy.contains("like").click()
+        cy.contains("likes").contains("1")
+      })
+    })
+
+
   })
 })
