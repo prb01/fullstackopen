@@ -75,8 +75,8 @@ describe("Blog app", function () {
           url: "http://www.blog3.com",
         })
       })
-    
-      it.only("A blog can be liked", function () {
+
+      it("A blog can be liked", function () {
         cy.contains("blog 1").parent().find("button").as("viewButton")
         cy.get("@viewButton").click()
 
@@ -87,8 +87,37 @@ describe("Blog app", function () {
         cy.contains("like").click()
         cy.contains("likes").contains("1")
       })
+
+      describe("Deleting", function () {
+        beforeEach(function () {
+          cy.request("POST", "http://localhost:3003/api/users", {
+            name: "test2 password2",
+            username: "test2",
+            password: "password2",
+          })
+        })
+
+        it("succeeds when user added blog", function () {
+          cy.contains("blog 1").parent().find("button").as("viewButton")
+          cy.get("@viewButton").click()
+
+          cy.contains("remove").click()
+          cy.get("ul").should("not.contain", "blog 1")
+          cy.get(".info").contains("removed")
+        })
+
+        it("fails when user did not add blog", function () {
+          cy.login({ username: "test2", password: "password2" })
+
+          cy.contains("blog 1").parent().find("button").as("viewButton")
+          cy.get("@viewButton").click()
+
+          cy.contains("blog1.com")
+            .parent()
+            .contains("remove")
+            .should("have.css", "display", "none")
+        })
+      })
     })
-
-
   })
 })
