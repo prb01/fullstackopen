@@ -21,7 +21,7 @@ const LoginForm = ({ loginUser }) => {
           type="text"
           value={username}
           name="Username"
-          id="form_username"
+          id="username"
           onChange={({ target }) => setUsername(target.value)}
         />
       </div>
@@ -31,11 +31,11 @@ const LoginForm = ({ loginUser }) => {
           type="password"
           value={password}
           name="Password"
-          id="form_password"
+          id="password"
           onChange={({ target }) => setPassword(target.value)}
         />
       </div>
-      <button type="submit">login</button>
+      <button type="submit" id="login-button">login</button>
     </form>
   )
 }
@@ -53,7 +53,7 @@ const NoteForm = ({ createNote }) => {
     event.preventDefault()
     createNote({
       content: newNote,
-      important: Math.random() > 0.5,
+      important: false,
       date: new Date().toISOString(),
     })
 

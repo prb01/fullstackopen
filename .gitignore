@@ -5,3 +5,4 @@ node_modules
 # part3/phonebook/.git
 # part4/blog/.git
 .env
+cypress/videos/

@@ -53,6 +53,7 @@ const App = (props) => {
       window.localStorage.setItem("user", JSON.stringify(user))
       noteService.setToken(user.token)
       setUser(user)
+      noteFormRef.current.toggleVisibility()
     } catch (error) {
       setErrorMsg("Incorrect credentials")
       setTimeout(() => {
