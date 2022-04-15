@@ -118,6 +118,38 @@ describe("Blog app", function () {
             .should("have.css", "display", "none")
         })
       })
+
+      it.only("Blogs are ordered by # of likes", function () {
+        //expand all blogs
+        cy.get("ul")
+          .find("button")
+          .then((buttons) => {
+            for (let i = 0; i < buttons.length; i++) {
+              if (buttons[i].innerHTML === "view") {
+                cy.wrap(buttons[i]).click()
+              }
+            }
+          })
+
+        cy.get("ul")
+          .find("strong")
+          .then((blogs) => {
+            cy.wrap(blogs[0]).contains("blog 1")
+            cy.wrap(blogs[2]).contains("blog 2")
+            cy.wrap(blogs[4]).contains("blog 3")
+          })
+
+        cy.contains("blog2.com").parent().contains("like").click()
+        cy.contains("blog2.com").parent().contains("like").click()
+        
+        cy.get("ul")
+          .find("strong")
+          .then((blogs) => {
+            cy.wrap(blogs[2]).contains("blog 1")
+            cy.wrap(blogs[0]).contains("blog 2")
+            cy.wrap(blogs[4]).contains("blog 3")
+          })
+      })
     })
   })
 })
