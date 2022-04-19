@@ -1,14 +1,15 @@
-import { useDispatch } from "react-redux"
+// import { useDispatch } from "react-redux"
 import { createNote } from "../reducers/noteReducer"
+import { connect } from "react-redux"
 
 const NewNote = props => {
-  const dispatch = useDispatch()
+  // const dispatch = useDispatch()
 
   const addNote = async (e) => {
     e.preventDefault()
     const content = e.target.note.value
     e.target.note.value = ""
-    dispatch(createNote(content))
+    props.createNote(content)
   }
 
   return (
@@ -19,4 +20,8 @@ const NewNote = props => {
   )
 }
 
-export default NewNote
+// export default NewNote
+export default connect(
+  null,
+  { createNote }
+)(NewNote)

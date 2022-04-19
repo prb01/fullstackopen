@@ -24,6 +24,11 @@
       "content": "bla bla",
       "important": false,
       "id": 5
+    },
+    {
+      "content": "new note here we go",
+      "important": false,
+      "id": 6
     }
   ]
 }
