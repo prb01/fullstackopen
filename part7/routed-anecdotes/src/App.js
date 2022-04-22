@@ -127,21 +127,28 @@ const CreateNew = (props) => {
     }
   }
 
+  const inputParams = params => {
+    const { reset, ...otherParams } = params
+    return otherParams
+  }
+
   return (
     <div>
       <h2>create a new anecdote</h2>
       <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="content">content</label>
-          <input {...content} />
+          <input {...inputParams(content)} />
         </div>
         <div>
           <label htmlFor="author">author</label>
-          <input {...author} />
+          {/* <input {...author} /> */}
+          <input {...inputParams(author)} />
         </div>
         <div>
           <label htmlFor="info">url for more info</label>
-          <input {...info} />
+          {/* <input {...info} /> */}
+          <input {...inputParams(info)} />
         </div>
         <button type="submit">create</button>
         <button type="reset" onClick={handleReset}>
