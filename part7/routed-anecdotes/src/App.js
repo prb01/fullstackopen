@@ -105,6 +105,8 @@ const CreateNew = (props) => {
   const content = useField("content", "text")
   const author = useField("author", "text")
   const info = useField("info", "text")
+  const fields = { content, author, info }
+
   const navigate = useNavigate()
 
   const handleSubmit = (e) => {
@@ -116,6 +118,13 @@ const CreateNew = (props) => {
       votes: 0,
     })
     navigate("/")
+  }
+
+  const handleReset = (e) => {
+    e.preventDefault()
+    for (const field in fields) {
+      fields[field].reset()
+    }
   }
 
   return (
@@ -134,7 +143,10 @@ const CreateNew = (props) => {
           <label htmlFor="info">url for more info</label>
           <input {...info} />
         </div>
-        <button>create</button>
+        <button type="submit">create</button>
+        <button type="reset" onClick={handleReset}>
+          reset
+        </button>
       </form>
     </div>
   )
