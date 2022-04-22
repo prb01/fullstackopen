@@ -5,8 +5,9 @@ import {
   Route,
   Routes,
   useMatch,
-  useNavigate
+  useNavigate,
 } from "react-router-dom"
+import { useField } from "./hooks"
 
 const Menu = () => {
   const padding = {
@@ -38,7 +39,7 @@ const Notification = ({ notification }) => {
     border: "solid 1px black",
     borderRadius: "3px",
     backgroundColor: "white",
-    zIndex: 1
+    zIndex: 1,
   }
 
   return <div style={style}>{notification}</div>
@@ -47,7 +48,9 @@ const Notification = ({ notification }) => {
 const Anecdote = ({ anecdote }) => (
   <div>
     <h2>{anecdote.content}</h2>
+    <em>{anecdote.author}</em>
     <p>has {anecdote.votes} votes</p>
+    <p>{anecdote.info}</p>
   </div>
 )
 
@@ -99,17 +102,17 @@ const Footer = () => (
 )
 
 const CreateNew = (props) => {
-  const [content, setContent] = useState("")
-  const [author, setAuthor] = useState("")
-  const [info, setInfo] = useState("")
+  const content = useField("content", "text")
+  const author = useField("author", "text")
+  const info = useField("info", "text")
   const navigate = useNavigate()
 
   const handleSubmit = (e) => {
     e.preventDefault()
     props.addNew({
-      content,
-      author,
-      info,
+      content: content.value,
+      author: author.value,
+      info: info.value,
       votes: 0,
     })
     navigate("/")
@@ -120,28 +123,16 @@ const CreateNew = (props) => {
       <h2>create a new anecdote</h2>
       <form onSubmit={handleSubmit}>
         <div>
-          content
-          <input
-            name="content"
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-          />
+          <label htmlFor="content">content</label>
+          <input {...content} />
         </div>
         <div>
-          author
-          <input
-            name="author"
-            value={author}
-            onChange={(e) => setAuthor(e.target.value)}
-          />
+          <label htmlFor="author">author</label>
+          <input {...author} />
         </div>
         <div>
-          url for more info
-          <input
-            name="info"
-            value={info}
-            onChange={(e) => setInfo(e.target.value)}
-          />
+          <label htmlFor="info">url for more info</label>
+          <input {...info} />
         </div>
         <button>create</button>
       </form>
