@@ -15,6 +15,11 @@ import {
   deleteBlog,
 } from "./reducers/blogsReducer"
 import { setUser } from "./reducers/userReducer"
+import { Routes, Route } from "react-router-dom"
+import Users from "./components/Users"
+// useParams,
+// useNavigate,
+// useMatch,
 
 const App = () => {
   const [username, setUsername] = useState("")
@@ -160,12 +165,20 @@ const App = () => {
         </>
       )}
 
-      <Blogs
-        blogs={blogs}
-        updateBlog={updateBlog}
-        removeBlog={removeBlog}
-        user={user}
-      />
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <Blogs
+              blogs={blogs}
+              updateBlog={updateBlog}
+              removeBlog={removeBlog}
+              user={user}
+            />
+          }
+        />
+        <Route path="/users" element={<Users />} />
+      </Routes>
     </div>
   )
 }
