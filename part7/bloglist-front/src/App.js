@@ -7,20 +7,29 @@ import loginService from "./services/login"
 import "./App.css"
 import Togglable from "./components/Togglable"
 import { useSelector, useDispatch } from "react-redux"
-import { toast } from "./reducers/notificationSlice"
+import { toast } from "./reducers/notificationReducer"
+import {
+  createBlog,
+  initializeBlogs,
+  editBlog,
+  deleteBlog,
+} from "./reducers/blogsReducer"
 
 const App = () => {
-  const [blogs, setBlogs] = useState([])
+  // const [blogs2, setBlogs] = useState([])
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
   const [user, setUser] = useState(null)
   const blogAddRef = useRef()
+  const blogs = useSelector((state) => state.blogs)
   const notification = useSelector((state) => state.notification)
   const dispatch = useDispatch()
+  // console.log("ignore:", blogs2)
+  console.log(blogs)
 
   useEffect(() => {
-    blogService.getAll().then((blogs) => setBlogs(blogs))
-  }, [])
+    dispatch(initializeBlogs())
+  }, [dispatch])
 
   useEffect(() => {
     const loggedUser = window.localStorage.getItem("user")
@@ -66,7 +75,7 @@ const App = () => {
       const returnedBlog = await blogService.create(newBlog)
       blogAddRef.current.toggleVisibility()
 
-      setBlogs(blogs.concat(returnedBlog))
+      dispatch(createBlog(returnedBlog))
       dispatch(
         toast(
           `a new blog ${newBlog.title} by ${newBlog.author} added`,
@@ -82,8 +91,8 @@ const App = () => {
   const updateBlog = async (updatedBlog, id) => {
     try {
       const returnedBlog = await blogService.update(updatedBlog, id)
-
-      setBlogs(blogs.map((blog) => (blog.id === id ? updatedBlog : blog)))
+      dispatch(editBlog({ id, returnedBlog }))
+      // setBlogs(blogs.map((blog) => (blog.id === id ? updatedBlog : blog)))
       dispatch(
         toast(
           `blog ${returnedBlog.title} by ${returnedBlog.author} updated`,
@@ -106,7 +115,8 @@ const App = () => {
 
       await blogService.remove(id)
 
-      setBlogs(blogs.filter((blog) => blog.id !== id))
+      // setBlogs(blogs.filter((blog) => blog.id !== id))
+      dispatch(deleteBlog(id))
       dispatch(
         toast(`blog "${blog.title}" by ${blog.author} removed`, "info", 5)
       )

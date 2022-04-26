@@ -3,7 +3,7 @@ import { useState } from "react"
 const Blogs = ({ blogs, updateBlog, removeBlog, user }) => (
   <div>
     <ul>
-      {blogs
+      {[...blogs]
         .sort((a, b) => a.likes < b.likes)
         .map((blog) => (
           <Blog
@@ -37,7 +37,7 @@ const Blog = ({ blog, updateBlog, removeBlog, user }) => {
   const addLike = async (e) => {
     e.preventDefault()
 
-    const updatedBlog = { ...blog, likes: ++blog.likes }
+    const updatedBlog = { ...blog, likes: blog.likes + 1 }
     updateBlog(updatedBlog, updatedBlog.id)
   }
 
