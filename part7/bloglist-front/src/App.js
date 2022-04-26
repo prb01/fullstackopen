@@ -6,14 +6,17 @@ import blogService from "./services/blogs"
 import loginService from "./services/login"
 import "./App.css"
 import Togglable from "./components/Togglable"
+import { useSelector, useDispatch } from "react-redux"
+import { toast } from "./reducers/notificationSlice"
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
   const [user, setUser] = useState(null)
-  const [notification, setNotification] = useState(null)
   const blogAddRef = useRef()
+  const notification = useSelector((state) => state.notification)
+  const dispatch = useDispatch()
 
   useEffect(() => {
     blogService.getAll().then((blogs) => setBlogs(blogs))
@@ -27,13 +30,6 @@ const App = () => {
       blogService.setToken(user.token)
     }
   }, [])
-
-  const toast = (msg, type, timeout) => {
-    setNotification({ msg, type })
-    setTimeout(() => {
-      setNotification(null)
-    }, timeout)
-  }
 
   const errorMsg = (error) =>
     `${error.response.status} ${error.response.statusText}: ${
@@ -49,12 +45,12 @@ const App = () => {
       window.localStorage.setItem("user", JSON.stringify(user))
       blogService.setToken(user.token)
       setUser(user)
-      toast(`${user.username} logged in successfully`, "info", 5000)
+      dispatch(toast(`${user.username} logged in successfully`, "info", 5))
 
       setUsername("")
       setPassword("")
     } catch (error) {
-      toast(errorMsg(error), "error", 5000)
+      dispatch(toast(errorMsg(error), "error", 5))
     }
   }
 
@@ -71,13 +67,15 @@ const App = () => {
       blogAddRef.current.toggleVisibility()
 
       setBlogs(blogs.concat(returnedBlog))
-      toast(
-        `a new blog ${newBlog.title} by ${newBlog.author} added`,
-        "info",
-        5000
+      dispatch(
+        toast(
+          `a new blog ${newBlog.title} by ${newBlog.author} added`,
+          "info",
+          5
+        )
       )
     } catch (error) {
-      toast(errorMsg(error), "error", 5000)
+      dispatch(toast(errorMsg(error), "error", 5))
     }
   }
 
@@ -86,13 +84,15 @@ const App = () => {
       const returnedBlog = await blogService.update(updatedBlog, id)
 
       setBlogs(blogs.map((blog) => (blog.id === id ? updatedBlog : blog)))
-      toast(
-        `blog ${returnedBlog.title} by ${returnedBlog.author} updated`,
-        "info",
-        5000
+      dispatch(
+        toast(
+          `blog ${returnedBlog.title} by ${returnedBlog.author} updated`,
+          "info",
+          5
+        )
       )
     } catch (error) {
-      toast(errorMsg(error), "error", 5000)
+      dispatch(toast(errorMsg(error), "error", 5))
     }
   }
 
@@ -107,9 +107,11 @@ const App = () => {
       await blogService.remove(id)
 
       setBlogs(blogs.filter((blog) => blog.id !== id))
-      toast(`blog "${blog.title}" by ${blog.author} removed`, "info", 5000)
+      dispatch(
+        toast(`blog "${blog.title}" by ${blog.author} removed`, "info", 5)
+      )
     } catch (error) {
-      toast(errorMsg(error), "error", 5000)
+      dispatch(toast(errorMsg(error), "error", 5))
     }
   }
 

@@ -1,5 +1,5 @@
 const Notification = ({ notification }) => {
-  if (!notification) return null
+  if (!notification.msg) return null
 
   const { msg, type } = notification
   const className = type === "error" ? "error" : "info"
