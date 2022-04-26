@@ -14,18 +14,14 @@ import {
   editBlog,
   deleteBlog,
 } from "./reducers/blogsReducer"
+import { setUser } from "./reducers/userReducer"
 
 const App = () => {
-  // const [blogs2, setBlogs] = useState([])
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
-  const [user, setUser] = useState(null)
   const blogAddRef = useRef()
-  const blogs = useSelector((state) => state.blogs)
-  const notification = useSelector((state) => state.notification)
+  const { user, blogs, notification } = useSelector((state) => state)
   const dispatch = useDispatch()
-  // console.log("ignore:", blogs2)
-  console.log(blogs)
 
   useEffect(() => {
     dispatch(initializeBlogs())
@@ -35,7 +31,7 @@ const App = () => {
     const loggedUser = window.localStorage.getItem("user")
     if (loggedUser) {
       const user = JSON.parse(loggedUser)
-      setUser(user)
+      dispatch(setUser(user))
       blogService.setToken(user.token)
     }
   }, [])
@@ -53,7 +49,7 @@ const App = () => {
 
       window.localStorage.setItem("user", JSON.stringify(user))
       blogService.setToken(user.token)
-      setUser(user)
+      dispatch(setUser(user))
       dispatch(toast(`${user.username} logged in successfully`, "info", 5))
 
       setUsername("")
@@ -66,7 +62,7 @@ const App = () => {
   const handleLogout = (e) => {
     e.preventDefault()
 
-    setUser(null)
+    dispatch(setUser(null))
     window.localStorage.removeItem("user")
   }
 
@@ -92,7 +88,6 @@ const App = () => {
     try {
       const returnedBlog = await blogService.update(updatedBlog, id)
       dispatch(editBlog({ id, returnedBlog }))
-      // setBlogs(blogs.map((blog) => (blog.id === id ? updatedBlog : blog)))
       dispatch(
         toast(
           `blog ${returnedBlog.title} by ${returnedBlog.author} updated`,
@@ -115,7 +110,6 @@ const App = () => {
 
       await blogService.remove(id)
 
-      // setBlogs(blogs.filter((blog) => blog.id !== id))
       dispatch(deleteBlog(id))
       dispatch(
         toast(`blog "${blog.title}" by ${blog.author} removed`, "info", 5)
