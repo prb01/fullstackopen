@@ -4,6 +4,7 @@ import Forms from "./components/Forms"
 import Notification from "./components/Notification"
 import blogService from "./services/blogs"
 import loginService from "./services/login"
+import userService from "./services/users"
 import "./App.css"
 import Togglable from "./components/Togglable"
 import { useSelector, useDispatch } from "react-redux"
@@ -14,18 +15,16 @@ import {
   editBlog,
   deleteBlog,
 } from "./reducers/blogsReducer"
-import { setUser } from "./reducers/userReducer"
-import { Routes, Route } from "react-router-dom"
+import { setUser, setUsers } from "./reducers/userReducer"
+import { Routes, Route, useMatch } from "react-router-dom"
 import Users from "./components/Users"
-// useParams,
-// useNavigate,
-// useMatch,
+import User from "./components/User"
 
 const App = () => {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
   const blogAddRef = useRef()
-  const { user, blogs, notification } = useSelector((state) => state)
+  const { users, blogs, notification } = useSelector((state) => state)
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -39,6 +38,10 @@ const App = () => {
       dispatch(setUser(user))
       blogService.setToken(user.token)
     }
+  }, [])
+
+  useEffect(() => {
+    userService.getAll().then((users) => dispatch(setUsers(users)))
   }, [])
 
   const errorMsg = (error) =>
@@ -144,11 +147,14 @@ const App = () => {
   const loggedIn = () => (
     <div>
       <span>
-        <strong>{user.name}</strong> logged in
+        <strong>{users.currentUser.name}</strong> logged in
       </span>
       <button onClick={handleLogout}>logout</button>
     </div>
   )
+
+  const match = useMatch("/users/:id")
+  const userId = match ? match.params.id : null
 
   return (
     <div>
@@ -156,7 +162,7 @@ const App = () => {
 
       <h1>blogs</h1>
 
-      {user === null ? (
+      {users.currentUser === null ? (
         loginForm()
       ) : (
         <>
@@ -166,6 +172,7 @@ const App = () => {
       )}
 
       <Routes>
+        <Route path="/users/:id" element={<User id={userId} />} />
         <Route
           path="/"
           element={
@@ -173,7 +180,7 @@ const App = () => {
               blogs={blogs}
               updateBlog={updateBlog}
               removeBlog={removeBlog}
-              user={user}
+              user={users.currentUser}
             />
           }
         />
