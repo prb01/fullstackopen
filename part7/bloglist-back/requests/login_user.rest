@@ -1,0 +1,32 @@
+#### SUCCESSFUL LOGIN
+POST http://localhost:3003/api/login
+Content-Type: application/json
+
+{
+  "username": "theRagnar",
+  "password": "pa55w0rd"
+}
+#### SUCCESSFUL LOGIN
+POST http://localhost:3003/api/login
+Content-Type: application/json
+
+{
+  "username": "erikSand",
+  "password": "pa55w0rd"
+}
+#### Error: non-existent username
+POST http://localhost:3003/api/login
+Content-Type: application/json
+
+{
+  "username": "theRagnar99",
+  "password": "pa55w0rd"
+}
+#### Error: password incorrect
+POST http://localhost:3003/api/login
+Content-Type: application/json
+
+{
+  "username": "theRagnar",
+  "password": "pa55w0rd99"
+}
