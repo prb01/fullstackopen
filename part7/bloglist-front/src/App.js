@@ -1,10 +1,10 @@
 import { useState, useEffect, useRef } from "react"
 import Blogs from "./components/Blogs"
+import Blog from "./components/Blog"
 import Forms from "./components/Forms"
 import Notification from "./components/Notification"
 import blogService from "./services/blogs"
 import loginService from "./services/login"
-import userService from "./services/users"
 import "./App.css"
 import Togglable from "./components/Togglable"
 import { useSelector, useDispatch } from "react-redux"
@@ -15,7 +15,7 @@ import {
   editBlog,
   deleteBlog,
 } from "./reducers/blogsReducer"
-import { setUser, setUsers } from "./reducers/userReducer"
+import { initializeUsers, setUser } from "./reducers/userReducer"
 import { Routes, Route, useMatch } from "react-router-dom"
 import Users from "./components/Users"
 import User from "./components/User"
@@ -41,7 +41,8 @@ const App = () => {
   }, [])
 
   useEffect(() => {
-    userService.getAll().then((users) => dispatch(setUsers(users)))
+    // userService.getAll().then((users) => dispatch(setUsers(users)))
+    dispatch(initializeUsers())
   }, [])
 
   const errorMsg = (error) =>
@@ -79,7 +80,7 @@ const App = () => {
       const returnedBlog = await blogService.create(newBlog)
       blogAddRef.current.toggleVisibility()
 
-      dispatch(createBlog(returnedBlog))
+      dispatch(createBlog([returnedBlog, users.currentUser]))
       dispatch(
         toast(
           `a new blog ${newBlog.title} by ${newBlog.author} added`,
@@ -95,7 +96,7 @@ const App = () => {
   const updateBlog = async (updatedBlog, id) => {
     try {
       const returnedBlog = await blogService.update(updatedBlog, id)
-      dispatch(editBlog({ id, returnedBlog }))
+      dispatch(editBlog([returnedBlog, users.currentUser]))
       dispatch(
         toast(
           `blog ${returnedBlog.title} by ${returnedBlog.author} updated`,
@@ -153,8 +154,11 @@ const App = () => {
     </div>
   )
 
-  const match = useMatch("/users/:id")
-  const userId = match ? match.params.id : null
+  const userMatch = useMatch("/users/:id")
+  const user = userMatch ? users.users.find(u => u.id === userMatch.params.id) : null
+
+  const blogMatch = useMatch("/blogs/:id")
+  const blog = blogMatch ? blogs.find(b => b.id === blogMatch.params.id) : null
 
   return (
     <div>
@@ -172,18 +176,19 @@ const App = () => {
       )}
 
       <Routes>
-        <Route path="/users/:id" element={<User id={userId} />} />
+        <Route path="/users/:id" element={<User user={user} blogs={blogs} />} />
         <Route
-          path="/"
+          path="/blogs/:id"
           element={
-            <Blogs
-              blogs={blogs}
+            <Blog
+              blog={blog}
               updateBlog={updateBlog}
               removeBlog={removeBlog}
               user={users.currentUser}
             />
           }
         />
+        <Route path="/" element={<Blogs blogs={blogs} />} />
         <Route path="/users" element={<Users />} />
       </Routes>
     </div>

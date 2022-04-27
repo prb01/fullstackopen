@@ -1,18 +1,21 @@
-import { useSelector } from "react-redux"
+import { Link } from "react-router-dom"
 
-const User = ({ id }) => {
-  const users = useSelector((state) => state.users.users)
-  const user = users.find((user) => (user.id === id))
-
+const User = ({ user, blogs }) => {
   if (!user) return null
+
+  const userBlogs = blogs.filter(b => b.user.id === user.id)
 
   return (
     <div>
       <h2>{user.name}</h2>
       <h3>added blogs:</h3>
       <ul>
-        {user.blogs.map(blog => (
-          <li key={blog.id}>{blog.title} by {blog.author}</li>
+        {userBlogs.map((blog) => (
+          <li key={blog.id}>
+            <Link to={`/blogs/${blog.id}`}>
+              {blog.title} by {blog.author}
+            </Link>
+          </li>
         ))}
       </ul>
     </div>

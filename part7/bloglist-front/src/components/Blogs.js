@@ -1,77 +1,19 @@
-import { useState } from "react"
+import { Link } from "react-router-dom"
 
-const Blogs = ({ blogs, updateBlog, removeBlog, user }) => (
+const Blogs = ({ blogs }) => (
   <div>
     <ul>
       {[...blogs]
         .sort((a, b) => a.likes < b.likes)
         .map((blog) => (
-          <Blog
-            key={blog.id}
-            blog={blog}
-            updateBlog={updateBlog}
-            removeBlog={removeBlog}
-            user={user}
-          />
+          <li key={blog.id}>
+            <Link to={`/blogs/${blog.id}`}>
+              {blog.title} by {blog.author}
+            </Link>
+          </li>
         ))}
     </ul>
   </div>
 )
-
-const Blog = ({ blog, updateBlog, removeBlog, user }) => {
-  const [fullView, setFullView] = useState(false)
-
-  const sessionUsername = user?.id || null
-  const blogUsername = blog.user?.id || null
-
-  const hideWhenFullView = { display: fullView ? "none" : "" }
-  const showWhenFullView = { display: fullView ? "" : "none" }
-  const toggleRemoveButton = {
-    display: sessionUsername === blogUsername ? "" : "none",
-  }
-
-  const toggleView = () => {
-    setFullView(!fullView)
-  }
-
-  const addLike = async (e) => {
-    e.preventDefault()
-
-    const updatedBlog = { ...blog, likes: blog.likes + 1 }
-    updateBlog(updatedBlog, updatedBlog.id)
-  }
-
-  const handleRemove = async (e) => {
-    e.preventDefault()
-
-    removeBlog(blog, blog.id)
-  }
-
-  return (
-    <>
-      <li style={hideWhenFullView} className="collapsed">
-        <strong>{blog.title}</strong> by {blog.author}
-        <button onClick={toggleView}>view</button>
-      </li>
-
-      <li style={showWhenFullView} className="expanded">
-        <strong>{blog.title}</strong> by {blog.author}
-        <button onClick={toggleView}>hide</button>
-        <ul>
-          <li>url: {blog.url}</li>
-          <li>
-            likes: {blog.likes}
-            <button onClick={addLike}>like</button>
-          </li>
-          <li>user: {blog.user?.name || "user unknown"}</li>
-
-          <button onClick={handleRemove} style={toggleRemoveButton}>
-            remove
-          </button>
-        </ul>
-      </li>
-    </>
-  )
-}
 
 export default Blogs

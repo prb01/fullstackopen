@@ -6,30 +6,34 @@ const blogsSlice = createSlice({
   initialState: [],
   reducers: {
     createBlog: (state, action) => {
-      state.push(action.payload)
+      const  [returnedBlog, user]  = action.payload
+      const { token, ...userParams } = user
+      console.log(token)
+      state.push({ ...returnedBlog, user: { ...userParams } })
     },
     setBlogs: (state, action) => {
       return action.payload
     },
     editBlog: (state, action) => {
-      const { id, returnedBlog } = action.payload
-      const idx = state.findIndex(blog => blog.id === id)
-      const { user, ...returnedObject } = returnedBlog
-      console.log(user)
-      state[idx] = { ...state[idx], ...returnedObject }
+      const [returnedBlog, user] = action.payload
+      const { token, ...userParams } = user
+      console.log(token)
+      const idx = state.findIndex((blog) => blog.id === returnedBlog.id)
+      state[idx] = { ...returnedBlog, user: { ...userParams } }
     },
     deleteBlog: (state, action) => {
       const id = action.payload
       const idx = state.findIndex((blog) => blog.id === id)
       state.splice(idx, 1)
-    }
-  }
+    },
+  },
 })
 
-export const { createBlog, setBlogs, editBlog, deleteBlog } = blogsSlice.actions
+export const { createBlog, setBlogs, editBlog, deleteBlog } =
+  blogsSlice.actions
 
 export const initializeBlogs = () => {
-  return async dispatch => {
+  return async (dispatch) => {
     const blogs = await blogService.getAll()
     dispatch(setBlogs(blogs))
   }
