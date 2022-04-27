@@ -1,23 +1,26 @@
 import { Link } from "react-router-dom"
+import { Typography, List, ListItem } from "@mui/material"
 
 const User = ({ user, blogs }) => {
   if (!user) return null
 
-  const userBlogs = blogs.filter(b => b.user.id === user.id)
+  const userBlogs = blogs.filter((b) => b.user.id === user.id)
 
   return (
     <div>
-      <h2>{user.name}</h2>
-      <h3>added blogs:</h3>
-      <ul>
+      <Typography variant="h4">{user.name}</Typography>
+      <Typography variant="h5">added blogs:</Typography>
+      <List dense={true}>
         {userBlogs.map((blog) => (
-          <li key={blog.id}>
-            <Link to={`/blogs/${blog.id}`}>
-              {blog.title} by {blog.author}
-            </Link>
-          </li>
+          <ListItem key={blog.id} divider={true}>
+            <Typography>
+              <Link to={`/blogs/${blog.id}`}>
+                {blog.title} by {blog.author}
+              </Link>
+            </Typography>
+          </ListItem>
         ))}
-      </ul>
+      </List>
     </div>
   )
 }

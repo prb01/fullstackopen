@@ -2,6 +2,19 @@ button {
   width: fit-content;
 }
 
+a {
+  color: inherit;
+}
+
+a:hover {
+  font-weight: bolder;
+  text-decoration: none;
+}
+
+a:visited {
+  color: inherit;
+}
+
 .container-form {
   display: flex;
   flex-direction: column;

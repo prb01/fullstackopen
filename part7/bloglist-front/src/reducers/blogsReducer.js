@@ -16,10 +16,8 @@ const blogsSlice = createSlice({
     },
     editBlog: (state, action) => {
       const [returnedBlog, user] = action.payload
-      const { token, ...userParams } = user
-      console.log(token)
       const idx = state.findIndex((blog) => blog.id === returnedBlog.id)
-      state[idx] = { ...returnedBlog, user: { ...userParams } }
+      state[idx] = { ...returnedBlog, user: { ...user } }
     },
     deleteBlog: (state, action) => {
       const id = action.payload

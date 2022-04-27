@@ -1,4 +1,5 @@
 import { Link, useNavigate } from "react-router-dom"
+import { Typography, List, ListItem, Button } from "@mui/material"
 
 const Blog = ({ blog, updateBlog, removeBlog, user }) => {
   const navigate = useNavigate()
@@ -26,18 +27,25 @@ const Blog = ({ blog, updateBlog, removeBlog, user }) => {
 
   return (
     <div>
-      <h2>{blog.title}</h2>
-      <p>{blog.url}</p>
-      <p>
-        {blog.likes} likes <button onClick={addLike}>like</button>
-      </p>
-      <p>
-        added by
-        <Link to={`/users/${blog.user.id}`}>{blog.user.name}</Link>
-      </p>
-      <button onClick={handleRemove} style={toggleRemoveButton}>
-        remove
-      </button>
+      <Typography variant="h5">{blog.title}</Typography>
+      <List dense={true}>
+        <ListItem>
+          <a href={blog.url}>{blog.url}</a>
+        </ListItem>
+        <ListItem>{blog.likes} likes</ListItem>
+        <ListItem>
+          added by
+          <Link to={`/users/${blog.user.id}`}>{blog.user.name}</Link>
+        </ListItem>
+        <ListItem>
+          <Button variant="outlined" onClick={addLike}>
+            like
+          </Button>
+          <Button onClick={handleRemove} style={toggleRemoveButton}>
+            remove
+          </Button>
+        </ListItem>
+      </List>
     </div>
   )
 }

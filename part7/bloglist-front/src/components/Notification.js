@@ -1,13 +1,16 @@
+import { Alert, Snackbar } from "@mui/material"
+
 const Notification = ({ notification }) => {
   if (!notification.msg) return null
 
   const { msg, type } = notification
-  const className = type === "error" ? "error" : "info"
 
   return (
-    <div className={`notification ${className}`}>
-      {msg}
-    </div>
+    <Snackbar open={true}>
+      <Alert variant="filled" severity={type}>
+        {msg}
+      </Alert>
+    </Snackbar>
   )
 }
 

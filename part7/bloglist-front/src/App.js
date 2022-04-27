@@ -6,7 +6,6 @@ import Notification from "./components/Notification"
 import blogService from "./services/blogs"
 import loginService from "./services/login"
 import "./App.css"
-import Togglable from "./components/Togglable"
 import { useSelector, useDispatch } from "react-redux"
 import { toast } from "./reducers/notificationReducer"
 import {
@@ -16,16 +15,32 @@ import {
   deleteBlog,
 } from "./reducers/blogsReducer"
 import { initializeUsers, setUser } from "./reducers/userReducer"
-import { Routes, Route, useMatch } from "react-router-dom"
+import {
+  Routes,
+  Route,
+  Link,
+  useMatch,
+  useNavigate,
+} from "react-router-dom"
 import Users from "./components/Users"
 import User from "./components/User"
+import {
+  Container,
+  AppBar,
+  Toolbar,
+  Button,
+  Box,
+  Paper,
+  Typography,
+} from "@mui/material"
 
 const App = () => {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
-  const blogAddRef = useRef()
   const { users, blogs, notification } = useSelector((state) => state)
   const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const blogAddRef = useRef()
 
   useEffect(() => {
     dispatch(initializeBlogs())
@@ -41,7 +56,6 @@ const App = () => {
   }, [])
 
   useEffect(() => {
-    // userService.getAll().then((users) => dispatch(setUsers(users)))
     dispatch(initializeUsers())
   }, [])
 
@@ -59,10 +73,13 @@ const App = () => {
       window.localStorage.setItem("user", JSON.stringify(user))
       blogService.setToken(user.token)
       dispatch(setUser(user))
-      dispatch(toast(`${user.username} logged in successfully`, "info", 5))
+      dispatch(
+        toast(`${user.username} logged in successfully`, "success", 5)
+      )
 
       setUsername("")
       setPassword("")
+      navigate("/")
     } catch (error) {
       dispatch(toast(errorMsg(error), "error", 5))
     }
@@ -84,7 +101,7 @@ const App = () => {
       dispatch(
         toast(
           `a new blog ${newBlog.title} by ${newBlog.author} added`,
-          "info",
+          "success",
           5
         )
       )
@@ -95,12 +112,13 @@ const App = () => {
 
   const updateBlog = async (updatedBlog, id) => {
     try {
+      const blog = blogs.find((b) => b.id === id)
       const returnedBlog = await blogService.update(updatedBlog, id)
-      dispatch(editBlog([returnedBlog, users.currentUser]))
+      dispatch(editBlog([returnedBlog, blog.user]))
       dispatch(
         toast(
           `blog ${returnedBlog.title} by ${returnedBlog.author} updated`,
-          "info",
+          "success",
           5
         )
       )
@@ -121,77 +139,111 @@ const App = () => {
 
       dispatch(deleteBlog(id))
       dispatch(
-        toast(`blog "${blog.title}" by ${blog.author} removed`, "info", 5)
+        toast(`blog "${blog.title}" by ${blog.author} removed`, "success", 5)
       )
     } catch (error) {
       dispatch(toast(errorMsg(error), "error", 5))
     }
   }
 
-  const loginForm = () => (
-    <Forms.Login
-      handleLogin={handleLogin}
-      setUsername={setUsername}
-      setPassword={setPassword}
-    />
-  )
-
-  const addBlogForm = () => (
-    <div>
-      <Togglable buttonLabel="add blog" ref={blogAddRef}>
-        <h2>Add new blog</h2>
-        <Forms.AddBlog addBlog={addBlog} />
-      </Togglable>
-    </div>
-  )
-
   const loggedIn = () => (
-    <div>
-      <span>
+    <Box>
+      <Typography>
         <strong>{users.currentUser.name}</strong> logged in
-      </span>
-      <button onClick={handleLogout}>logout</button>
-    </div>
+        <Button
+          color="inherit"
+          variant="outlined"
+          onClick={handleLogout}
+          sx={{ marginLeft: 1, marginRight: 1 }}
+        >
+          Logout
+        </Button>
+      </Typography>
+    </Box>
   )
 
   const userMatch = useMatch("/users/:id")
-  const user = userMatch ? users.users.find(u => u.id === userMatch.params.id) : null
+  const user = userMatch
+    ? users.users.find((u) => u.id === userMatch.params.id)
+    : null
 
   const blogMatch = useMatch("/blogs/:id")
-  const blog = blogMatch ? blogs.find(b => b.id === blogMatch.params.id) : null
+  const blog = blogMatch
+    ? blogs.find((b) => b.id === blogMatch.params.id)
+    : null
 
   return (
-    <div>
+    <Container>
       <Notification notification={notification} />
 
-      <h1>blogs</h1>
+      <AppBar position="static">
+        <Toolbar disableGutters>
+          <Box display="flex" flexGrow={1}>
+            <Button color="inherit" component={Link} to="/">
+              Blogs
+            </Button>
+            <Button color="inherit" component={Link} to="/users">
+              Users
+            </Button>
+          </Box>
+          {users.currentUser === null ? (
+            <Button
+              color="inherit"
+              variant="outlined"
+              component={Link}
+              to="/login"
+              sx={{ marginLeft: 1, marginRight: 1 }}
+            >
+              Login
+            </Button>
+          ) : (
+            <>{loggedIn()}</>
+          )}
+        </Toolbar>
+      </AppBar>
 
-      {users.currentUser === null ? (
-        loginForm()
-      ) : (
-        <>
-          {loggedIn()}
-          {addBlogForm()}
-        </>
-      )}
-
-      <Routes>
-        <Route path="/users/:id" element={<User user={user} blogs={blogs} />} />
-        <Route
-          path="/blogs/:id"
-          element={
-            <Blog
-              blog={blog}
-              updateBlog={updateBlog}
-              removeBlog={removeBlog}
-              user={users.currentUser}
-            />
-          }
-        />
-        <Route path="/" element={<Blogs blogs={blogs} />} />
-        <Route path="/users" element={<Users />} />
-      </Routes>
-    </div>
+      <Box sx={{ marginTop: 2, padding: 2 }} component={Paper}>
+        <Routes>
+          <Route
+            path="/users/:id"
+            element={<User user={user} blogs={blogs} />}
+          />
+          <Route
+            path="/blogs/:id"
+            element={
+              <Blog
+                blog={blog}
+                updateBlog={updateBlog}
+                removeBlog={removeBlog}
+                user={users.currentUser}
+              />
+            }
+          />
+          <Route
+            path="/"
+            element={
+              <Blogs
+                blogs={blogs}
+                user={users.currentUser}
+                addBlog={addBlog}
+                blogAddRef={blogAddRef}
+              />
+            }
+          />
+          <Route path="/users" element={<Users />} />
+          <Route
+            path="/login"
+            element={
+              <Forms.Login
+                handleLogin={handleLogin}
+                setUsername={setUsername}
+                setPassword={setPassword}
+              />
+            }
+          />
+        </Routes>
+      </Box>
+    </Container>
   )
 }
 
