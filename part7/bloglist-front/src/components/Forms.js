@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { TextField, Button, Typography } from "@mui/material"
+import { TextField, Button } from "@mui/material"
 
 const Login = ({ handleLogin, setUsername, setPassword }) => (
   <form onSubmit={handleLogin} className="container-form">
@@ -40,7 +40,6 @@ const AddBlog = ({ addBlog }) => {
 
   return (
     <form onSubmit={handleAddBlog} className="container-form">
-      <Typography variant="h4">Add New Blog</Typography>
       <div className="container-formfields">
         <TextField
           label="title"
@@ -72,5 +71,31 @@ const AddBlog = ({ addBlog }) => {
   )
 }
 
-const Forms = { Login, AddBlog }
+const AddComment = ({ addComment, blogId }) => {
+  const [content, setContent] = useState("")
+
+  const handleAddComment = (event) => {
+    event.preventDefault()
+
+    addComment({ content }, blogId)
+    setContent("")
+  }
+
+  return (
+    <form onSubmit={handleAddComment} className="container-form">
+      <div className="container-formfields">
+        <TextField
+          label="comment"
+          onChange={({ target }) => setContent(target.value)}
+          value={content}
+        />
+      </div>
+      <Button variant="contained" type="submit">
+        Add Comment
+      </Button>
+    </form>
+  )
+}
+
+const Forms = { Login, AddBlog, AddComment }
 export default Forms

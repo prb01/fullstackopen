@@ -3,13 +3,13 @@ import Togglable from "./Togglable"
 import Forms from "./Forms"
 import { List, ListItem, Typography } from "@mui/material"
 
-const Blogs = ({ blogs, user, addBlog, blogAddRef }) => {
+const Blogs = ({ blogs, user, addBlog, toggleVisibilityRef }) => {
   const addBlogForm = () => {
     if (!user) return null
 
     return (
       <div>
-        <Togglable buttonLabel="add blog" ref={blogAddRef}>
+        <Togglable buttonLabel="add blog" ref={toggleVisibilityRef}>
           <Forms.AddBlog addBlog={addBlog} />
         </Togglable>
       </div>
@@ -18,6 +18,7 @@ const Blogs = ({ blogs, user, addBlog, blogAddRef }) => {
 
   return (
     <div>
+      <Typography variant="h4">Blogs</Typography>
       {addBlogForm()}
       <List dense={true}>
         {[...blogs]

@@ -5,6 +5,7 @@ import Forms from "./components/Forms"
 import Notification from "./components/Notification"
 import blogService from "./services/blogs"
 import loginService from "./services/login"
+import commentService from "./services/comments"
 import "./App.css"
 import { useSelector, useDispatch } from "react-redux"
 import { toast } from "./reducers/notificationReducer"
@@ -13,6 +14,7 @@ import {
   initializeBlogs,
   editBlog,
   deleteBlog,
+  createComment
 } from "./reducers/blogsReducer"
 import { initializeUsers, setUser } from "./reducers/userReducer"
 import {
@@ -40,7 +42,7 @@ const App = () => {
   const { users, blogs, notification } = useSelector((state) => state)
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const blogAddRef = useRef()
+  const toggleVisibilityRef = useRef()
 
   useEffect(() => {
     dispatch(initializeBlogs())
@@ -95,12 +97,12 @@ const App = () => {
   const addBlog = async (newBlog) => {
     try {
       const returnedBlog = await blogService.create(newBlog)
-      blogAddRef.current.toggleVisibility()
+      toggleVisibilityRef.current.toggleVisibility()
 
-      dispatch(createBlog([returnedBlog, users.currentUser]))
+      dispatch(createBlog(returnedBlog))
       dispatch(
         toast(
-          `a new blog ${newBlog.title} by ${newBlog.author} added`,
+          `a new blog "${newBlog.title}" by ${newBlog.author} added`,
           "success",
           5
         )
@@ -112,12 +114,11 @@ const App = () => {
 
   const updateBlog = async (updatedBlog, id) => {
     try {
-      const blog = blogs.find((b) => b.id === id)
       const returnedBlog = await blogService.update(updatedBlog, id)
-      dispatch(editBlog([returnedBlog, blog.user]))
+      dispatch(editBlog(returnedBlog))
       dispatch(
         toast(
-          `blog ${returnedBlog.title} by ${returnedBlog.author} updated`,
+          `blog "${returnedBlog.title}" by ${returnedBlog.author} updated`,
           "success",
           5
         )
@@ -139,7 +140,29 @@ const App = () => {
 
       dispatch(deleteBlog(id))
       dispatch(
-        toast(`blog "${blog.title}" by ${blog.author} removed`, "success", 5)
+        toast(
+          `blog "${blog.title}" by ${blog.author} removed`,
+          "success",
+          5
+        )
+      )
+    } catch (error) {
+      dispatch(toast(errorMsg(error), "error", 5))
+    }
+  }
+
+  const addComment = async (newComment, blogId) => {
+    try {
+      const returnedComment = await commentService.create(newComment, blogId)
+      toggleVisibilityRef.current.toggleVisibility()
+
+      dispatch(createComment([returnedComment, blogId]))
+      dispatch(
+        toast(
+          `a new comment "${newComment.content}" added`,
+          "success",
+          5
+        )
       )
     } catch (error) {
       dispatch(toast(errorMsg(error), "error", 5))
@@ -215,7 +238,9 @@ const App = () => {
                 blog={blog}
                 updateBlog={updateBlog}
                 removeBlog={removeBlog}
+                addComment={addComment}
                 user={users.currentUser}
+                toggleVisibilityRef={toggleVisibilityRef}
               />
             }
           />
@@ -226,7 +251,7 @@ const App = () => {
                 blogs={blogs}
                 user={users.currentUser}
                 addBlog={addBlog}
-                blogAddRef={blogAddRef}
+                toggleVisibilityRef={toggleVisibilityRef}
               />
             }
           />

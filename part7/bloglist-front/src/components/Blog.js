@@ -1,7 +1,17 @@
 import { Link, useNavigate } from "react-router-dom"
 import { Typography, List, ListItem, Button } from "@mui/material"
+import Comments from "./Comments"
+import Togglable from "./Togglable"
+import Forms from "./Forms"
 
-const Blog = ({ blog, updateBlog, removeBlog, user }) => {
+const Blog = ({
+  blog,
+  updateBlog,
+  removeBlog,
+  addComment,
+  user,
+  toggleVisibilityRef,
+}) => {
   const navigate = useNavigate()
   if (!blog) return null
 
@@ -25,6 +35,18 @@ const Blog = ({ blog, updateBlog, removeBlog, user }) => {
     navigate("/")
   }
 
+  const addCommentForm = () => {
+    if (!user) return null
+
+    return (
+      <div>
+        <Togglable buttonLabel="add comment" ref={toggleVisibilityRef}>
+          <Forms.AddComment addComment={addComment} blogId={blog.id}/>
+        </Togglable>
+      </div>
+    )
+  }
+
   return (
     <div>
       <Typography variant="h5">{blog.title}</Typography>
@@ -46,6 +68,9 @@ const Blog = ({ blog, updateBlog, removeBlog, user }) => {
           </Button>
         </ListItem>
       </List>
+      <Typography variant="h6">Comments</Typography>
+      {addCommentForm()}
+      <Comments blog={blog} />
     </div>
   )
 }
