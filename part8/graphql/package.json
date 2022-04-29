@@ -1,0 +1,14 @@
+{
+  "name": "graphql",
+  "version": "1.0.0",
+  "description": "GraphQL part8a",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Patrick Reinhold Bergstroem",
+  "license": "ISC",
+  "dependencies": {
+    "apollo-server": "^3.6.7"
+  }
+}
