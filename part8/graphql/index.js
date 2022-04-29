@@ -97,7 +97,7 @@ const typeDefs = gql`
   type Query {
     bookCount(author: String): Int!
     authorCount: Int!
-    allBooks(author: String): [Book!]!
+    allBooks(author: String, genre: String): [Book!]!
     allAuthors: [Author!]
   }
 `
@@ -106,24 +106,29 @@ const resolvers = {
   Query: {
     bookCount: (root, args) => {
       if (!args.author) return books.length
-      return books.filter(b => b.author === args.author).length
+      return books.filter((b) => b.author === args.author).length
     },
     authorCount: (root) => {
       return authors.length
     },
     allBooks: (root, args) => {
-      if (!args.author) return books
-      return books.filter((b) => b.author === args.author)
+      if (!args.author && !args.genre) return books
+      return books.filter(
+        (b) =>
+        args.author ? b.author === args.author : true 
+        &&
+        args.genre ? b.genres.includes(args.genre) : true
+      )
     },
     allAuthors: (root) => {
       return authors
-    }
+    },
   },
   Author: {
     bookCount: (root, args) => {
-      return books.filter(b => b.author === root.name).length
-    }
-  }
+      return books.filter((b) => b.author === root.name).length
+    },
+  },
 }
 
 const server = new ApolloServer({
