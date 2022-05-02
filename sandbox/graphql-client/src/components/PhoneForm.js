@@ -1,11 +1,11 @@
 import { useMutation } from "@apollo/client"
-import { EDIT_NUMBER, ALL_PERSONS } from "../queries"
-import { useState } from "react"
+import { EDIT_NUMBER } from "../queries"
+import { useState, useEffect } from "react"
 
 const PhoneForm = ({ setError }) => {
   const [name, setName] = useState("")
   const [phone, setPhone] = useState("")
-  const [changeNumber] = useMutation(EDIT_NUMBER, {
+  const [changeNumber, result] = useMutation(EDIT_NUMBER, {
     onError: (error) => setError(error.graphQLErrors[0].message),
   })
 
@@ -16,6 +16,12 @@ const PhoneForm = ({ setError }) => {
     setName("")
     setPhone("")
   }
+
+  useEffect(() => {
+    if (result.data && result.data.editNumber === null) {
+      setError("person not found")
+    }
+  }, [result.data]) //eslint-disable-line
 
   return (
     <div>
