@@ -1,5 +1,5 @@
 require("dotenv").config()
-const { ApolloServer, gql } = require("apollo-server")
+const { ApolloServer, UserInputError, gql } = require("apollo-server")
 const mongoose = require("mongoose")
 const Author = require("./models/author")
 const Book = require("./models/book")
@@ -101,6 +101,10 @@ const resolvers = {
         throw new UserInputError("author not in db")
       }
 
+      if (args.title.length < 2) {
+        throw new UserInputError("title length too short")
+      }
+
       const book = new Book({ ...args, author: author._id })
 
       return book.save().catch((error) => {
@@ -111,6 +115,10 @@ const resolvers = {
     },
     addAuthor: async (root, args) => {
       const author = new Author({ ...args })
+
+      if (args.name.length < 4) {
+        throw new UserInputError("author name length too short")
+      }
 
       return author.save().catch((error) => {
         throw new UserInputError(error.message, {
