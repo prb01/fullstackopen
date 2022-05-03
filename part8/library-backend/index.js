@@ -1,31 +1,14 @@
+require("dotenv").config()
 const { ApolloServer, gql } = require("apollo-server")
 const { v4: uuidv4 } = require("uuid")
+const mongoose = require("mongoose")
+const Author = require("./models/author")
+const Book = require("./models/book")
 
-let authors = [
-  {
-    name: "Robert Martin",
-    id: "afa51ab0-344d-11e9-a414-719c6709cf3e",
-    born: 1952,
-  },
-  {
-    name: "Martin Fowler",
-    id: "afa5b6f0-344d-11e9-a414-719c6709cf3e",
-    born: 1963,
-  },
-  {
-    name: "Fyodor Dostoevsky",
-    id: "afa5b6f1-344d-11e9-a414-719c6709cf3e",
-    born: 1821,
-  },
-  {
-    name: "Joshua Kerievsky", // birthyear not known
-    id: "afa5b6f2-344d-11e9-a414-719c6709cf3e",
-  },
-  {
-    name: "Sandi Metz", // birthyear not known
-    id: "afa5b6f3-344d-11e9-a414-719c6709cf3e",
-  },
-]
+mongoose
+  .connect(process.env.MONGODB_URI)
+  .then((result) => console.log("connected to MongoDB"))
+  .catch((error) => console.log("error", error))
 
 let books = [
   {
@@ -83,15 +66,14 @@ const typeDefs = gql`
   type Book {
     title: String!
     published: Int!
-    author: String!
+    author: Author!
     genres: [String!]
-    id: String!
+    id: ID!
   }
 
   type Author {
     name: String!
     born: Int
-    id: String!
     bookCount: Int!
   }
 
@@ -109,6 +91,7 @@ const typeDefs = gql`
       author: String!
       genres: [String!]
     ): Book
+    addAuthor(name: String!, born: Int): Author
     editAuthor(name: String!, setBornTo: Int!): Author
   }
 `
@@ -116,39 +99,61 @@ const typeDefs = gql`
 const resolvers = {
   Query: {
     bookCount: (root, args) => {
-      if (!args.author) return books.length
-      return books.filter((b) => b.author === args.author).length
+      if (!args.author) return Book.collection.countDocuments()
+      // return books.filter((b) => b.author === args.author).length
     },
     authorCount: (root) => {
-      return authors.length
+      return Author.collection.countDocuments()
     },
-    allBooks: (root, args) => {
-      if (!args.author && !args.genre) return books
-      return books.filter((b) =>
-        args.author
-          ? b.author === args.author
-          : true && args.genre
-          ? b.genres.includes(args.genre)
-          : true
-      )
+    allBooks: async (root, args) => {
+      if (!args.author && !args.genre) return Book.find({})
+      // return books.filter((b) =>
+      //   args.author
+      //     ? b.author === args.author
+      //     : true && args.genre
+      //     ? b.genres.includes(args.genre)
+      //     : true
+      // )
     },
-    allAuthors: (root) => {
-      return authors
+    allAuthors: async (root) => {
+      return Author.find({})
     },
   },
+  Book: {
+    author: async (root, args) => {
+      return Author.findById(root.author)
+    }
+  },
   Author: {
-    bookCount: (root, args) => {
-      return books.filter((b) => b.author === root.name).length
+    bookCount: async (root, args) => {
+      return await Book.count({ author: root._id })
+      // return books.filter((b) => b.author === root.name).length
     },
   },
   Mutation: {
-    addBook: (root, args) => {
-      const book = { ...args, id: uuidv4() }
-      books.push(book)
-      if (!authors.find((a) => a.name === book.author)) {
-        authors.push({ name: args.author, id: uuidv4() })
+    addBook: async (root, args) => {
+      const author = await Author.findOne({ name: args.author })
+
+      if (!author) {
+        throw new UserInputError("author not in db")
       }
-      return book
+
+      const book = new Book({ ...args, author: author._id })
+
+      return book.save().catch((error) => {
+        throw new UserInputError(error.message, {
+          invalidArgs: args,
+        })
+      })
+    },
+    addAuthor: async (root, args) => {
+      const author = new Author({ ...args })
+
+      return author.save().catch((error) => {
+        throw new UserInputError(error.message, {
+          invalidArgs: args,
+        })
+      })
     },
     editAuthor: (root, args) => {
       const author = authors.find((a) => a.name === args.name)
