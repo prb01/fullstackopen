@@ -12,7 +12,7 @@ export const updateBookCache = (cache, query, addedBook) => {
     const exists = allBooks.some(book => {
       return book.title === addedBook.title
     })
-    
+        
     if (!exists) {
       return {
         allBooks: allBooks.concat(addedBook)
