@@ -41,5 +41,9 @@ const typeDefs = gql`
     createUser(username: String!, password: String!): User
     login(username: String!, password: String!): Token
   }
+
+  type Subscription {
+    personAdded: Person!
+  }
 `
 module.exports = typeDefs

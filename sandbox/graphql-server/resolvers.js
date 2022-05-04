@@ -4,6 +4,9 @@ const User = require("./models/user")
 const jwt = require("jsonwebtoken")
 const bcrypt = require("bcrypt")
 const saltRounds = 10
+const { PubSub } = require("graphql-subscriptions")
+
+const pubsub = new PubSub()
 
 const resolvers = {
   Query: {
@@ -46,6 +49,9 @@ const resolvers = {
           invalidArgs: args,
         })
       }
+
+      pubsub.publish("PERSON_ADDED", { personAdded: person })
+
       return person
     },
     editNumber: async (root, args, { currentUser }) => {
@@ -114,6 +120,11 @@ const resolvers = {
       }
 
       return { value: jwt.sign(userForToken, process.env.JWT_SECRET) }
+    },
+  },
+  Subscription: {
+    personAdded: {
+      subscribe: () => pubsub.asyncIterator(["PERSON_ADDED"]),
     },
   },
 }
