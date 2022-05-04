@@ -1,11 +1,25 @@
-import { useState, useEffect, useImperativeHandle } from "react"
+import { useState, useEffect } from "react"
 import { useApolloClient, useQuery, useSubscription } from "@apollo/client"
 import Authors from "./components/Authors"
 import Books from "./components/Books"
 import NewBook from "./components/NewBook"
 import LoginForm from "./components/LoginForm"
 import Recommended from "./components/Recommended"
-import { BOOK_ADDED, USER } from "./queries"
+import { ALL_BOOKS, BOOK_ADDED, USER } from "./queries"
+
+export const updateBookCache = (cache, query, addedBook) => {
+  cache.updateQuery(query, ({ allBooks }) => {
+    const exists = allBooks.some(book => {
+      return book.title === addedBook.title
+    })
+    
+    if (!exists) {
+      return {
+        allBooks: allBooks.concat(addedBook)
+      }
+    }
+  })
+}
 
 const App = () => {
   const [page, setPage] = useState("authors")
@@ -27,9 +41,10 @@ const App = () => {
 
   useSubscription(BOOK_ADDED, {
     onSubscriptionData: ({ subscriptionData }) => {
-      const book = subscriptionData.data.bookAdded
-      window.alert(`Added new book: ${book.title}`)
-    }
+      const addedBook = subscriptionData.data.bookAdded
+      window.alert(`Added new book: ${addedBook.title}`)
+      updateBookCache(client.cache, { query: ALL_BOOKS }, addedBook)
+    },
   })
 
   const refetchUserQuery = async () => {
