@@ -1,11 +1,11 @@
 import { useState, useEffect, useImperativeHandle } from "react"
-import { useApolloClient, useQuery } from "@apollo/client"
+import { useApolloClient, useQuery, useSubscription } from "@apollo/client"
 import Authors from "./components/Authors"
 import Books from "./components/Books"
 import NewBook from "./components/NewBook"
 import LoginForm from "./components/LoginForm"
 import Recommended from "./components/Recommended"
-import { USER } from "./queries"
+import { BOOK_ADDED, USER } from "./queries"
 
 const App = () => {
   const [page, setPage] = useState("authors")
@@ -24,6 +24,13 @@ const App = () => {
       }
     }
   }, [userResult])
+
+  useSubscription(BOOK_ADDED, {
+    onSubscriptionData: ({ subscriptionData }) => {
+      const book = subscriptionData.data.bookAdded
+      window.alert(`Added new book: ${book.title}`)
+    }
+  })
 
   const refetchUserQuery = async () => {
     await client.refetchQueries({
