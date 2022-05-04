@@ -1,11 +1,26 @@
-import { useQuery, useApolloClient } from "@apollo/client"
-import { ALL_PERSONS } from "./queries"
+import { useQuery, useSubscription, useApolloClient } from "@apollo/client"
+import { ALL_PERSONS, PERSON_ADDED } from "./queries"
 import { useEffect, useState } from "react"
 import PersonForm from "./components/PersonForm"
 import Persons from "./components/Persons"
 import Notify from "./components/Notify"
 import PhoneForm from "./components/PhoneForm"
 import LoginForm from "./components/LoginForm"
+
+export const updateCache = (cache, query, addedPerson) => {
+  const uniqByName = (a) => {
+    let seen = new Set()
+    return a.filter((item) => {
+      let k = item.name
+      return seen.has(k) ? false : seen.add(k)
+    })
+  }
+  cache.updateQuery(query, ({ allPersons }) => {
+    return {
+      allPersons: uniqByName(allPersons.concat(addedPerson)),
+    }
+  })
+}
 
 const App = () => {
   const [errorMessage, setErrorMessage] = useState(null)
@@ -19,9 +34,15 @@ const App = () => {
     }
   }, [])
 
-  const result = useQuery(ALL_PERSONS, {
-    pollInterval: 60000,
+  useSubscription(PERSON_ADDED, {
+    onSubscriptionData: ({ subscriptionData }) => {
+      const addedPerson = subscriptionData.data.personAdded
+      notify(`${addedPerson.name} added`)
+      updateCache(client.cache, { query: ALL_PERSONS }, addedPerson)
+    },
   })
+
+  const result = useQuery(ALL_PERSONS)
 
   if (result.loading) {
     return <div>loading...</div>

@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { useMutation } from "@apollo/client"
 import { ALL_PERSONS, CREATE_PERSON } from "../queries"
+import { updateCache } from "../App"
 
 const PersonForm = ({ setError }) => {
   const [name, setName] = useState("")
@@ -14,19 +15,20 @@ const PersonForm = ({ setError }) => {
     },
     // refetchQueries: [{ query: ALL_PERSONS }],
     update: (cache, response) => {
-      cache.updateQuery({ query: ALL_PERSONS }, ({ allPersons, personCount }) => {
-        return {
-          allPersons: allPersons.concat(response.data.addPerson),
-          personCount,
-        }
-      })
-    }
+      updateCache(cache, { query: ALL_PERSONS }, response.data.addPerson)
+    },
   })
   const submit = (event) => {
     event.preventDefault()
 
-    createPerson({ variables: { name, street, city, 
-      phone: phone.length > 0 ? phone : undefined } })
+    createPerson({
+      variables: {
+        name,
+        street,
+        city,
+        phone: phone.length > 0 ? phone : undefined,
+      },
+    })
     setName("")
     setPhone("")
     setStreet("")
