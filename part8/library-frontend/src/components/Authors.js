@@ -33,7 +33,7 @@ const Authors = (props) => {
           ))}
         </tbody>
       </table>
-      <EditAuthor authors={authors}/>
+      {props.token ? <EditAuthor authors={authors}/> : null}
     </div>
   )
 }
