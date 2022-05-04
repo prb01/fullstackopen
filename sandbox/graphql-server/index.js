@@ -9,8 +9,8 @@ const User = require("./models/user")
 const jwt = require("jsonwebtoken")
 const typeDefs = require("./schema")
 const resolvers = require("./resolvers")
-const { execute, subscribe } = require('graphql')
-const { SubscriptionServer } = require('subscriptions-transport-ws')
+const { execute, subscribe } = require("graphql")
+const { SubscriptionServer } = require("subscriptions-transport-ws")
 
 console.log("connecting to", process.env.MONGODB_URI)
 
@@ -22,6 +22,8 @@ mongoose
   .catch((error) => {
     console.log("error connection to MongoDB:", error.message)
   })
+
+mongoose.set("debug", true)
 
 const start = async () => {
   const app = express()
@@ -39,7 +41,10 @@ const start = async () => {
     context: async ({ req }) => {
       const auth = req ? req.headers.authorization : null
       if (auth && auth.toLowerCase().startsWith("bearer ")) {
-        const decodedToken = jwt.verify(auth.substring(7), process.env.JWT_SECRET)
+        const decodedToken = jwt.verify(
+          auth.substring(7),
+          process.env.JWT_SECRET
+        )
         const currentUser = await User.findById(decodedToken.id).populate(
           "friends"
         )
