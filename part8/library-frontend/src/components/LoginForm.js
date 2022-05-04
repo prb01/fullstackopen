@@ -3,7 +3,7 @@ import { TextField, Button } from "@mui/material"
 import { useMutation } from "@apollo/client"
 import { LOGIN } from "../queries"
 
-const LoginForm = ({ show, setToken, setPage }) => {
+const LoginForm = ({ show, setToken, setPage, refetchUserQuery }) => {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
   const [login, result] = useMutation(LOGIN, {
@@ -19,6 +19,7 @@ const LoginForm = ({ show, setToken, setPage }) => {
       localStorage.setItem("library-user-token", token)
       setUsername("")
       setPassword("")
+      refetchUserQuery()
       setPage("authors")
     }
   }, [result.data])
