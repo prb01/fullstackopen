@@ -1,5 +1,5 @@
 require("dotenv").config()
-const { ApolloServer, UserInputError, gql } = require("apollo-server")
+const { ApolloServer, UserInputError, AuthenticationError,gql } = require("apollo-server")
 const { v1: uuid } = require("uuid")
 const mongoose = require("mongoose")
 const Person = require("./models/person")
@@ -108,7 +108,11 @@ const resolvers = {
       }
       return person
     },
-    editNumber: async (root, args) => {
+    editNumber: async (root, args, { currentUser }) => {
+      if (!currentUser) {
+        throw new AuthenticationError("not authenticated")
+      }
+
       const person = await Person.findOne({ name: args.name })
       person.phone = args.phone
 
