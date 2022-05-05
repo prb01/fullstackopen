@@ -13,10 +13,14 @@ const calculateBmi = (height: number, weight: number): string => {
   }
 };
 
-console.log(calculateBmi(180, 74));
+
 
 // Major adult BMI classifications are 
 // underweight (under 18.5 kg/m2), 
 // normal weight (18.5 to 24.9), 
 // overweight (25 to 29.9), and 
 // obese (30 or more)
+
+const height: number = Number(process.argv[2])
+const weight: number = Number(process.argv[3])
+console.log(calculateBmi(height, weight));

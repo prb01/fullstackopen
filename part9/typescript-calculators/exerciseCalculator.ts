@@ -30,7 +30,8 @@ const calculateExercises = (
       break;
 
     case 3:
-      ratingDescription = "you. are. amazing! go pat yourself on the back!";
+      ratingDescription =
+        "you. are. amazing! go pat yourself on the back!";
       break;
 
     default:
@@ -49,6 +50,12 @@ const calculateExercises = (
   };
 };
 
-console.log(calculateExercises([3, 0, 2, 4.5, 0, 3, 1], 2));
-console.log(calculateExercises([3, 0, 2, 4.5, 0, 3, 1], 1));
-console.log(calculateExercises([3, 0, 2, 4.5, 0, 3, 1], 5));
+// console.log(calculateExercises([3, 0, 2, 4.5, 0, 3, 1], 2));
+// console.log(calculateExercises([3, 0, 2, 4.5, 0, 3, 1], 1));
+// console.log(calculateExercises([3, 0, 2, 4.5, 0, 3, 1], 5));
+
+const target: number = Number(process.argv[2]);
+const hoursExercised: Array<number> = process.argv
+  .slice(3)
+  .map((hours) => Number(hours));
+console.log(calculateExercises(hoursExercised, target));
