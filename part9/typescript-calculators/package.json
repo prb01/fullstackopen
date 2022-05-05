@@ -1,0 +1,16 @@
+{
+  "name": "typescript-calculators",
+  "version": "1.0.0",
+  "description": "FSO exercises 9.1-9.7",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "ts-node": "ts-node",
+    "calculateBmi": "ts-node bmiCalculator.ts"
+  },
+  "author": "Patrick Reinhold Bergstroem",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^17.0.31"
+  }
+}
