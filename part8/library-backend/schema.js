@@ -48,6 +48,7 @@ const typeDefs = gql`
       favoriteGenre: String!
     ): User
     login(username: String!, password: String!): Token
+    deleteAllBooks: Boolean!
   }
 
   type Subscription {

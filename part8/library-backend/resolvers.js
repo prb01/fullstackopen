@@ -48,14 +48,18 @@ const resolvers = {
     },
   },
   Author: {
-    bookCount: async (root, args) => {
-      return Book.count({ author: root._id })
+    bookCount: async (root) => {
+      return root.books.length
     },
   },
   Mutation: {
     addBook: async (root, args, { currentUser }) => {
       if (!currentUser) {
         throw new AuthenticationError("not authenticated")
+      }
+      
+      if (args.title.length < 2) {
+        throw new UserInputError("title length too short")
       }
 
       let author = await Author.findOne({ name: args.author })
@@ -69,15 +73,15 @@ const resolvers = {
         })
       }
 
-      if (args.title.length < 2) {
-        throw new UserInputError("title length too short")
-      }
-
       const book = new Book({ ...args, author: author._id })
 
       pubsub.publish("BOOK_ADDED", { bookAdded: book })
 
-      return book.save().catch((error) => {
+      return book.save().then(book => {
+        author.books.push(book._id)
+        author.save()
+        return book
+      }).catch((error) => {
         throw new UserInputError(error.message, {
           invalidArgs: args,
         })
@@ -151,6 +155,10 @@ const resolvers = {
 
       return { value: jwt.sign(userForToken, process.env.JWT_SECRET) }
     },
+    deleteAllBooks: async () => {
+      await Book.deleteMany({})
+      return true
+    }
   },
   Subscription: {
     bookAdded: {
