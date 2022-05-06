@@ -1,12 +1,20 @@
-const calculateExercises = (
-  hoursExercised: Array<number>,
+export const calculateExercises = (
+  daily_exercises: Array<number>,
   target: number
 ): object => {
-  const periodLength: number = hoursExercised.length;
-  const trainingDays: number = hoursExercised.filter(
+  if (daily_exercises === undefined || target === undefined) {
+    throw new Error("parameters missing");
+  }
+
+  if (!(daily_exercises instanceof Array) || typeof target !== "number") {
+    throw new Error("malformatted parameters");
+  }
+
+  const periodLength: number = daily_exercises.length;
+  const trainingDays: number = daily_exercises.filter(
     (hours) => hours > 0
   ).length;
-  const totalExerciseHours: number = hoursExercised.reduce(
+  const totalExerciseHours: number = daily_exercises.reduce(
     (prevValue, curValue) => {
       return prevValue + curValue;
     },
@@ -54,8 +62,8 @@ const calculateExercises = (
 // console.log(calculateExercises([3, 0, 2, 4.5, 0, 3, 1], 1));
 // console.log(calculateExercises([3, 0, 2, 4.5, 0, 3, 1], 5));
 
-const target = Number(process.argv[2]);
-const hoursExercised: Array<number> = process.argv
-  .slice(3)
-  .map((hours) => Number(hours));
-console.log(calculateExercises(hoursExercised, target));
+// const target = Number(process.argv[2]);
+// const daily_exercises: Array<number> = process.argv
+//   .slice(3)
+//   .map((hours) => Number(hours));
+// console.log(calculateExercises(daily_exercises, target));
