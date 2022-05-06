@@ -1,7 +1,7 @@
 type Operation = "multiply" | "add" | "divide";
 type Result = number;
 
-const calculator = (a: number, b: number, op: Operation): Result => {
+export const calculator = (a: number, b: number, op: Operation): Result => {
   switch (op) {
     case "multiply":
       return a * b;
@@ -27,7 +27,7 @@ const calculator = (a: number, b: number, op: Operation): Result => {
 //   console.log(errorMessage);
 // }
 
-const a: number = Number(process.argv[2]);
-const b: number = Number(process.argv[3]);
-// const op: Operation = process.argv[3];
-calculator(a, b, op);
+// const a: number = Number(process.argv[2]);
+// const b: number = Number(process.argv[3]);
+// const op: string = process.argv[3];
+// calculator(a, b, op);
