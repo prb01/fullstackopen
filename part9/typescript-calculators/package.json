@@ -9,13 +9,17 @@
     "calculateBmi": "ts-node bmiCalculator.ts",
     "calculateExercises": "ts-node exerciseCalculator.ts",
     "start": "ts-node index.ts",
-    "dev": "ts-node-dev index.ts"
+    "dev": "ts-node-dev index.ts",
+    "lint": "eslint --ext .ts ."
   },
   "author": "Patrick Reinhold Bergstroem",
   "license": "ISC",
   "devDependencies": {
     "@types/express": "^4.17.13",
     "@types/node": "^17.0.31",
+    "@typescript-eslint/eslint-plugin": "^5.22.0",
+    "@typescript-eslint/parser": "^5.22.0",
+    "eslint": "^8.14.0",
     "ts-node-dev": "^1.1.8"
   },
   "dependencies": {

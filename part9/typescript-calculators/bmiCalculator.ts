@@ -1,10 +1,10 @@
 export const calculateBmi = (height: number, weight: number): object => {
   if (!weight || !height) {
-    throw new Error("malformatted parameters")
+    throw new Error("malformatted parameters");
   }
 
   const bmi = weight / ((height / 100) ^ 2);
-  let result = {weight, height}
+  const result = { weight, height };
 
   if (bmi < 18.5) {
     return {
@@ -19,12 +19,12 @@ export const calculateBmi = (height: number, weight: number): object => {
   } else if (bmi >= 25 && bmi < 30) {
     return {
       ...result,
-      bmi: "Overweight"
+      bmi: "Overweight",
     };
   } else {
     return {
       ...result,
-      bmi: "Obese"
+      bmi: "Obese",
     };
   }
 };

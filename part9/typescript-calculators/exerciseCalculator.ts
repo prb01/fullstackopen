@@ -54,7 +54,7 @@ const calculateExercises = (
 // console.log(calculateExercises([3, 0, 2, 4.5, 0, 3, 1], 1));
 // console.log(calculateExercises([3, 0, 2, 4.5, 0, 3, 1], 5));
 
-const target: number = Number(process.argv[2]);
+const target = Number(process.argv[2]);
 const hoursExercised: Array<number> = process.argv
   .slice(3)
   .map((hours) => Number(hours));
