@@ -8,3 +8,25 @@ Content-Type: application/json
   "gender": "male",
   "occupation": "dancer"
 }
+###########################################
+POST http://localhost:3001/api/patients
+Content-Type: application/json
+
+{
+  "ssn": "123-45-6789",
+  "name": "Bobby Tables",
+  "dateOfBirth": "2000-01-01",
+  "gender": "BLARGH",
+  "occupation": "dancer"
+}
+##########################################
+POST http://localhost:3001/api/patients
+Content-Type: application/json
+
+{
+  "ssn": "123-45-6789",
+  "name": "Bobby Tables",
+  "dateOfBirth": "blue",
+  "gender": "male",
+  "occupation": "dancer"
+}
