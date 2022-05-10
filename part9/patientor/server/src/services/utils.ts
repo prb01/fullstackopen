@@ -1,4 +1,4 @@
-import { NewPatient, Gender } from "../types";
+import { NewPatient, Gender, Entry } from "../types";
 
 const parseString = (str: unknown): string => {
   if (!str || !isString(str)) {
@@ -36,18 +36,13 @@ const isGender = (param: any): param is Gender => {
   return Object.values(Gender).includes(param);
 };
 
-//   "ssn": "123-45-6789",
-//   "name": "Bobby Tables",
-//   "dateOfBirth": "2000-01-01",
-//   "gender": "male",
-//   "occupation": "dancer"
-
 type Fields = {
   ssn: unknown;
   name: unknown;
   dateOfBirth: unknown;
   gender: unknown;
   occupation: unknown;
+  entries: unknown
 };
 
 const toNewPatient = ({
@@ -56,6 +51,7 @@ const toNewPatient = ({
   dateOfBirth,
   gender,
   occupation,
+  entries
 }: Fields): NewPatient => {
   const newEntry: NewPatient = {
     ssn: parseString(ssn),
@@ -63,6 +59,7 @@ const toNewPatient = ({
     dateOfBirth: parseDate(dateOfBirth),
     gender: parseGender(gender),
     occupation: parseString(occupation),
+    entries: entries as Array<Entry>
   };
 
   return newEntry;

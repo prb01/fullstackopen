@@ -26,8 +26,22 @@ const addPatient = (entry: NewPatient): Patient => {
   return newPatient;
 };
 
+const findById = (id: string): Patient | unknown => {
+  // return patients
+  //   .filter((p) => p.id === id)
+  //   .map(({ id, name, dateOfBirth, gender, occupation }) => ({
+  //     id,
+  //     name,
+  //     dateOfBirth,
+  //     gender,
+  //     occupation,
+  //   }));
+  return patients.filter((p) => p.id === id)
+};;
+
 export default {
   getPatients,
   getPatientsNonSensitiveInfo,
   addPatient,
+  findById
 };
