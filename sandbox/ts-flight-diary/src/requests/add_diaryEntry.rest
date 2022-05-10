@@ -1,0 +1,19 @@
+POST http://localhost:3000/api/diaries
+Content-Type: application/json
+
+{
+  "date": "2022-05-09",
+  "weather": "sunny",
+  "visibility": "good",
+  "comment": "I did awesome"
+}
+######################################
+POST http://localhost:3000/api/diaries
+Content-Type: application/json
+
+{
+  "date": "2022-05-09",
+  "weather": "GARBAGE",
+  "visibility": "GARBAGE",
+  "comment": "I did awesome"
+}
