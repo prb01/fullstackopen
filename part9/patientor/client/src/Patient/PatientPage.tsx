@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 
 const PatientPage = () => {
   const [{ patients }] = useStateValue();
-  const { id } = useParams();
+  const { id } = useParams<{ id: string }>();
   const patientId = id as string;
 
   if (!patients) return null;
