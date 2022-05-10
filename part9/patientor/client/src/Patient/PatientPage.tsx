@@ -2,11 +2,16 @@ import { useStateValue } from "../state";
 import { useParams } from "react-router-dom";
 
 const PatientPage = () => {
-  const [{ patients }] = useStateValue();
+  const [{ patients, diagnoses }] = useStateValue();
   const { id } = useParams<{ id: string }>();
   const patientId = id as string;
 
-  if (!patients) return null;
+  if (
+    Object.keys(patients).length === 0 ||
+    Object.keys(diagnoses).length === 0
+  ) {
+    return null;
+  }
 
   const patient = patients[patientId];
 
@@ -28,7 +33,9 @@ const PatientPage = () => {
             </p>
             <ul>
               {e.diagnosisCodes?.map((d) => (
-                <li key={d}>{d}</li>
+                <li key={d}>
+                  {d} {diagnoses[d]?.name || null}
+                </li>
               ))}
             </ul>
           </div>
