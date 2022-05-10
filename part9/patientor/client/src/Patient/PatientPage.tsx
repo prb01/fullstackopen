@@ -1,5 +1,6 @@
 import { useStateValue } from "../state";
 import { useParams } from "react-router-dom";
+import EntryDetail from "./EntryDetail";
 
 const PatientPage = () => {
   const [{ patients, diagnoses }] = useStateValue();
@@ -27,18 +28,7 @@ const PatientPage = () => {
       <div>
         <h2>entries</h2>
         {patient.entries.map((e) => (
-          <div key={e.id}>
-            <p>
-              <b>{e.date}:</b> {e.description}
-            </p>
-            <ul>
-              {e.diagnosisCodes?.map((d) => (
-                <li key={d}>
-                  {d} {diagnoses[d]?.name || null}
-                </li>
-              ))}
-            </ul>
-          </div>
+          <EntryDetail key={e.id} entry={e} />
         ))}
       </div>
     </div>
