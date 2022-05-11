@@ -7,7 +7,7 @@ export interface Diagnosis {
 export enum Gender {
   Male = "male",
   Female = "female",
-  Other = "other"
+  Other = "other",
 }
 
 export interface Patient {
@@ -17,7 +17,7 @@ export interface Patient {
   gender: Gender;
   ssn?: string;
   dateOfBirth?: string;
-  entries: Array<Entry>
+  entries: Array<Entry>;
 }
 
 interface BaseEntry {
@@ -65,3 +65,9 @@ export type Entry =
   | HospitalEntry
   | HealthCheckEntry
   | OccupationalHealthcareEntry;
+
+type UnionOmit<T, K extends string | number | symbol> = T extends unknown
+  ? Omit<T, K>
+  : never;
+
+export type NewEntry = UnionOmit<Entry, "id">;
