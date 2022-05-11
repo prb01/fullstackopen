@@ -45,7 +45,7 @@ type Fields = {
   entries: unknown
 };
 
-const toNewPatient = ({
+export const toNewPatient = ({
   ssn,
   name,
   dateOfBirth,
@@ -64,5 +64,3 @@ const toNewPatient = ({
 
   return newEntry;
 };
-
-export default toNewPatient;
