@@ -1,6 +1,7 @@
 node_modules
 .vscode/
 /**/.git
+part10/githubRater/.git
 # part3/notes-back/.git
 # part3/phonebook/.git
 # part4/blog/.git
