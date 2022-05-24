@@ -1,0 +1,58 @@
+name: Deployment pipeline
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:    
+    branches: [master]    
+    types: [opened, synchronize]
+
+jobs:
+  simple_deployment_pipeline:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "16"
+      - name: npm install
+        run: npm install
+      - name: lint        
+        run: npm run eslint
+      - name: build
+        run: npm run build
+      - name: test
+        run: npm test
+      - name: e2e tests
+        uses: cypress-io/github-action@v2
+        with: 
+          command: npm run test:e2e
+          start: npm run start-prod
+          wait-on: http://localhost:5000
+      - name: heroku deployment
+        if: ${{ github.event_name == 'push' && !contains(join(toJson(github.event.commits.*.message),' '), '#skip') }}  
+        uses: akhileshns/heroku-deploy@v3.12.12
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: "fso-pokedex-prb01"
+          heroku_email: "p.bergstroem@gmail.com"
+          healthcheck: "https://fso-pokedex-prb01.herokuapp.com/health"
+          checkstring: "ok"
+          rollbackonhealthcheckfailed: true
+  tag_release:
+    needs: [simple_deployment_pipeline]
+    runs-on: ubuntu-20.04
+    if: ${{ !contains(join(toJson(github.event.commits.*.message),' '), '#skip') }}
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: '0'
+      - name: Bump version and push tag
+        if: ${{ github.event_name == 'push' }}  
+        uses: anothrNick/github-tag-action@3840ec22ac98e14d981375e3ae2d8d0392964521
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          WITH_V: true
+          DEFAULT_BUMP: patch
+
