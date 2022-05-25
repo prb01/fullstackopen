@@ -40,6 +40,27 @@ jobs:
           healthcheck: "https://fso-pokedex-prb01.herokuapp.com/health"
           checkstring: "ok"
           rollbackonhealthcheckfailed: true
+      - name: Discord | Success
+        uses: rjstone/discord-webhook-notify@v1.0.4
+        if: github.event_name == 'push' && success()
+        with:
+          severity: info
+          text: 'Successfully deployed'
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+      - name: Discord | Warning
+        uses: rjstone/discord-webhook-notify@v1.0.4
+        if: github.event_name == 'push' && cancelled()
+        with:
+          severity: warn
+          text: 'Warning during deployment'
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+      - name: Discord | Error
+        uses: rjstone/discord-webhook-notify@v1.0.4
+        if: github.event_name == 'push' && failure()
+        with:
+          severity: error
+          text: 'Error during deployment'
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
   tag_release:
     needs: [simple_deployment_pipeline]
     runs-on: ubuntu-20.04
@@ -55,4 +76,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           WITH_V: true
           DEFAULT_BUMP: patch
+    
+
 
