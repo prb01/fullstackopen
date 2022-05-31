@@ -1,0 +1,69 @@
+#### Root user
+POST http://localhost:3003/api/users
+Content-Type: application/json
+
+{
+  "name": "Erik Sandstrom",
+  "username": "erikSand",
+  "password": "pa55w0rd"
+}
+#### Second user for good measure
+POST http://localhost:3003/api/users
+Content-Type: application/json
+
+{
+  "name": "Ragnar Lothbrok",
+  "username": "theRagnar",
+  "password": "pa55w0rd"
+}
+#### Error: username already taken
+POST http://localhost:3003/api/users
+Content-Type: application/json
+
+{
+  "name": "Erik Sandstrom",
+  "username": "erikSand",
+  "password": "pa55w0rd"
+}
+#### Error: password too short
+POST http://localhost:3003/api/users
+Content-Type: application/json
+
+{
+  "name": "Shorty McShorterson",
+  "username": "shorty",
+  "password": "1234"
+}
+#### Error: username too short
+POST http://localhost:3003/api/users
+Content-Type: application/json
+
+{
+  "name": "Shorty McShorterson",
+  "username": "sh",
+  "password": "123456789"
+}
+#### Error: No username
+POST http://localhost:3003/api/users
+Content-Type: application/json
+
+{
+  "name": "Test1",
+  "password": "12345678"
+}
+#### Error: No name
+POST http://localhost:3003/api/users
+Content-Type: application/json
+
+{
+  "username": "Test1",
+  "password": "12345678"
+}
+#### Error: No password
+POST http://localhost:3003/api/users
+Content-Type: application/json
+
+{
+  "name": "Test1",
+  "username": "Test1"
+}

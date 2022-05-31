@@ -1,0 +1,15 @@
+#### Successfull delete (user: the Ragnar, blog_id: (change as req)
+DELETE http://localhost:3003/api/blogs/6244e0d2af95629196ad8754
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRoZVJhZ25hciIsImlkIjoiNjI0NDgwZTM4ZWY0MDI3Y2QzNDYzYzFhIiwiaWF0IjoxNjQ4Njc4MDkzfQ.MyIfnA-3eiLKIjdcxXDO3POtCJAsw4NJAvEXkhTmZgM
+#### Error: blog belongs to different owner
+DELETE http://localhost:3003/api/blogs/6244dda5b4e75c541ec5f964
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImVyaWtTYW5kIiwiaWQiOiI2MjQ0N2ZlMzMxYjRhMDBmMWRmNDk3NDQiLCJpYXQiOjE2NDg2ODAzMTZ9.TUgbdesgpFP64Ms2hN68_yGDZ6dBbTMh5knxCQNG6Co
+#### Error: token missing
+DELETE http://localhost:3003/api/blogs/6244dda5b4e75c541ec5f964
+Content-Type: application/json
+#### Error: token invalid
+DELETE http://localhost:3003/api/blogs/6244dda5b4e75c541ec5f964
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NinR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImVyaWtTYW5kIiwiaWQiOiI2MjQ0N2ZlMzMxYjRhMDBmMWRmNDk3NDQiLCJpYXQiOjE2NDg2ODAzMTZ9.TUgbdesgpFP64Ms2hN68_yGDZ6dBbTMh5knxCQNG6Co

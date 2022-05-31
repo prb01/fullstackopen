@@ -1,0 +1,53 @@
+button {
+  width: fit-content;
+}
+
+a {
+  color: inherit;
+}
+
+a:hover {
+  font-weight: bolder;
+  text-decoration: none;
+}
+
+a:visited {
+  color: inherit;
+}
+
+.container-form {
+  display: flex;
+  flex-direction: column;
+  width: max-content;
+}
+
+.container-formfields {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0.5rem;
+}
+
+.notification {
+  position: fixed;
+  top: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: fit-content;
+  text-align: center;
+
+  border-radius: 3px;
+  border: 1px solid;
+  padding: 0.5rem 1rem;
+}
+
+.notification.error {
+  border-color: hsl(355, 52%, 48%);
+  background-color: hsl(355, 52%, 85%);
+  color: hsl(355, 52%, 48%);
+}
+
+.notification.info {
+  border-color: hsl(148, 54%, 40%);
+  background-color: hsl(148, 54%, 85%);
+  color: hsl(148, 54%, 40%);
+}

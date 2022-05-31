@@ -1,0 +1,108 @@
+Script started on 2022-05-26 08:37:00-05:00 [TERM="xterm-256color" TTY="/dev/pts/0" COLUMNS="107" LINES="39"]
+]777;notify;Command completed;exit\]777;precmd\]0;misterbelgic@hal:~/Documents/coding/webdev/2021/fullstackopen/part12/part12-containers-applications/script-answers\]7;file://hal/home/misterbelgic/Documents/coding/webdev/2021/fullstackopen/part12/part12-containers-applications/script-answers\[?2004h[misterbelgic@hal script-answers]$ exitsudo docker container run -it ubuntu bash[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cexit[Ksudo docker container run -it ubuntu bash[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cexit[K[Kexitsudo docker container run -it ubuntu bash[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cexit[Kscript[1Pclearsudo docker image pull hello-worldclear[Ksudo docker image pull hello-worldclear[Kscript[2Pexitsudo docker container run -it ubuntu bash[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cexit[K[Ksudo docker run -i [7mexercise12_3.txt[27m[1Pexercise12_3.tx[K[K[K[K[K[K[K[K[K[K[K[K[K[K[Kgallant_mc[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[Kls -a
+[?2004l]777;preexec\[sudo] password for misterbelgic: 
+unknown shorthand flag: 'a' in -a
+See 'docker --help'.
+
+Usage:  docker [OPTIONS] COMMAND
+
+A self-sufficient runtime for containers
+
+Options:
+      --config string      Location of client config files (default "/root/.docker")
+  -c, --context string     Name of the context to use to connect to the daemon (overrides
+                           DOCKER_HOST env var and default context set with "docker context use")
+  -D, --debug              Enable debug mode
+  -H, --host list          Daemon socket(s) to connect to
+  -l, --log-level string   Set the logging level ("debug"|"info"|"warn"|"error"|"fatal") (default "info")
+      --tls                Use TLS; implied by --tlsverify
+      --tlscacert string   Trust certs signed only by this CA (default "/root/.docker/ca.pem")
+      --tlscert string     Path to TLS certificate file (default "/root/.docker/cert.pem")
+      --tlskey string      Path to TLS key file (default "/root/.docker/key.pem")
+      --tlsverify          Use TLS and verify the remote
+  -v, --version            Print version information and quit
+
+Management Commands:
+  app*        Docker App (Docker Inc., v0.9.1-beta3)
+  builder     Manage builds
+  buildx*     Docker Buildx (Docker Inc., v0.8.2-docker)
+  compose*    Docker Compose (Docker Inc., v2.5.0)
+  config      Manage Docker configs
+  container   Manage containers
+  context     Manage contexts
+  image       Manage images
+  manifest    Manage Docker image manifests and manifest lists
+  network     Manage networks
+  node        Manage Swarm nodes
+  plugin      Manage plugins
+  scan*       Docker Scan (Docker Inc., v0.17.0)
+  secret      Manage Docker secrets
+  service     Manage services
+  stack       Manage Docker stacks
+  swarm       Manage Swarm
+  system      Manage Docker
+  trust       Manage trust on Docker images
+  volume      Manage volumes
+
+Commands:
+  attach      Attach local standard input, output, and error streams to a running container
+  build       Build an image from a Dockerfile
+  commit      Create a new image from a container's changes
+  cp          Copy files/folders between a container and the local filesystem
+  create      Create a new container
+  diff        Inspect changes to files or directories on a container's filesystem
+  events      Get real time events from the server
+  exec        Run a command in a running container
+  export      Export a container's filesystem as a tar archive
+  history     Show the history of an image
+  images      List images
+  import      Import the contents from a tarball to create a filesystem image
+  info        Display system-wide information
+  inspect     Return low-level information on Docker objects
+  kill        Kill one or more running containers
+  load        Load an image from a tar archive or STDIN
+  login       Log in to a Docker registry
+  logout      Log out from a Docker registry
+  logs        Fetch the logs of a container
+  pause       Pause all processes within one or more containers
+  port        List port mappings or a specific mapping for the container
+  ps          List containers
+  pull        Pull an image or a repository from a registry
+  push        Push an image or a repository to a registry
+  rename      Rename a container
+  restart     Restart one or more containers
+  rm          Remove one or more containers
+  rmi         Remove one or more images
+  run         Run a command in a new container
+  save        Save one or more images to a tar archive (streamed to STDOUT by default)
+  search      Search the Docker Hub for images
+  start       Start one or more stopped containers
+  stats       Display a live stream of container(s) resource usage statistics
+  stop        Stop one or more running containers
+  tag         Create a tag TARGET_IMAGE that refers to SOURCE_IMAGE
+  top         Display the running processes of a container
+  unpause     Unpause all processes within one or more containers
+  update      Update configuration of one or more containers
+  version     Show the Docker version information
+  wait        Block until one or more containers stop, then print their exit codes
+
+Run 'docker COMMAND --help' for more information on a command.
+
+[1mTo get more help with docker, check out our guides at https://docs.docker.com/go/guides/[0m
+
+]777;notify;Command completed;sudo docker ls -a\]777;precmd\]0;misterbelgic@hal:~/Documents/coding/webdev/2021/fullstackopen/part12/part12-containers-applications/script-answers\]7;file://hal/home/misterbelgic/Documents/coding/webdev/2021/fullstackopen/part12/part12-containers-applications/script-answers\[?2004h[misterbelgic@hal script-answers]$ sudo docker ls -a[K[K[K[K[K[Kc[K container ls -a
+[?2004l]777;preexec\CONTAINER ID   IMAGE         COMMAND    CREATED          STATUS                          PORTS     NAMES
+d693b972cfcf   ubuntu        "bash"     8 minutes ago    Exited (0) About a minute ago             gallant_mcnulty
+e774018ee455   hello-world   "/hello"   14 minutes ago   Exited (0) 14 minutes ago                 youthful_mayer
+]777;notify;Command completed;sudo docker container ls -a\]777;precmd\]0;misterbelgic@hal:~/Documents/coding/webdev/2021/fullstackopen/part12/part12-containers-applications/script-answers\]7;file://hal/home/misterbelgic/Documents/coding/webdev/2021/fullstackopen/part12/part12-containers-applications/script-answers\[?2004h[misterbelgic@hal script-answers]$ sudo docker run o[K-i[7mgallant_mcnulty[27m[1Pgallant_mcnult[K[K[K[K[K[K[K[K[K[K[K[K[K[K [7mgallant_mcnulty[27mgallant_mcnulty
+[?2004l]777;preexec\Unable to find image 'gallant_mcnulty:latest' locally
+docker: Error response from daemon: pull access denied for gallant_mcnulty, repository does not exist or may require 'docker login': denied: requested access to the resource is denied.
+See 'docker run --help'.
+]777;notify;Command completed;sudo docker run -i gallant_mcnulty\]777;precmd\]0;misterbelgic@hal:~/Documents/coding/webdev/2021/fullstackopen/part12/part12-containers-applications/script-answers\]7;file://hal/home/misterbelgic/Documents/coding/webdev/2021/fullstackopen/part12/part12-containers-applications/script-answers\[?2004h[misterbelgic@hal script-answers]$ sudo docker run -i gallant_mcnulty[1P[1P[1P[1@s[1@t[1@a[1@r[1@t
+[?2004l]777;preexec\[?2004h]0;root@d693b972cfcf: /root@d693b972cfcf:/# [K]0;root@d693b972cfcf: /root@d693b972cfcf:/# nano /usr/src/app/index.js 
+[?2004l[?2004h[?1049h[22;0;0t[1;39r(B[m[4l[?7h[39;49m[?1h=[?1h=[?25l[39;49m(B[m[H[2J[37;47H(B[0;7m[ Reading... ](B[m[37;46H(B[0;7m[ Read 0 lines ](B[m[H(B[0;7m  GNU nano 6.2 [30b/usr/src/app/index.js [39b [1;106H(B[m[38d(B[0;7m^G(B[m Help[38;16H(B[0;7m^O(B[m Write Out   (B[0;7m^W(B[m Where Is    (B[0;7m^K(B[m Cut[38;61H(B[0;7m^T(B[m Execute     (B[0;7m^C(B[m Location    (B[0;7mM-U(B[m Undo[39d(B[0;7m^X(B[m Exit[39;16H(B[0;7m^R(B[m Read File   (B[0;7m^\(B[m Replace     (B[0;7m^U(B[m Paste[61G(B[0;7m^J(B[m Justify     (B[0;7m^/(B[m Go To Line  (B[0;7mM-E(B[m Redo[2d[?12l[?25h[?25l[1;68H(B[0;7m*[37d(B[m[K[1;106H[2dconsole.log((B[0;1m[35m'Hello World'[39m(B[m)[?12l[?25h[?25l[37;47H(B[0;7m[ Writing... ](B[m[1;68H(B[0;7m [106G(B[m[37;46H(B[0;7m[ Wrote 1 line ](B[m[?12l[?25h[2;27H[?25l[38;16H [10b(B[0;7mM-D(B[m DOS Format [11b(B[0;7mM-A(B[m Append[16X[38;79H(B[0;7mM-B(B[m Backup File[K[39;2H(B[0;7mC(B[m Cancel[16G [10b(B[0;7mM-M(B[m Mac Format [11b(B[0;7mM-P(B[m Prepend[15X[39;79H(B[0;7m^T(B[m Browse[K[37d(B[0;7mFile Name to Write: /usr/src/app/index.js [64b [37;42H(B[m[?12l[?25h[?25l[?12l[?25h[?25l    [1K (B[0;7m[ Writing... ](B[m[K[1;106H[37;46H(B[0;7m[ Wrote 1 line ](B[m[38;16H(B[0;7m^O(B[m Write Out   (B[0;7m^W(B[m Where Is    (B[0;7m^K(B[m Cut [8b(B[0;7m^T(B[m Execute     (B[0;7m^C(B[m Location    (B[0;7mM-U(B[m Undo[39;2H(B[0;7mX(B[m Exit  [16G(B[0;7m^R(B[m Read File   (B[0;7m^\(B[m Replace     (B[0;7m^U(B[m Paste [6b(B[0;7m^J(B[m Justify     (B[0;7m^/(B[m Go To Line  (B[0;7mM-E(B[m Redo[?12l[?25h[2;27H[?25l[37d[J[39d[?12l[?25h[39;1H[?1049l[23;0;0t[?1l>[?2004l[?2004h]0;root@d693b972cfcf: /root@d693b972cfcf:/# [Kexit
+[?2004lexit
+]777;notify;Command completed;sudo docker start -i gallant_mcnulty\]777;precmd\]0;misterbelgic@hal:~/Documents/coding/webdev/2021/fullstackopen/part12/part12-containers-applications/script-answers\]7;file://hal/home/misterbelgic/Documents/coding/webdev/2021/fullstackopen/part12/part12-containers-applications/script-answers\[?2004h[misterbelgic@hal script-answers]$ exit
+[?2004l]777;preexec\exit
+
+Script done on 2022-05-26 08:39:05-05:00 [COMMAND_EXIT_CODE="0"]

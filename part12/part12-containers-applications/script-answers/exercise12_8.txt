@@ -1,0 +1,121 @@
+Script started on 2022-05-26 10:24:32-05:00 [TERM="xterm-256color" TTY="/dev/pts/4" COLUMNS="97" LINES="19"]
+]777;notify;Command completed;exit\]777;precmd\]0;misterbelgic@hal:~/Documents/coding/webdev/2021/fullstackopen/part12/part12-containers-applications/todo-app/todo-backend\]7;file://hal/home/misterbelgic/Documents/coding/webdev/2021/fullstackopen/part12/part12-containers-applications/todo-app/todo-backend\[?2004h[misterbelgic@hal todo-backend]$ sudo docker compose ls
+[?2004l]777;preexec\[sudo] password for misterbelgic: 
+NAME                STATUS              CONFIG FILES
+]777;notify;Command completed;sudo docker compose ls\]777;precmd\]0;misterbelgic@hal:~/Documents/coding/webdev/2021/fullstackopen/part12/part12-containers-applications/todo-app/todo-backend\]7;file://hal/home/misterbelgic/Documents/coding/webdev/2021/fullstackopen/part12/part12-containers-applications/todo-app/todo-backend\[?2004h[misterbelgic@hal todo-backend]$ sudo docker compose ls -a
+[?2004l]777;preexec\NAME                STATUS              CONFIG FILES
+todo-backend        exited(1)           /home/misterbelgic/Documents/coding/webdev/2021/fullstackopen/part12/part12-containers-applications/todo-app/todo-backend/docker-compose.yml
+]777;notify;Command completed;sudo docker compose ls -a\]777;precmd\]0;misterbelgic@hal:~/Documents/coding/webdev/2021/fullstackopen/part12/part12-containers-applications/todo-app/todo-backend\]7;file://hal/home/misterbelgic/Documents/coding/webdev/2021/fullstackopen/part12/part12-containers-applications/todo-app/todo-backend\[?2004h[misterbelgic@hal todo-backend]$ sudo docker compose -f docker-compose.dev.yml -d[K[Kup -d
+[?2004l]777;preexec\[1A[1B[0G[?25l[+] Running 0/0
+[37m ⠋ Network todo-backend_default  Creating                                                   0.1s
+[0m[?25h[1A[1A[0G[?25l[+] Running 0/1
+[37m ⠙ Network todo-backend_default  Creating                                                   0.2s
+[0m[?25h[33mWARN[0m[0000] Found orphan containers ([todo-backend-app-1]) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up. 
+[1A[1A[0G[?25l[34m[+] Running 1/1[0m
+[34m ⠿ Network todo-backend_default    Created                                                  0.3s
+[0m[37m ⠋ Container todo-backend-mongo-1  Creating                                                 0.0s
+[0m[?25h[1A[1A[1A[0G[?25l[+] Running 1/2
+[34m ⠿ Network todo-backend_default    Created                                                  0.3s
+[0m[37m ⠿ Container todo-backend-mongo-1  Starting                                                 0.1s
+[0m[?25h[1A[1A[1A[0G[?25l[+] Running 1/2
+[34m ⠿ Network todo-backend_default    Created                                                  0.3s
+[0m[37m ⠿ Container todo-backend-mongo-1  Starting                                                 0.2s
+[0m[?25h[1A[1A[1A[0G[?25l[+] Running 1/2
+[34m ⠿ Network todo-backend_default    Created                                                  0.3s
+[0m[37m ⠿ Container todo-backend-mongo-1  Starting                                                 0.3s
+[0m[?25h[1A[1A[1A[0G[?25l[34m[+] Running 2/2[0m
+[34m ⠿ Network todo-backend_default    Created                                                  0.3s
+[0m[34m ⠿ Container todo-backend-mongo-1  Started                                                  0.4s
+[0m[?25h]777;notify;Command completed;sudo docker compose -f docker-compose.dev.yml up -d\]777;precmd\]0;misterbelgic@hal:~/Documents/coding/webdev/2021/fullstackopen/part12/part12-containers-applications/todo-app/todo-backend\]7;file://hal/home/misterbelgic/Documents/coding/webdev/2021/fullstackopen/part12/part12-containers-applications/todo-app/todo-backend\[?2004h[misterbelgic@hal todo-backend]$ sudo[K[K[K[Ksudo docker container ls
+[?2004l]777;preexec\CONTAINER ID   IMAGE     COMMAND                  CREATED          STATUS          PORTS                                         NAMES
+5adca6fbdba8   mongo     "docker-entrypoint.s…"   15 seconds ago   Up 13 seconds   0.0.0.0:3456->27017/tcp, :::3456->27017/tcp   todo-backend-mongo-1
+]777;notify;Command completed;sudo docker container ls\]777;precmd\]0;misterbelgic@hal:~/Documents/coding/webdev/2021/fullstackopen/part12/part12-containers-applications/todo-app/todo-backend\]7;file://hal/home/misterbelgic/Documents/coding/webdev/2021/fullstackopen/part12/part12-containers-applications/todo-app/todo-backend\[?2004h[misterbelgic@hal todo-backend]$ sudo docker exec 5ad mongo [7m-u root -p example[27m-u root -p example
+[?2004l]777;preexec\MongoDB shell version v5.0.8
+connecting to: mongodb://127.0.0.1:27017/?compressors=disabled&gssapiServiceName=mongodb
+Implicit session: session { "id" : UUID("5e63f023-5ed6-4cf3-83a4-298b3ac63bc8") }
+MongoDB server version: 5.0.8
+================
+Warning: the "mongo" shell has been superseded by "mongosh",
+which delivers improved usability and compatibility.The "mongo" shell has been deprecated and will be removed in
+an upcoming release.
+For installation instructions, see
+https://docs.mongodb.com/mongodb-shell/install/
+================
+bye
+]777;notify;Command completed;sudo docker exec 5ad mongo -u root -p example\]777;precmd\]0;misterbelgic@hal:~/Documents/coding/webdev/2021/fullstackopen/part12/part12-containers-applications/todo-app/todo-backend\]7;file://hal/home/misterbelgic/Documents/coding/webdev/2021/fullstackopen/part12/part12-containers-applications/todo-app/todo-backend\[?2004h[misterbelgic@hal todo-backend]$ sudo docker exec 5ad mongo -u root -p example[C[C[1@ [1@-[1@i[1@t
+[?2004l]777;preexec\MongoDB shell version v5.0.8
+connecting to: mongodb://127.0.0.1:27017/?compressors=disabled&gssapiServiceName=mongodb
+Implicit session: session { "id" : UUID("6553c5db-2500-4ce3-bf93-122ac3834ffb") }
+MongoDB server version: 5.0.8
+================
+Warning: the "mongo" shell has been superseded by "mongosh",
+which delivers improved usability and compatibility.The "mongo" shell has been deprecated and will be removed in
+an upcoming release.
+For installation instructions, see
+https://docs.mongodb.com/mongodb-shell/install/
+================
+Welcome to the MongoDB shell.
+For interactive help, type "help".
+For more comprehensive documentation, see
+	https://docs.mongodb.com/
+Questions? Try the MongoDB Developer Community Forums
+	https://community.mongodb.com
+---
+        Enable MongoDB's free cloud-based monitoring service, which will then receive and display
+        metrics about your deployment (disk utilization, CPU, operation statistics, etc).
+
+        The monitoring data will be available on a MongoDB website with a unique URL accessible to you
+        and anyone you share the URL with. MongoDB may use this information to make product
+        improvements and to suggest MongoDB products and deployment options to you.
+
+        To enable free monitoring, run the following command: db.enableFreeMonitoring()
+        To permanently disable this reminder, run the following command: db.disableFreeMonitoring()
+---
+> show dbs[3G[Jshow dbs[11G
+admin         0.000GB
+config        0.000GB
+local         0.000GB
+the_database  0.000GB
+> use the_database[3G[Juse the_database[19G
+switched to db the_database
+> showe [3G[Jshowe[8G[3G[Jshow[7G collections[3G[Jshow collections[19G
+todos
+> db.todos.find({})[3G[Jdb.todos.find({})[20G
+{ "_id" : ObjectId("628f9bf6a3fe2b24f20d5f46"), "text" : "Write code", "done" : true }
+{ "_id" : ObjectId("628f9bf6a3fe2b24f20d5f47"), "text" : "Learn about containers", "done" : false }
+> [3G[Jdb.todos.find({})[20G[3G[Jdb.todos.find({}[19G[3G[Jdb.todos.find({[18G[3G[Jdb.todos.find([17G[3G[Jdb.todos.find[16G[3G[Jdb.todos.fin[15G[3G[Jdb.todos.fi[14G[3G[Jdb.todos.f[13G[3G[Jdb.todos.[12GinsertOne()[3G[Jdb.todos.insertOne[1;34m([0m)[22G[3G[Jdb.todos.insertOne([1;34m{[0m)[23G[3G[Jdb.todos.insertOne[1;34m([0m{})[24G[3G[Jdb.todos.insertOne([1;34m{[0m})[23G[3G[Jdb.todos.insertOne([1;34m{[0m"})[24G[3G[Jdb.todos.insertOne([1;34m{[0m"t})[25G[3G[Jdb.todos.insertOne([1;34m{[0m"te})[26G[3G[Jdb.todos.insertOne([1;34m{[0m"tex})[27G[3G[Jdb.todos.insertOne([1;34m{[0m"text})[28G[3G[Jdb.todos.insertOne([1;34m{[0m"text"})[29G[3G[Jdb.todos.insertOne([1;34m{[0m"text" })[30G[3G[Jdb.todos.insertOne([1;34m{[0m"text" :})[31G[3G[Jdb.todos.insertOne([1;34m{[0m"text" })[30G[3G[Jdb.todos.insertOne([1;34m{[0m"text"})[29G[3G[Jdb.todos.insertOne([1;34m{[0m"text":})[30G[3G[Jdb.todos.insertOne([1;34m{[0m"text": })[31G[3G[Jdb.todos.insertOne([1;34m{[0m"text": "})[32G[3G[Jdb.todos.insertOne([1;34m{[0m"text": ""})[33G[3G[Jdb.todos.insertOne([1;34m{[0m"text": "",})[34G[3G[Jdb.todos.insertOne([1;34m{[0m"text": "", })[35G[3G[Jdb.todos.insertOne([1;34m{[0m"text": "", "})[36G[3G[Jdb.todos.insertOne([1;34m{[0m"text": "", "d})[37G[3G[Jdb.todos.insertOne([1;34m{[0m"text": "", "do})[38G[3G[Jdb.todos.insertOne([1;34m{[0m"text": "", "don})[39G[3G[Jdb.todos.insertOne([1;34m{[0m"text": "", "done})[40G[3G[Jdb.todos.insertOne([1;34m{[0m"text": "", "done"})[41G[3G[Jdb.todos.insertOne([1;34m{[0m"text": "", "done":})[42G[3G[Jdb.todos.insertOne([1;34m{[0m"text": "", "done":f})[43G[3G[Jdb.todos.insertOne([1;34m{[0m"text": "", "done":})[42G[3G[Jdb.todos.insertOne([1;34m{[0m"text": "", "done": })[43G[3G[Jdb.todos.insertOne([1;34m{[0m"text": "", "done": f})[44G[3G[Jdb.todos.insertOne([1;34m{[0m"text": "", "done": fa})[45G[3G[Jdb.todos.insertOne([1;34m{[0m"text": "", "done": fal})[46G[3G[Jdb.todos.insertOne([1;34m{[0m"text": "", "done": fals})[47G[3G[Jdb.todos.insertOne([1;34m{[0m"text": "", "done": false})[48G[3G[Jdb.todos.insertOne({"text": "", "done": false})[47G[3G[Jdb.todos.insertOne({"text": "", "done": false})[46G[3G[Jdb.todos.insertOne({"text": "", "done": false})[45G[3G[Jdb.todos.insertOne({"text": "", "done": false})[44G[3G[Jdb.todos.insertOne({"text": "", "done": false})[43G[3G[Jdb.todos.insertOne({"text": "", "done": false})[42G[3G[Jdb.todos.insertOne({"text": "", "done": false})[41G[3G[Jdb.todos.insertOne({"text": "", "done": false})[40G[3G[Jdb.todos.insertOne({"text": "", "done": false})[39G[3G[Jdb.todos.insertOne({"text": "", "done": false})[38G[3G[Jdb.todos.insertOne({"text": "", "done": false})[37G[3G[Jdb.todos.insertOne({"text": "", "done": false})[36G[3G[Jdb.todos.insertOne({"text": "", "done": false})[35G[3G[Jdb.todos.insertOne({"text": "", "done": false})[34G[3G[Jdb.todos.insertOne({"text": "", "done": false})[33G[3G[Jdb.todos.insertOne({"text": "", "done": false})[32G[3G[Jdb.todos.insertOne({"text": "", "done": false})[31G[3G[Jdb.todos.insertOne({"text": "", "done": false})[32G[3G[Jdb.todos.insertOne({"text": "I", "done": false})[33G[3G[Jdb.todos.insertOne({"text": "In", "done": false})[34G[3G[Jdb.todos.insertOne({"text": "Inc", "done": false})[35G[3G[Jdb.todos.insertOne({"text": "Incr", "done": false})[36G[3G[Jdb.todos.insertOne({"text": "Incre", "done": false})[37G[3G[Jdb.todos.insertOne({"text": "Increa", "done": false})[38G[3G[Jdb.todos.insertOne({"text": "Increas", "done": false})[39G[3G[Jdb.todos.insertOne({"text": "Increase", "done": false})[40G[3G[Jdb.todos.insertOne({"text": "Increase ", "done": false})[41G[3G[Jdb.todos.insertOne({"text": "Increase t", "done": false})[42G[3G[Jdb.todos.insertOne({"text": "Increase th", "done": false})[43G[3G[Jdb.todos.insertOne({"text": "Increase the", "done": false})[44G[3G[Jdb.todos.insertOne({"text": "Increase the ", "done": false})[45G[3G[Jdb.todos.insertOne({"text": "Increase the n", "done": false})[46G[3G[Jdb.todos.insertOne({"text": "Increase the nu", "done": false})[47G[3G[Jdb.todos.insertOne({"text": "Increase the num", "done": false})[48G[3G[Jdb.todos.insertOne({"text": "Increase the numb", "done": false})[49G[3G[Jdb.todos.insertOne({"text": "Increase the numbe", "done": false})[50G[3G[Jdb.todos.insertOne({"text": "Increase the number", "done": false})[51G[3G[Jdb.todos.insertOne({"text": "Increase the number ", "done": false})[52G[3G[Jdb.todos.insertOne({"text": "Increase the number o", "done": false})[53G[3G[Jdb.todos.insertOne({"text": "Increase the number of", "done": false})[54G[3G[Jdb.todos.insertOne({"text": "Increase the number of ", "done": false})[55G[3G[Jdb.todos.insertOne({"text": "Increase the number of t", "done": false})[56G[3G[Jdb.todos.insertOne({"text": "Increase the number of to", "done": false})[57G[3G[Jdb.todos.insertOne({"text": "Increase the number of too", "done": false})[58G[3G[Jdb.todos.insertOne({"text": "Increase the number of tool", "done": false})[59G[3G[Jdb.todos.insertOne({"text": "Increase the number of tools", "done": false})[60G[3G[Jdb.todos.insertOne({"text": "Increase the number of tools ", "done": false})[61G[3G[Jdb.todos.insertOne({"text": "Increase the number of tools i", "done": false})[62G[3G[Jdb.todos.insertOne({"text": "Increase the number of tools in", "done": false})[63G[3G[Jdb.todos.insertOne({"text": "Increase the number of tools in ", "done": false})[64G[3G[Jdb.todos.insertOne({"text": "Increase the number of tools in m", "done": false})[65G[3G[Jdb.todos.insertOne({"text": "Increase the number of tools in my", "done": false})[66G[3G[Jdb.todos.insertOne({"text": "Increase the number of tools in my ", "done": false})[67G[3G[Jdb.todos.insertOne({"text": "Increase the number of tools in my t", "done": false})[68G[3G[Jdb.todos.insertOne({"text": "Increase the number of tools in my to", "done": false})[69G[3G[Jdb.todos.insertOne({"text": "Increase the number of tools in my too", "done": false})[70G[3G[Jdb.todos.insertOne({"text": "Increase the number of tools in my tool", "done": false})[71G[3G[Jdb.todos.insertOne({"text": "Increase the number of tools in my toolb", "done": false})[72G[3G[Jdb.todos.insertOne({"text": "Increase the number of tools in my toolbe", "done": false})[73G[3G[Jdb.todos.insertOne({"text": "Increase the number of tools in my toolbel", "done": false})[74G[3G[Jdb.todos.insertOne({"text": "Increase the number of tools in my toolbelt", "done": false})[75G[3G[Jdb.todos.insertOne({"text": "Increase the number of tools in my toolbelt", "done": false})[93G
+{
+	"acknowledged" : true,
+	"insertedId" : ObjectId("628f9cb2f4500ddc129ef265")
+}
+> [3G[Jdb.todos.insertOne({"text": "Increase the number of tools in my toolbelt", "done": false})[93G[3G[Jdb.todos.find({})[20G[3G[Jdb.todos.find({})[20G
+{ "_id" : ObjectId("628f9bf6a3fe2b24f20d5f46"), "text" : "Write code", "done" : true }
+{ "_id" : ObjectId("628f9bf6a3fe2b24f20d5f47"), "text" : "Learn about containers", "done" : false }
+{ "_id" : ObjectId("628f9cb2f4500ddc129ef265"), "text" : "Increase the number of tools in my toolbelt", "done" : false }
+> exit[3G[Jexit[7G
+bye
+]777;notify;Command completed;sudo docker exec -it 5ad mongo -u root -p example\]777;precmd\]0;misterbelgic@hal:~/Documents/coding/webdev/2021/fullstackopen/part12/part12-containers-applications/todo-app/todo-backend\]7;file://hal/home/misterbelgic/Documents/coding/webdev/2021/fullstackopen/part12/part12-containers-applications/todo-app/todo-backend\[?2004h[misterbelgic@hal todo-backend]$ sudo docker exec -it 5ad mongo -u root -p example[4P[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[21Pcontainer lsmpose -f docker-compose.dev.yml up -d[1@d[1@o[1@w[1@n[1P[1P -d[1P-d[1Pd[K
+[?2004l]777;preexec\[1A[1B[0G[?25l[+] Running 0/0
+[37m ⠋ Container todo-backend-mongo-1  Stopping                                                 0.1s
+[0m[?25h[1A[1A[0G[?25l[+] Running 0/1
+[37m ⠙ Container todo-backend-mongo-1  Stopping                                                 0.2s
+[0m[?25h[1A[1A[0G[?25l[+] Running 0/1
+[37m ⠿ Container todo-backend-mongo-1  Removing                                                 0.3s
+[0m[?25h[1A[1A[0G[?25l[+] Running 0/1
+[37m ⠿ Container todo-backend-mongo-1  Removing                                                 0.4s
+[0m[?25h[1A[1A[0G[?25l[34m[+] Running 1/1[0m
+[34m ⠿ Container todo-backend-mongo-1  Removed                                                  0.4s
+[0m[37m ⠋ Network todo-backend_default    Removing                                                 0.1s
+[0m[?25h[1A[1A[1A[0G[?25l[+] Running 1/2
+[34m ⠿ Container todo-backend-mongo-1  Removed                                                  0.4s
+[0m[37m ⠙ Network todo-backend_default    Removing                                                 0.2s
+[0m[?25h[1A[1A[1A[0G[?25l[34m[+] Running 2/2[0m
+[34m ⠿ Container todo-backend-mongo-1  Removed                                                  0.4s
+[0m[34m ⠿ Network todo-backend_default    Removed                                                  0.2s
+[0m[?25h]777;notify;Command completed;sudo docker compose -f docker-compose.dev.yml down\]777;precmd\]0;misterbelgic@hal:~/Documents/coding/webdev/2021/fullstackopen/part12/part12-containers-applications/todo-app/todo-backend\]7;file://hal/home/misterbelgic/Documents/coding/webdev/2021/fullstackopen/part12/part12-containers-applications/todo-app/todo-backend\[?2004h[misterbelgic@hal todo-backend]$ sudo docker container ls
+[?2004l]777;preexec\CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+]777;notify;Command completed;sudo docker container ls\]777;precmd\]0;misterbelgic@hal:~/Documents/coding/webdev/2021/fullstackopen/part12/part12-containers-applications/todo-app/todo-backend\]7;file://hal/home/misterbelgic/Documents/coding/webdev/2021/fullstackopen/part12/part12-containers-applications/todo-app/todo-backend\[?2004h[misterbelgic@hal todo-backend]$ clear
+[?2004l]777;preexec\[H[2J[3J]777;notify;Command completed;clear\]777;precmd\]0;misterbelgic@hal:~/Documents/coding/webdev/2021/fullstackopen/part12/part12-containers-applications/todo-app/todo-backend\]7;file://hal/home/misterbelgic/Documents/coding/webdev/2021/fullstackopen/part12/part12-containers-applications/todo-app/todo-backend\[?2004h[misterbelgic@hal todo-backend]$ exit
+[?2004l]777;preexec\exit
+
+Script done on 2022-05-26 10:29:29-05:00 [COMMAND_EXIT_CODE="0"]

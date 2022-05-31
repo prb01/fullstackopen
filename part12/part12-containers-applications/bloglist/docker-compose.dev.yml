@@ -1,0 +1,42 @@
+services:
+  app:
+    image: bloglist-front-dev
+    build:
+      context: ./bloglist-front
+      dockerfile: dev.Dockerfile
+    volumes:
+      - ./bloglist-front/:/usr/src/app
+    ports:
+      - 3000:3000
+  mongo:
+    image: mongo
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+      MONGO_INITDB_DATABASE: blogApp
+    volumes:
+      - ./bloglist-back/mongo/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js
+  server:
+    image: bloglist-back-dev
+    build:
+      context: ./bloglist-back 
+      dockerfile: dev.Dockerfile 
+    volumes:
+      - ./bloglist-back/:/usr/src/app 
+    ports:
+      - 3003:3003
+    environment: 
+      - MONGODB_URI=mongodb://the_username:the_password@mongo:27017/blogApp
+    depends_on:
+      - mongo
+  nginx:
+    image: nginx:1.20.1
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - 8080:80
+    depends_on:
+      - app
+      - server

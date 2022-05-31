@@ -1,0 +1,31 @@
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRoZVJhZ25hciIsImlkIjoiNjI0NDgwZTM4ZWY0MDI3Y2QzNDYzYzFhIiwiaWF0IjoxNjQ4Njc4MDkzfQ.MyIfnA-3eiLKIjdcxXDO3POtCJAsw4NJAvEXkhTmZgM
+
+{
+  "title": "9th blog",
+  "author": "Bloggy McBloggerson",
+  "url": "www.google.com/blog/bloggy",
+  "likes": 23
+}
+#### Error: create Blog without authorization
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
+
+{
+  "title": "7th blog",
+  "author": "Bloggy McBloggerson",
+  "url": "www.google.com/blog/bloggy",
+  "likes": 22
+}
+#### Error: create Blog with incorrect authorization
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIspXVCJ9.eyJ1c2VybmFtZSI6InRoZVJhZ25hciIsImlkIjoiNjI0NDgwZTM4ZWY0MDI3Y2QzNDYzYzFhIiwiaWF0IjoxNjQ4Njc4MDkzfQ.MyIfnA-3eiLKIjdcxXDO3POtCJAsw4NJAvEXkhTmZgM
+
+{
+  "title": "7th blog",
+  "author": "Bloggy McBloggerson",
+  "url": "www.google.com/blog/bloggy",
+  "likes": 22
+}
