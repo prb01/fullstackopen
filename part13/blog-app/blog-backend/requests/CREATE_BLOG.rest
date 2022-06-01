@@ -1,0 +1,15 @@
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
+
+{
+  "author": "Test Author",
+  "url": "http://wwww.test.com",
+  "title": "Blog Test Title"
+}
+######### BAD QUERY
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
+
+{
+  "author": "Test Author"
+}
