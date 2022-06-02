@@ -1,4 +1,4 @@
-const { Blog, User } = require("../models")
+const { Blog, User, Session } = require("../models")
 const jwt = require("jsonwebtoken")
 const { SECRET } = require("../util/config")
 
@@ -14,7 +14,7 @@ const userFinder = async (req, res, next) => {
   next()
 }
 
-const tokenExtractor = (req, res, next) => {
+const tokenExtractor = async (req, res, next) => {
   const auth = req.get("authorization")
   if (!(auth && auth.slice(0, 7).toLowerCase() === "bearer ")) {
     return res.status(401).json({ error: "token missing" })
@@ -22,8 +22,12 @@ const tokenExtractor = (req, res, next) => {
 
   try {
     req.decodedToken = jwt.verify(auth.slice(7), SECRET)
+    req.sessionToken = await Session.findOne({
+      where: { sessionToken: req.decodedToken.sessionToken },
+    })
+    if (!req.sessionToken) throw "error"
   } catch (error) {
-    res.status(401).json({ error: "token invalid" })
+    res.status(401).json({ error: "token invalid" }).end()
   }
 
   next()

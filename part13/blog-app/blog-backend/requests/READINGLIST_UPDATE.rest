@@ -1,0 +1,24 @@
+###### CHANGE READING LIST (as Erik)
+PUT http://localhost:3003/api/readinglists/1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJlcmlrQHNhbmQuY29tIiwibmFtZSI6IkVyaWsgU2FuZHN0cm9tIiwiaWF0IjoxNjU0MTg4NzA1fQ.0CgQ7L4QHjCsgjWUSh1Ml781vPiicx-wK3Mf1Ih93ng
+
+{
+  "read": false
+}
+###### FAIL: CHANGE READING LIST (as Ragnar)
+PUT http://localhost:3003/api/readinglists/1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwidXNlcm5hbWUiOiJ0aGVAcmFnbmFyLmNvbSIsIm5hbWUiOiJSYWduYXIgTG90aGJydWsiLCJpYXQiOjE2NTQxODg3NTl9.GxwKRYeNnh5uX6IbeZqjXwS1AicsF-E11mHqbXLHL7g
+
+{
+  "read": false
+}
+###### CHANGE READING LIST (as Ragnar)
+PUT http://localhost:3003/api/readinglists/2
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwidXNlcm5hbWUiOiJ0aGVAcmFnbmFyLmNvbSIsIm5hbWUiOiJSYWduYXIgTG90aGJydWsiLCJpYXQiOjE2NTQxODg3NTl9.GxwKRYeNnh5uX6IbeZqjXwS1AicsF-E11mHqbXLHL7g
+
+{
+  "read": true
+}

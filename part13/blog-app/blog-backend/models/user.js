@@ -16,6 +16,7 @@ User.init(
     },
     passwordHash: { type: DataTypes.TEXT, allowNull: false },
     name: { type: DataTypes.TEXT, allowNull: false },
+    disabled: { type: DataTypes.BOOLEAN, defaultValue: false}
   },
   { sequelize, underscored: true, timestamps: true, modelName: "user" }
 )

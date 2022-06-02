@@ -24,3 +24,13 @@ Content-Type: application/json
   "password": "password",
   "name": "Foo Bar"
 }
+##### Disabled User
+POST http://localhost:3003/api/users
+Content-Type: application/json
+
+{
+  "username": "disabled@disabled.com",
+  "password": "password",
+  "name": "Disabled User",
+  "disabled": true
+}

@@ -9,13 +9,13 @@ Content-Type: application/json
 ######### WITH Auth (erik@sand.com)
 POST http://localhost:3003/api/blogs
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJlcmlrQHNhbmQuY29tIiwibmFtZSI6IkVyaWsgU2FuZHN0cm9tIiwiaWF0IjoxNjU0MTg4NzA1fQ.0CgQ7L4QHjCsgjWUSh1Ml781vPiicx-wK3Mf1Ih93ng
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJlcmlrQHNhbmQuY29tIiwibmFtZSI6IkVyaWsgU2FuZHN0cm9tIiwic2Vzc2lvblRva2VuIjoiZDAyYTY0Y2NjNjliMWJkNzczM2ZjZmZlYmU0NWU1NzhhNzdhNzIyMjdhNWI1MTkwMzJjNjIxMGMzMDVhNWU1ZTY5NTAwY2E3YjU2OGY4MjY5MzYzYmZhNmYyZTk1ZmEzMDgzNjQ3NTc4NjA0Mjk5MGUzNWEzODZjMGZjNGVjMzMiLCJpYXQiOjE2NTQyMDk1NTR9.MnQMMP03Gl5vq9-PiDDWUltsglHNkSUFkAbkCat4cHg
 
 {
   "author": "Auth Auth",
   "url": "http://wwww.eriksand.com",
   "title": "ErikSand Blog by Auth Auth",
-  "year": 2030
+  "year": 2010
 }
 ######### WITH Auth (the@ragnar.com)
 POST http://localhost:3003/api/blogs
