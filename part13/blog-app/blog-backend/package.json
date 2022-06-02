@@ -16,5 +16,11 @@
   "bugs": {
     "url": "https://github.com/prb01/blog-app/issues"
   },
-  "homepage": "https://github.com/prb01/blog-app#readme"
+  "homepage": "https://github.com/prb01/blog-app#readme",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "express-async-errors": "^3.1.1",
+    "jsonwebtoken": "^8.5.1",
+    "umzug": "^3.1.1"
+  }
 }

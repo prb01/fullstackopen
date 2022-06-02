@@ -1,0 +1,23 @@
+POST http://localhost:3001/api/login
+Content-Type: application/json
+
+{
+  "username": "erikSand",
+  "password": "secret"
+}
+##### USER
+POST http://localhost:3001/api/login
+Content-Type: application/json
+
+{
+  "username": "user",
+  "password": "secret"
+}
+###### DISABLED
+POST http://localhost:3001/api/login
+Content-Type: application/json
+
+{
+  "username": "disabled",
+  "password": "secret"
+}

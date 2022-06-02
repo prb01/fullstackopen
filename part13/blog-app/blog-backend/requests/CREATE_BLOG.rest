@@ -6,10 +6,48 @@ Content-Type: application/json
   "url": "http://wwww.test.com",
   "title": "Blog Test Title"
 }
+######### WITH Auth (erik@sand.com)
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJlcmlrQHNhbmQuY29tIiwibmFtZSI6IkVyaWsgU2FuZHN0cm9tIiwiaWF0IjoxNjU0MTg4NzA1fQ.0CgQ7L4QHjCsgjWUSh1Ml781vPiicx-wK3Mf1Ih93ng
+
+{
+  "author": "Auth Auth",
+  "url": "http://wwww.eriksand.com",
+  "title": "ErikSand Blog by Auth Auth",
+  "year": 2030
+}
+######### WITH Auth (the@ragnar.com)
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwidXNlcm5hbWUiOiJ0aGVAcmFnbmFyLmNvbSIsIm5hbWUiOiJSYWduYXIgTG90aGJydWsiLCJpYXQiOjE2NTQxODg3NTl9.GxwKRYeNnh5uX6IbeZqjXwS1AicsF-E11mHqbXLHL7g
+
+{
+  "author": "Auth Auth",
+  "url": "http://wwww.ragnar.com",
+  "title": "Ragnar Blog by Auth Auth"
+}
 ######### BAD QUERY
 POST http://localhost:3003/api/blogs
 Content-Type: application/json
 
 {
   "author": "Test Author"
+}
+######### BAD QUERY (1 missing value)
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
+
+{
+  "author": "Test Author",
+  "url": "www.google.com"
+}
+######## BAD QUERY (wrong data type)
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
+
+{
+  "author": "Test Author",
+  "url": 00000,
+  "title": "Blog Test Title"
 }

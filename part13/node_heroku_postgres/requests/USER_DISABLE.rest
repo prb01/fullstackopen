@@ -1,25 +1,16 @@
-POST http://localhost:3001/api/notes
-Content-Type: application/json
-
-{
-  "content": "test note",
-  "important": false
-}
-##### WITH AUTH (erikSand)
-POST http://localhost:3001/api/notes
+PUT http://localhost:3001/api/users/disabled
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImVyaWtTYW5kIiwiaWQiOjEsImlhdCI6MTY1NDE4NDQzN30.Ex2Z4yNnWGrF54a41rsiEcQIOrPR04QFvFSNPoX3XTM
 
 {
-  "content": "important note",
-  "important": true
+  "disabled": false
 }
-##### WITH AUTH (user)
-POST http://localhost:3001/api/notes
+##### Non-admin
+PUT http://localhost:3001/api/users/disabled
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXIiLCJpZCI6MiwiaWF0IjoxNjU0MTg0NTIzfQ.E17wuJCIcUIWFZEkCYLbf3TBndMb4IcQsxu5gk5iK4Q
 
+
 {
-  "content": "user note",
-  "important": false
+  "disabled": false
 }

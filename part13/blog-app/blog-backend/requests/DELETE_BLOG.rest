@@ -1,2 +1,7 @@
-DELETE http://localhost:3003/api/blogs/4
+DELETE http://localhost:3003/api/blogs/6
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJlcmlrU2FuZCIsIm5hbWUiOiJFcmlrIFNhbmRzdHJvbSIsImlhdCI6MTY1NDExNjM0N30.rU0tbfwFiBQaWwaFVVa9szirsOAUW_EQnNxQkyUdAVM
+###### WRONG AUTH (Ragnar)
+DELETE http://localhost:3003/api/blogs/6
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwidXNlcm5hbWUiOiJ0aGVSYWduYXIiLCJuYW1lIjoiUmFnbmFyIExvdGhicnVrIiwiaWF0IjoxNjU0MTE4MzAwfQ.4DQ52f5_CLAAowh1vwIuxNCgNa4WsVg9S_8Uw16f9KI
